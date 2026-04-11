@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+               <?import javafx.scene.control.*?>
+               <?import javafx.scene.effect.*?>
+               <?import javafx.scene.layout.*?>
+               <?import javafx.scene.paint.*?>
+               <?import javafx.scene.shape.*?>
+               <?import javafx.scene.text.*?>
+               <?import org.kordamp.ikonli.javafx.*?>
+
+               <AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="780.0" styleClass="txtfld" stylesheets="@../../../styles/ui.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.training.studyfx.controller.UIController">
+                  <children>
+                     <!-- Sidebar - Increased width from 148 to 200 -->
+                     <VBox prefWidth="200.0" spacing="18" alignment="TOP_CENTER" style="-fx-background-color: #0084ff;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+                        <children>
+                           <VBox spacing="10" alignment="CENTER" style="-fx-padding: 28 0 16 0;">
+                              <children>
+                                 <Circle fx:id="avt" fill="WHITE" radius="68.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+                                    <effect>
+                                       <DropShadow>
+                                          <color>
+                                             <Color red="0.763" green="0.763" blue="0.763" />
+                                          </color>
+                                       </DropShadow>
+                                    </effect>
+                                 </Circle>
+                                 <Label text="You">
+                                    <font>
+                                       <Font name="Arial Rounded MT Bold" size="15.0" />
+                                    </font>
+                                 </Label>
+                              </children>
+                           </VBox>
+                           <!-- Nút menu - Increased button width from 130 to 170 -->
+                           <Button fx:id="About" prefHeight="50.0" prefWidth="170.0" onMouseClicked="#handleAboutClick" styleClass="nav-button">
+                              <graphic>
+                                 <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                       <FontIcon iconLiteral="fas-user" styleClass="nav-icon" />
+                                       <Label styleClass="nav-label" text="About" />
+                                    </children>
+                                 </HBox>
+                              </graphic>
+                           </Button>
+                           <Button fx:id="Chat" prefHeight="50.0" prefWidth="170.0" onMouseClicked="#handleChatClick" styleClass="nav-button">
+                              <graphic>
+                                 <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                       <FontIcon iconLiteral="fas-globe" iconSize="12" styleClass="nav-icon" />
+                                       <Label styleClass="nav-label" text="Global" />
+                                    </children>
+                                 </HBox>
+                              </graphic>
+                           </Button>
+                           <Button fx:id="Chatbot" prefHeight="50.0" prefWidth="170.0" onMouseClicked="#handleChatbotClick" styleClass="nav-button">
+                              <graphic>
+                                 <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                       <FontIcon iconLiteral="fas-robot" styleClass="nav-icon" />
+                                       <Label styleClass="nav-label" text="Chatbot" />
+                                    </children>
+                                 </HBox>
+                              </graphic>
+                           </Button>
+                           <Button fx:id="Setting" prefHeight="50.0" prefWidth="170.0" onMouseClicked="#handleSettingClick" styleClass="nav-button">
+                              <graphic>
+                                 <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <children>
+                                       <FontIcon iconLiteral="fas-cog" styleClass="nav-icon" />
+                                       <Label styleClass="nav-label" text="Setting" />
+                                    </children>
+                                 </HBox>
+                              </graphic>
+                           </Button>
+                           <Pane VBox.vgrow="ALWAYS"/> <!-- Đẩy nút lên trên -->
+                        </children>
+                     </VBox>
+
+                     <!-- Vùng nội dung chính - Updated leftAnchor to match new sidebar width -->
+                     <AnchorPane fx:id="mainContentArea"
+                                 style="-fx-background-color: #f3f7fa;"
+                                 AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0"
+                                 AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+                        <children>
+                           <!-- Nội dung động sẽ load vào đây -->
+                        </children>
+                     </AnchorPane>
+
+                     <!-- List phụ - Updated leftAnchor to match new sidebar width -->
+                     <HBox fx:id="list" visible="false" managed="false"
+                           prefHeight="580.0" prefWidth="200.0"
+                           AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="0.0" />
+
+                     <!-- Khu vực bot_area - Updated leftAnchor to match new sidebar width -->
+                     <AnchorPane fx:id="bot_area" visible="false" managed="false"
+                                 AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="0.0" />
+                  </children>
+               </AnchorPane>

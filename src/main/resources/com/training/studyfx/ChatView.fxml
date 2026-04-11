@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Rectangle2D?>
+
+<VBox maxWidth="1.7976931348623157E308" minWidth="-Infinity"
+      prefHeight="620.0" prefWidth="1060.0" spacing="0"
+      stylesheets="@../../../styles/ui.css"
+      style="-fx-background-color: #1C1C1E;"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.training.studyfx.controller.ChatViewController">
+
+    <!-- ══ Top Header Bar ══ -->
+    <HBox alignment="CENTER_LEFT" spacing="12"
+          style="-fx-background-color: #2C2C2E;
+                 -fx-padding: 15 22 15 22;
+                 -fx-border-width: 0 0 1 0;
+                 -fx-border-color: rgba(255,255,255,0.06);">
+
+        <!-- Globe avatar -->
+        <StackPane>
+            <Circle radius="22" fill="rgba(48,209,88,0.12)"
+                     stroke="rgba(48,209,88,0.3)" strokeWidth="1.5"/>
+            <Circle radius="17" fill="#30D158"/>
+            <Label text="🌐" style="-fx-font-size: 14px;"/>
+        </StackPane>
+
+        <VBox spacing="2">
+            <Label text="Global Chat"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;
+                          -fx-text-fill: #FFFFFF;
+                          -fx-font-family: 'Segoe UI Semibold', 'Segoe UI', sans-serif;"/>
+            <Label text="Everyone is here"
+                   style="-fx-font-size: 12px;
+                          -fx-text-fill: rgba(255,255,255,0.4);"/>
+        </VBox>
+
+        <Pane HBox.hgrow="ALWAYS"/>
+
+        <!-- Live badge -->
+        <HBox alignment="CENTER" spacing="6"
+              style="-fx-background-color: rgba(48,209,88,0.1);
+                     -fx-background-radius: 20px; -fx-padding: 5 13 5 13;
+                     -fx-border-color: rgba(48,209,88,0.28);
+                     -fx-border-radius: 20px; -fx-border-width: 1px;">
+            <Circle radius="4" fill="#30D158"/>
+            <Label text="Live"
+                   style="-fx-font-size: 12px; -fx-font-weight: bold;
+                          -fx-text-fill: #30D158;"/>
+        </HBox>
+    </HBox>
+
+    <!-- ══ Chat Messages Area ══ -->
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER"
+                prefHeight="480.0" VBox.vgrow="ALWAYS"
+                styleClass="right-aligned-scrollpane"
+                style="-fx-background: transparent;
+                       -fx-background-color: transparent;
+                       -fx-border-color: transparent;">
+        <content>
+            <StackPane style="-fx-background-color: #1C1C1E;">
+                <VBox fx:id="chatContainer" spacing="10"
+                      style="-fx-background-color: transparent; -fx-padding: 24px;">
+                    <padding>
+                        <Insets bottom="8" left="16" right="16" top="8"/>
+                    </padding>
+                    <children>
+                        <!-- Empty state -->
+                        <VBox alignment="CENTER" spacing="12">
+                            <Label text="🌐"
+                                   style="-fx-font-size: 42px; -fx-opacity: 0.25;"/>
+                            <Text fx:id="emptyStateText"
+                                  fill="rgba(255,255,255,0.3)"
+                                  text="No messages yet. Be the first to say hello!">
+                                <font><Font size="14.0"/></font>
+                            </Text>
+                        </VBox>
+                    </children>
+                </VBox>
+            </StackPane>
+        </content>
+    </ScrollPane>
+
+    <!-- ══ Message Input Bar ══ -->
+    <HBox alignment="CENTER" spacing="10"
+          style="-fx-background-color: #2C2C2E;
+                 -fx-padding: 12 20 12 20;
+                 -fx-border-width: 1 0 0 0;
+                 -fx-border-color: rgba(255,255,255,0.06);">
+
+        <!-- Emoji button -->
+        <Button fx:id="emojiButton"
+                onAction="#showEmojiPicker"
+                text="😊"
+                style="-fx-font-size: 20px; -fx-background-color: transparent;
+                       -fx-cursor: hand; -fx-padding: 4 6;
+                       -fx-background-radius: 10px;"
+                styleClass="emoji-button"/>
+
+        <!-- Text input pill -->
+        <TextField fx:id="messageField"
+                   onAction="#sendMessage"
+                   promptText="Message…"
+                   prefHeight="44.0"
+                   styleClass="message-input"
+                   HBox.hgrow="ALWAYS">
+            <font><Font size="14.0"/></font>
+        </TextField>
+
+        <!-- Send button - circle -->
+        <StackPane alignment="CENTER" onMouseClicked="#sendMessage"
+                   style="-fx-cursor: hand;
+                          -fx-background-color: #0A84FF;
+                          -fx-background-radius: 50%;
+                          -fx-effect: dropshadow(gaussian, rgba(10,132,255,0.5), 10, 0, 0, 3);"
+                   prefWidth="44" prefHeight="44">
+            <ImageView fitHeight="20.0" fitWidth="20.0"
+                       pickOnBounds="true" preserveRatio="true">
+                <image><Image url="@../../../images/send_.png"/></image>
+                <viewport><Rectangle2D/></viewport>
+            </ImageView>
+        </StackPane>
+    </HBox>
+</VBox>
