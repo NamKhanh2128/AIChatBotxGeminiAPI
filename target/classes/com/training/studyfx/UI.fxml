@@ -1,98 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-               <?import javafx.scene.control.*?>
-               <?import javafx.scene.effect.*?>
-               <?import javafx.scene.layout.*?>
-               <?import javafx.scene.paint.*?>
-               <?import javafx.scene.shape.*?>
-               <?import javafx.scene.text.*?>
-               <?import org.kordamp.ikonli.javafx.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-               <AnchorPane id="AnchorPane" prefHeight="580.0" prefWidth="780.0" styleClass="txtfld" stylesheets="@../../../styles/ui.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.training.studyfx.controller.UIController">
+<BorderPane prefHeight="680.0" prefWidth="960.0"
+            stylesheets="@../../../styles/ui.css"
+            styleClass="root-pane"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.training.studyfx.controller.UIController">
+
+   <!-- ══ LEFT: Sidebar (fixed 250px) ══ -->
+   <left>
+      <VBox prefWidth="250.0" spacing="4"
+            alignment="TOP_CENTER"
+            styleClass="side-bar">
+
+         <!-- ── Avatar / Profile section ── -->
+         <VBox spacing="10" alignment="CENTER"
+               styleClass="sidebar-profile-section">
+            <children>
+               <!-- Avatar with glow ring -->
+               <StackPane alignment="CENTER">
+                  <Circle radius="46" fill="rgba(59,130,246,0.1)"
+                           stroke="rgba(59,130,246,0.35)"
+                           strokeWidth="1.5"/>
+                  <Circle fx:id="avt" fill="#1E293B" radius="39.0"
+                           stroke="rgba(255,255,255,0.1)"
+                           strokeType="INSIDE" strokeWidth="1.5">
+                     <effect>
+                        <DropShadow radius="14" color="rgba(59,130,246,0.3)" offsetY="2"/>
+                     </effect>
+                  </Circle>
+               </StackPane>
+
+               <!-- Username -->
+               <Label text="You"
+                      style="-fx-text-fill: #F8FAFC;
+                             -fx-font-size: 14px;
+                             -fx-font-weight: bold;
+                             -fx-font-family: 'Segoe UI Semibold', 'Segoe UI', sans-serif;"/>
+
+               <!-- Online status -->
+               <HBox alignment="CENTER" spacing="5">
+                  <Circle radius="4" fill="#22C55E"/>
+                  <Label text="Active now"
+                         style="-fx-text-fill: #94A3B8;
+                                -fx-font-size: 11px;
+                                -fx-font-family: 'Segoe UI', sans-serif;"/>
+               </HBox>
+            </children>
+         </VBox>
+
+         <!-- ── MENU section label ── -->
+         <Label text="MENU" styleClass="sidebar-section-label"/>
+
+         <!-- ── Nav Buttons ── -->
+         <Button fx:id="About" prefHeight="48.0" prefWidth="220.0"
+                 onMouseClicked="#handleAboutClick"
+                 styleClass="nav-button">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
                   <children>
-                     <!-- Sidebar - Increased width from 148 to 200 -->
-                     <VBox prefWidth="200.0" spacing="18" alignment="TOP_CENTER" style="-fx-background-color: #0084ff;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
-                        <children>
-                           <VBox spacing="10" alignment="CENTER" style="-fx-padding: 28 0 16 0;">
-                              <children>
-                                 <Circle fx:id="avt" fill="WHITE" radius="68.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
-                                    <effect>
-                                       <DropShadow>
-                                          <color>
-                                             <Color red="0.763" green="0.763" blue="0.763" />
-                                          </color>
-                                       </DropShadow>
-                                    </effect>
-                                 </Circle>
-                                 <Label text="You">
-                                    <font>
-                                       <Font name="Arial Rounded MT Bold" size="15.0" />
-                                    </font>
-                                 </Label>
-                              </children>
-                           </VBox>
-                           <!-- Nút menu - Increased button width from 130 to 170 -->
-                           <Button fx:id="About" prefHeight="50.0" prefWidth="170.0" onMouseClicked="#handleAboutClick" styleClass="nav-button">
-                              <graphic>
-                                 <HBox alignment="CENTER_LEFT" spacing="10">
-                                    <children>
-                                       <FontIcon iconLiteral="fas-user" styleClass="nav-icon" />
-                                       <Label styleClass="nav-label" text="About" />
-                                    </children>
-                                 </HBox>
-                              </graphic>
-                           </Button>
-                           <Button fx:id="Chat" prefHeight="50.0" prefWidth="170.0" onMouseClicked="#handleChatClick" styleClass="nav-button">
-                              <graphic>
-                                 <HBox alignment="CENTER_LEFT" spacing="10">
-                                    <children>
-                                       <FontIcon iconLiteral="fas-globe" iconSize="12" styleClass="nav-icon" />
-                                       <Label styleClass="nav-label" text="Global" />
-                                    </children>
-                                 </HBox>
-                              </graphic>
-                           </Button>
-                           <Button fx:id="Chatbot" prefHeight="50.0" prefWidth="170.0" onMouseClicked="#handleChatbotClick" styleClass="nav-button">
-                              <graphic>
-                                 <HBox alignment="CENTER_LEFT" spacing="10">
-                                    <children>
-                                       <FontIcon iconLiteral="fas-robot" styleClass="nav-icon" />
-                                       <Label styleClass="nav-label" text="Chatbot" />
-                                    </children>
-                                 </HBox>
-                              </graphic>
-                           </Button>
-                           <Button fx:id="Setting" prefHeight="50.0" prefWidth="170.0" onMouseClicked="#handleSettingClick" styleClass="nav-button">
-                              <graphic>
-                                 <HBox alignment="CENTER_LEFT" spacing="10">
-                                    <children>
-                                       <FontIcon iconLiteral="fas-cog" styleClass="nav-icon" />
-                                       <Label styleClass="nav-label" text="Setting" />
-                                    </children>
-                                 </HBox>
-                              </graphic>
-                           </Button>
-                           <Pane VBox.vgrow="ALWAYS"/> <!-- Đẩy nút lên trên -->
-                        </children>
-                     </VBox>
-
-                     <!-- Vùng nội dung chính - Updated leftAnchor to match new sidebar width -->
-                     <AnchorPane fx:id="mainContentArea"
-                                 style="-fx-background-color: #f3f7fa;"
-                                 AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0"
-                                 AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
-                        <children>
-                           <!-- Nội dung động sẽ load vào đây -->
-                        </children>
-                     </AnchorPane>
-
-                     <!-- List phụ - Updated leftAnchor to match new sidebar width -->
-                     <HBox fx:id="list" visible="false" managed="false"
-                           prefHeight="580.0" prefWidth="200.0"
-                           AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="0.0" />
-
-                     <!-- Khu vực bot_area - Updated leftAnchor to match new sidebar width -->
-                     <AnchorPane fx:id="bot_area" visible="false" managed="false"
-                                 AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="0.0" />
+                     <StackPane prefWidth="30" prefHeight="30">
+                        <Circle radius="15" fill="rgba(59,130,246,0.15)"/>
+                        <FontIcon iconLiteral="fas-user" iconSize="14" styleClass="nav-icon"/>
+                     </StackPane>
+                     <Label styleClass="nav-label" text="About"/>
                   </children>
-               </AnchorPane>
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Button fx:id="Chat" prefHeight="48.0" prefWidth="220.0"
+                 onMouseClicked="#handleChatClick"
+                 styleClass="nav-button">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <children>
+                     <StackPane prefWidth="30" prefHeight="30">
+                        <Circle radius="15" fill="rgba(34,197,94,0.15)"/>
+                        <FontIcon iconLiteral="fas-globe" iconSize="14"
+                                  style="-fx-fill: rgba(255,255,255,0.5);" styleClass="nav-icon"/>
+                     </StackPane>
+                     <Label styleClass="nav-label" text="Global Chat"/>
+                  </children>
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Button fx:id="Chatbot" prefHeight="48.0" prefWidth="220.0"
+                 onMouseClicked="#handleChatbotClick"
+                 styleClass="nav-button">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <children>
+                     <StackPane prefWidth="30" prefHeight="30">
+                        <Circle radius="15" fill="rgba(245,158,11,0.15)"/>
+                        <FontIcon iconLiteral="fas-robot" iconSize="14"
+                                  style="-fx-fill: rgba(245,158,11,0.8);" styleClass="nav-icon"/>
+                     </StackPane>
+                     <Label styleClass="nav-label" text="Chatbot AI"/>
+                  </children>
+               </HBox>
+            </graphic>
+         </Button>
+
+         <Button fx:id="Setting" prefHeight="48.0" prefWidth="220.0"
+                 onMouseClicked="#handleSettingClick"
+                 styleClass="nav-button">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <children>
+                     <StackPane prefWidth="30" prefHeight="30">
+                        <Circle radius="15" fill="rgba(148,163,184,0.12)"/>
+                        <FontIcon iconLiteral="fas-cog" iconSize="14" styleClass="nav-icon"/>
+                     </StackPane>
+                     <Label styleClass="nav-label" text="Settings"/>
+                  </children>
+               </HBox>
+            </graphic>
+         </Button>
+
+         <!-- Spacer -->
+         <Pane VBox.vgrow="ALWAYS"/>
+
+         <!-- ── Bottom version label ── -->
+         <VBox alignment="CENTER" spacing="8"
+               styleClass="sidebar-footer">
+            <Label text="v1.0.0 · HUST OOP"
+                   styleClass="version-label"/>
+         </VBox>
+
+      </VBox>
+   </left>
+
+   <!-- ══ CENTER: Main Content Area (auto-fills) ══ -->
+   <center>
+      <AnchorPane fx:id="mainContentArea"
+                  styleClass="childpan">
+         <children>
+            <!-- Dynamic content loads here via controller -->
+         </children>
+      </AnchorPane>
+   </center>
+
+</BorderPane>

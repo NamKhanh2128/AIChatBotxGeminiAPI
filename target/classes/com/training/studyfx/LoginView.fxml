@@ -1,37 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.effect.DropShadow?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.training.studyfx.controller.LoginController">
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-   <children>
-      <Label text="Chat Application" textFill="#0084ff">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <VBox alignment="CENTER" spacing="10.0">
-         <children>
-            <Label text="Username:" />
-            <TextField fx:id="usernameField" promptText="Enter your username" />
-            <Label text="Password:" />
-            <PasswordField fx:id="passwordField" promptText="Enter your password" />
-            <Label fx:id="errorLabel" textFill="RED" visible="false" />
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" spacing="10.0">
-         <children>
-            <Button fx:id="loginButton" defaultButton="true" mnemonicParsing="false" onAction="#handleLogin" prefHeight="25.0" prefWidth="98.0" style="-fx-background-color: #0084ff; -fx-text-fill: white;" text="Login" />
-            <Button fx:id="registerButton" mnemonicParsing="false" onAction="#handleShowRegister" text="Create Account" />
-         </children>
-      </VBox>
-   </children>
-</VBox>
+<AnchorPane
+    stylesheets="@../../../styles/ui.css"
+    xmlns="http://javafx.com/javafx/23.0.1"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.training.studyfx.controller.LoginController"
+    styleClass="auth-container">
+
+    <!-- Decorative ambient blobs -->
+    <Circle radius="280" fill="rgba(59,130,246,0.05)"
+             translateX="-60" translateY="100"
+             AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0"/>
+    <Circle radius="200" fill="rgba(139,92,246,0.05)"
+             translateX="60" translateY="-60"
+             AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"/>
+    <Circle radius="100" fill="rgba(59,130,246,0.06)"
+             translateX="140" translateY="180"
+             AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>
+
+    <!-- Center wrapper -->
+    <VBox alignment="CENTER"
+          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+
+        <!-- Auth Card -->
+        <VBox alignment="CENTER" spacing="20"
+              styleClass="auth-card"
+              maxWidth="420">
+
+            <!-- Logo + Branding -->
+            <VBox alignment="CENTER" spacing="10">
+                <StackPane alignment="CENTER">
+                    <Circle radius="40"
+                             fill="rgba(59,130,246,0.12)"
+                             stroke="rgba(59,130,246,0.35)"
+                             strokeWidth="1.5"/>
+                    <Circle radius="33" fill="#3B82F6"/>
+                    <Label text="💬" style="-fx-font-size: 28px;"/>
+                </StackPane>
+
+                <Label text="Internal Chat" styleClass="auth-title">
+                    <font><Font name="System Bold" size="26.0"/></font>
+                </Label>
+                <Label text="Sign in to continue" styleClass="auth-subtitle"/>
+            </VBox>
+
+            <!-- Divider -->
+            <Rectangle height="1" width="320"
+                       fill="rgba(255,255,255,0.07)"/>
+
+            <!-- Username field -->
+            <VBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Username" styleClass="auth-label"/>
+                <TextField fx:id="usernameField"
+                           promptText="Enter your username"
+                           styleClass="auth-field"/>
+            </VBox>
+
+            <!-- Password field -->
+            <VBox alignment="CENTER_LEFT" spacing="8">
+                <Label text="Password" styleClass="auth-label"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Enter your password"
+                               styleClass="auth-field"/>
+            </VBox>
+
+            <!-- Error label -->
+            <Label fx:id="errorLabel"
+                   styleClass="auth-error"
+                   visible="false"
+                   wrapText="true"
+                   maxWidth="320"/>
+
+            <!-- Buttons -->
+            <VBox alignment="CENTER" spacing="12">
+                <Button fx:id="loginButton"
+                        defaultButton="true"
+                        mnemonicParsing="false"
+                        onAction="#handleLogin"
+                        text="Sign In"
+                        styleClass="auth-btn-primary"
+                        prefHeight="48"/>
+                <Button fx:id="registerButton"
+                        mnemonicParsing="false"
+                        onAction="#handleShowRegister"
+                        text="Create an Account"
+                        styleClass="auth-btn-secondary"
+                        prefHeight="44"/>
+            </VBox>
+
+            <!-- Footer -->
+            <Label text="Internal Chat · HUST OOP Project"
+                   style="-fx-font-size: 11px;
+                          -fx-text-fill: #475569;
+                          -fx-font-family: 'Segoe UI', sans-serif;"/>
+        </VBox>
+    </VBox>
+</AnchorPane>

@@ -20,17 +20,17 @@
     xmlns="http://javafx.com/javafx/23.0.1"
     xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.training.studyfx.controller.LoginController"
-    style="-fx-background-color: #1C1C1E;">
+    styleClass="auth-container">
 
-    <!-- Decorative ambient circles -->
-    <Circle radius="260" fill="rgba(10,132,255,0.04)"
-             translateX="-30" translateY="80"
+    <!-- Decorative ambient blobs -->
+    <Circle radius="280" fill="rgba(59,130,246,0.05)"
+             translateX="-60" translateY="100"
              AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0"/>
-    <Circle radius="180" fill="rgba(191,90,242,0.04)"
-             translateX="40" translateY="-40"
+    <Circle radius="200" fill="rgba(139,92,246,0.05)"
+             translateX="60" translateY="-60"
              AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"/>
-    <Circle radius="90" fill="rgba(10,132,255,0.05)"
-             translateX="120" translateY="200"
+    <Circle radius="100" fill="rgba(59,130,246,0.06)"
+             translateX="140" translateY="180"
              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"/>
 
     <!-- Center wrapper -->
@@ -39,26 +39,18 @@
           AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
         <!-- Auth Card -->
-        <VBox alignment="CENTER" spacing="22"
-              style="-fx-background-color: #2C2C2E;
-                     -fx-background-radius: 22px;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.7), 50, 0, 0, 16);
-                     -fx-padding: 48 56 48 56;
-                     -fx-border-color: rgba(255,255,255,0.07);
-                     -fx-border-radius: 22px;
-                     -fx-border-width: 1px;"
-              maxWidth="400">
+        <VBox alignment="CENTER" spacing="20"
+              styleClass="auth-card"
+              maxWidth="420">
 
             <!-- Logo + Branding -->
             <VBox alignment="CENTER" spacing="10">
                 <StackPane alignment="CENTER">
-                    <!-- Glow ring -->
-                    <Circle radius="38"
-                             fill="rgba(10,132,255,0.1)"
-                             stroke="rgba(10,132,255,0.3)"
+                    <Circle radius="40"
+                             fill="rgba(59,130,246,0.12)"
+                             stroke="rgba(59,130,246,0.35)"
                              strokeWidth="1.5"/>
-                    <!-- Icon background -->
-                    <Circle radius="32" fill="#0A84FF"/>
+                    <Circle radius="33" fill="#3B82F6"/>
                     <Label text="💬" style="-fx-font-size: 28px;"/>
                 </StackPane>
 
@@ -69,11 +61,11 @@
             </VBox>
 
             <!-- Divider -->
-            <Rectangle height="1" width="300"
+            <Rectangle height="1" width="320"
                        fill="rgba(255,255,255,0.07)"/>
 
             <!-- Username field -->
-            <VBox alignment="CENTER_LEFT" spacing="7">
+            <VBox alignment="CENTER_LEFT" spacing="8">
                 <Label text="Username" styleClass="auth-label"/>
                 <TextField fx:id="usernameField"
                            promptText="Enter your username"
@@ -81,7 +73,7 @@
             </VBox>
 
             <!-- Password field -->
-            <VBox alignment="CENTER_LEFT" spacing="7">
+            <VBox alignment="CENTER_LEFT" spacing="8">
                 <Label text="Password" styleClass="auth-label"/>
                 <PasswordField fx:id="passwordField"
                                promptText="Enter your password"
@@ -93,29 +85,29 @@
                    styleClass="auth-error"
                    visible="false"
                    wrapText="true"
-                   maxWidth="300"/>
+                   maxWidth="320"/>
 
             <!-- Buttons -->
-            <VBox alignment="CENTER" spacing="11">
+            <VBox alignment="CENTER" spacing="12">
                 <Button fx:id="loginButton"
                         defaultButton="true"
                         mnemonicParsing="false"
                         onAction="#handleLogin"
                         text="Sign In"
                         styleClass="auth-btn-primary"
-                        prefHeight="46"/>
+                        prefHeight="48"/>
                 <Button fx:id="registerButton"
                         mnemonicParsing="false"
                         onAction="#handleShowRegister"
                         text="Create an Account"
                         styleClass="auth-btn-secondary"
-                        prefHeight="42"/>
+                        prefHeight="44"/>
             </VBox>
 
             <!-- Footer -->
             <Label text="Internal Chat · HUST OOP Project"
                    style="-fx-font-size: 11px;
-                          -fx-text-fill: rgba(255,255,255,0.2);
+                          -fx-text-fill: #475569;
                           -fx-font-family: 'Segoe UI', sans-serif;"/>
         </VBox>
     </VBox>

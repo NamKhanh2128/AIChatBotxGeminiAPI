@@ -8,175 +8,146 @@
 <?import javafx.scene.text.*?>
 <?import org.kordamp.ikonli.javafx.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="620.0" prefWidth="860.0"
+<BorderPane prefHeight="680.0" prefWidth="960.0"
             stylesheets="@../../../styles/ui.css"
-            style="-fx-background-color: #1C1C1E;"
+            styleClass="root-pane"
             xmlns="http://javafx.com/javafx/17.0.12"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.training.studyfx.controller.UIController">
-   <children>
-      <!-- ══ Sidebar ══ -->
-      <VBox prefWidth="220.0" spacing="4"
+
+   <!-- ══ LEFT: Sidebar (fixed 250px) ══ -->
+   <left>
+      <VBox prefWidth="250.0" spacing="4"
             alignment="TOP_CENTER"
-            style="-fx-background-color: #161618;
-                   -fx-border-width: 0 1 0 0;
-                   -fx-border-color: rgba(255,255,255,0.06);"
-            AnchorPane.leftAnchor="0.0"
-            AnchorPane.topAnchor="0.0"
-            AnchorPane.bottomAnchor="0.0">
-         <children>
+            styleClass="side-bar">
 
-            <!-- ── Avatar / Profile section ── -->
-            <VBox spacing="10" alignment="CENTER"
-                  style="-fx-padding: 30 0 22 0;
-                         -fx-border-width: 0 0 1 0;
-                         -fx-border-color: rgba(255,255,255,0.06);
-                         -fx-border-style: solid;">
-               <children>
-                  <!-- Avatar with glow ring -->
-                  <StackPane alignment="CENTER">
-                     <Circle radius="44" fill="rgba(10,132,255,0.08)"
-                              stroke="rgba(10,132,255,0.3)"
-                              strokeWidth="1.5"/>
-                     <Circle fx:id="avt" fill="#2C2C2E" radius="38.0"
-                              stroke="rgba(255,255,255,0.12)"
-                              strokeType="INSIDE" strokeWidth="1.5">
-                        <effect>
-                           <DropShadow radius="12" color="rgba(10,132,255,0.25)" offsetY="2"/>
-                        </effect>
-                     </Circle>
-                  </StackPane>
+         <!-- ── Avatar / Profile section ── -->
+         <VBox spacing="10" alignment="CENTER"
+               styleClass="sidebar-profile-section">
+            <children>
+               <!-- Avatar with glow ring -->
+               <StackPane alignment="CENTER">
+                  <Circle radius="46" fill="rgba(59,130,246,0.1)"
+                           stroke="rgba(59,130,246,0.35)"
+                           strokeWidth="1.5"/>
+                  <Circle fx:id="avt" fill="#1E293B" radius="39.0"
+                           stroke="rgba(255,255,255,0.1)"
+                           strokeType="INSIDE" strokeWidth="1.5">
+                     <effect>
+                        <DropShadow radius="14" color="rgba(59,130,246,0.3)" offsetY="2"/>
+                     </effect>
+                  </Circle>
+               </StackPane>
 
-                  <!-- Username -->
-                  <Label text="You"
-                         style="-fx-text-fill: #FFFFFF;
-                                -fx-font-size: 14px;
-                                -fx-font-weight: bold;
-                                -fx-font-family: 'Segoe UI Semibold', 'Segoe UI', sans-serif;"/>
+               <!-- Username -->
+               <Label text="You"
+                      style="-fx-text-fill: #F8FAFC;
+                             -fx-font-size: 14px;
+                             -fx-font-weight: bold;
+                             -fx-font-family: 'Segoe UI Semibold', 'Segoe UI', sans-serif;"/>
 
-                  <!-- Online status -->
-                  <HBox alignment="CENTER" spacing="5">
-                     <Circle radius="4" fill="#30D158"/>
-                     <Label text="Active now"
-                            style="-fx-text-fill: rgba(255,255,255,0.45);
-                                   -fx-font-size: 11px;
-                                   -fx-font-family: 'Segoe UI', sans-serif;"/>
-                  </HBox>
-               </children>
-            </VBox>
+               <!-- Online status -->
+               <HBox alignment="CENTER" spacing="5">
+                  <Circle radius="4" fill="#22C55E"/>
+                  <Label text="Active now"
+                         style="-fx-text-fill: #94A3B8;
+                                -fx-font-size: 11px;
+                                -fx-font-family: 'Segoe UI', sans-serif;"/>
+               </HBox>
+            </children>
+         </VBox>
 
-            <!-- ── MENU section label ── -->
-            <Label text="MENU"
-                   style="-fx-text-fill: rgba(255,255,255,0.28);
-                          -fx-font-size: 10px;
-                          -fx-font-weight: bold;
-                          -fx-padding: 16 16 4 16;
-                          -fx-font-family: 'Segoe UI', sans-serif;"/>
+         <!-- ── MENU section label ── -->
+         <Label text="MENU" styleClass="sidebar-section-label"/>
 
-            <!-- ── Nav Buttons ── -->
-            <Button fx:id="About" prefHeight="48.0" prefWidth="192.0"
-                    onMouseClicked="#handleAboutClick"
-                    styleClass="nav-button">
-               <graphic>
-                  <HBox alignment="CENTER_LEFT" spacing="12">
-                     <children>
-                        <StackPane prefWidth="28" prefHeight="28">
-                           <Circle radius="14" fill="rgba(10,132,255,0.12)"/>
-                           <FontIcon iconLiteral="fas-user" iconSize="14" styleClass="nav-icon"/>
-                        </StackPane>
-                        <Label styleClass="nav-label" text="About"/>
-                     </children>
-                  </HBox>
-               </graphic>
-            </Button>
+         <!-- ── Nav Buttons ── -->
+         <Button fx:id="About" prefHeight="48.0" prefWidth="220.0"
+                 onMouseClicked="#handleAboutClick"
+                 styleClass="nav-button">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <children>
+                     <StackPane prefWidth="30" prefHeight="30">
+                        <Circle radius="15" fill="rgba(59,130,246,0.15)"/>
+                        <FontIcon iconLiteral="fas-user" iconSize="14" styleClass="nav-icon"/>
+                     </StackPane>
+                     <Label styleClass="nav-label" text="About"/>
+                  </children>
+               </HBox>
+            </graphic>
+         </Button>
 
-            <Button fx:id="Chat" prefHeight="48.0" prefWidth="192.0"
-                    onMouseClicked="#handleChatClick"
-                    styleClass="nav-button">
-               <graphic>
-                  <HBox alignment="CENTER_LEFT" spacing="12">
-                     <children>
-                        <StackPane prefWidth="28" prefHeight="28">
-                           <Circle radius="14" fill="rgba(48,209,88,0.12)"/>
-                           <FontIcon iconLiteral="fas-globe" iconSize="14"
-                                     style="-fx-fill: rgba(255,255,255,0.5);" styleClass="nav-icon"/>
-                        </StackPane>
-                        <Label styleClass="nav-label" text="Global Chat"/>
-                     </children>
-                  </HBox>
-               </graphic>
-            </Button>
+         <Button fx:id="Chat" prefHeight="48.0" prefWidth="220.0"
+                 onMouseClicked="#handleChatClick"
+                 styleClass="nav-button">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <children>
+                     <StackPane prefWidth="30" prefHeight="30">
+                        <Circle radius="15" fill="rgba(34,197,94,0.15)"/>
+                        <FontIcon iconLiteral="fas-globe" iconSize="14"
+                                  style="-fx-fill: rgba(255,255,255,0.5);" styleClass="nav-icon"/>
+                     </StackPane>
+                     <Label styleClass="nav-label" text="Global Chat"/>
+                  </children>
+               </HBox>
+            </graphic>
+         </Button>
 
-            <Button fx:id="Chatbot" prefHeight="48.0" prefWidth="192.0"
-                    onMouseClicked="#handleChatbotClick"
-                    styleClass="nav-button">
-               <graphic>
-                  <HBox alignment="CENTER_LEFT" spacing="12">
-                     <children>
-                        <StackPane prefWidth="28" prefHeight="28">
-                           <Circle radius="14" fill="rgba(245,158,11,0.12)"/>
-                           <FontIcon iconLiteral="fas-robot" iconSize="14"
-                                     style="-fx-fill: rgba(245,158,11,0.7);" styleClass="nav-icon"/>
-                        </StackPane>
-                        <Label styleClass="nav-label" text="Chatbot AI"/>
-                     </children>
-                  </HBox>
-               </graphic>
-            </Button>
+         <Button fx:id="Chatbot" prefHeight="48.0" prefWidth="220.0"
+                 onMouseClicked="#handleChatbotClick"
+                 styleClass="nav-button">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <children>
+                     <StackPane prefWidth="30" prefHeight="30">
+                        <Circle radius="15" fill="rgba(245,158,11,0.15)"/>
+                        <FontIcon iconLiteral="fas-robot" iconSize="14"
+                                  style="-fx-fill: rgba(245,158,11,0.8);" styleClass="nav-icon"/>
+                     </StackPane>
+                     <Label styleClass="nav-label" text="Chatbot AI"/>
+                  </children>
+               </HBox>
+            </graphic>
+         </Button>
 
-            <Button fx:id="Setting" prefHeight="48.0" prefWidth="192.0"
-                    onMouseClicked="#handleSettingClick"
-                    styleClass="nav-button">
-               <graphic>
-                  <HBox alignment="CENTER_LEFT" spacing="12">
-                     <children>
-                        <StackPane prefWidth="28" prefHeight="28">
-                           <Circle radius="14" fill="rgba(255,255,255,0.07)"/>
-                           <FontIcon iconLiteral="fas-cog" iconSize="14" styleClass="nav-icon"/>
-                        </StackPane>
-                        <Label styleClass="nav-label" text="Settings"/>
-                     </children>
-                  </HBox>
-               </graphic>
-            </Button>
+         <Button fx:id="Setting" prefHeight="48.0" prefWidth="220.0"
+                 onMouseClicked="#handleSettingClick"
+                 styleClass="nav-button">
+            <graphic>
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <children>
+                     <StackPane prefWidth="30" prefHeight="30">
+                        <Circle radius="15" fill="rgba(148,163,184,0.12)"/>
+                        <FontIcon iconLiteral="fas-cog" iconSize="14" styleClass="nav-icon"/>
+                     </StackPane>
+                     <Label styleClass="nav-label" text="Settings"/>
+                  </children>
+               </HBox>
+            </graphic>
+         </Button>
 
-            <!-- Spacer -->
-            <Pane VBox.vgrow="ALWAYS"/>
+         <!-- Spacer -->
+         <Pane VBox.vgrow="ALWAYS"/>
 
-            <!-- ── Bottom divider + version ── -->
-            <VBox alignment="CENTER" spacing="8"
-                  style="-fx-border-width: 1 0 0 0;
-                         -fx-border-color: rgba(255,255,255,0.06);
-                         -fx-padding: 12 0 18 0;">
-               <Label text="v1.0.0 · HUST OOP"
-                      style="-fx-text-fill: rgba(255,255,255,0.2);
-                             -fx-font-size: 10px;
-                             -fx-font-family: 'Segoe UI', sans-serif;"/>
-            </VBox>
+         <!-- ── Bottom version label ── -->
+         <VBox alignment="CENTER" spacing="8"
+               styleClass="sidebar-footer">
+            <Label text="v1.0.0 · HUST OOP"
+                   styleClass="version-label"/>
+         </VBox>
 
-         </children>
       </VBox>
+   </left>
 
-      <!-- ══ Main Content Area ══ -->
+   <!-- ══ CENTER: Main Content Area (auto-fills) ══ -->
+   <center>
       <AnchorPane fx:id="mainContentArea"
-                  style="-fx-background-color: #1C1C1E;"
-                  AnchorPane.leftAnchor="220.0"
-                  AnchorPane.rightAnchor="0.0"
-                  AnchorPane.topAnchor="0.0"
-                  AnchorPane.bottomAnchor="0.0">
+                  styleClass="childpan">
          <children>
-            <!-- Dynamic content loads here -->
+            <!-- Dynamic content loads here via controller -->
          </children>
       </AnchorPane>
+   </center>
 
-      <!-- (hidden helper panels) -->
-      <HBox fx:id="list" visible="false" managed="false"
-            prefHeight="620.0" prefWidth="220.0"
-            AnchorPane.leftAnchor="220.0"
-            AnchorPane.topAnchor="0.0"/>
-
-      <AnchorPane fx:id="bot_area" visible="false" managed="false"
-                  AnchorPane.leftAnchor="220.0"
-                  AnchorPane.topAnchor="0.0"/>
-   </children>
-</AnchorPane>
+</BorderPane>
