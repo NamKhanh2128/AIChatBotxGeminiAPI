@@ -1,10 +1,11 @@
 package com.training.studyfx.exception;
 
 public class ConnectionException extends RuntimeException {
-    public ConnectionException(String message) {
-        super(message);
+    public ConnectionException(String msg) {
+        super(msg);
     }
-    public ConnectionException(String message, Throwable cause) {
-        super(message, cause);
+
+    public ConnectionException(String msg, Throwable cause) {
+        super(msg, cause);
     }
-} 
+}

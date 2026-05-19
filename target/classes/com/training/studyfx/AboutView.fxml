@@ -12,7 +12,7 @@
 <?import javafx.scene.effect.DropShadow?>
 
 <AnchorPane
-    stylesheets="@../../../styles/ui.css"
+    stylesheets="@../../../styles/dark-theme.css"
     style="-fx-background-color: #1C1C1E;"
     xmlns="http://javafx.com/javafx/23.0.1"
     xmlns:fx="http://javafx.com/fxml/1">

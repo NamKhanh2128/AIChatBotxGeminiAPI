@@ -1,29 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.shape.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8"
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.training.studyfx.controller.ProfileSettingController"
-            stylesheets="@../../../styles/ui.css"
-            style="-fx-background-color: #1C1C1E;">
+            styleClass="childpan">
 
-    <!-- ── Header Bar ── -->
-    <HBox alignment="CENTER_LEFT" prefHeight="58.0"
-          style="-fx-background-color: #2C2C2E;
-                 -fx-padding: 0 24 0 24;
-                 -fx-border-width: 0 0 1 0;
-                 -fx-border-color: rgba(255,255,255,0.06);"
-          AnchorPane.topAnchor="0"
-          AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0">
-        <children>
+    <VBox AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <HBox alignment="CENTER_LEFT" prefHeight="58.0" styleClass="chat-header">
             <StackPane style="-fx-padding: 0 12 0 0;">
                 <Circle radius="16" fill="rgba(255,255,255,0.07)"/>
                 <Label text="⚙" style="-fx-font-size: 16px; -fx-text-fill: rgba(255,255,255,0.7);"/>
@@ -31,168 +19,44 @@
             <Label text="Settings" textFill="#FFFFFF">
                 <font><Font name="Segoe UI Semibold" size="17.0"/></font>
             </Label>
-        </children>
-    </HBox>
+        </HBox>
 
-    <!-- ── Main content ── -->
-    <VBox alignment="CENTER" spacing="26"
-          AnchorPane.topAnchor="58.0"
-          AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0">
+        <VBox alignment="CENTER" spacing="26" VBox.vgrow="ALWAYS">
+            <VBox alignment="CENTER" spacing="14">
+                <StackPane alignment="CENTER">
+                    <Circle radius="62" fill="rgba(10,132,255,0.08)" stroke="rgba(10,132,255,0.25)" strokeWidth="1.5"/>
+                    <Circle radius="56" fill="#2C2C2E" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5"/>
+                    <ImageView fx:id="profileImage" fitHeight="104.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true"/>
+                </StackPane>
+                <Button fx:id="changePhotoButton" text="Change Photo" prefHeight="36.0" minWidth="148.0" styleClass="change-photo-button"/>
+            </VBox>
 
-        <!-- ── Avatar section ── -->
-        <VBox alignment="CENTER" spacing="14">
-            <StackPane alignment="CENTER">
-                <!-- Outer glow ring -->
-                <Circle radius="62"
-                         fill="rgba(10,132,255,0.08)"
-                         stroke="rgba(10,132,255,0.25)"
-                         strokeWidth="1.5"/>
-                <!-- Inner white border for avatar -->
-                <Circle radius="56"
-                         fill="#2C2C2E"
-                         stroke="rgba(255,255,255,0.1)"
-                         strokeWidth="1.5"/>
-                <ImageView fx:id="profileImage"
-                           fitHeight="104.0" fitWidth="104.0"
-                           pickOnBounds="true" preserveRatio="true"
-                           style="-fx-background-radius: 52px; -fx-clip=null;">
-                    <effect>
-                        <DropShadow radius="12" color="rgba(0,0,0,0.5)" offsetY="3"/>
-                    </effect>
-                </ImageView>
-            </StackPane>
+            <VBox maxWidth="520" alignment="CENTER" spacing="18" styleClass="profile-container">
+                <Label text="Personal Information" styleClass="section-title"/>
+                <GridPane hgap="14" vgap="14" alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" minWidth="90.0"/>
+                        <ColumnConstraints prefWidth="250.0" hgrow="ALWAYS"/>
+                    </columnConstraints>
+                    <Label text="Name" styleClass="form-label" GridPane.rowIndex="0"/>
+                    <TextField fx:id="nameField" promptText="Your name" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Label text="Email" styleClass="form-label" GridPane.rowIndex="1"/>
+                    <TextField fx:id="emailField" promptText="Your email" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Label text="Status" styleClass="form-label" GridPane.rowIndex="2"/>
+                    <TextField fx:id="statusField" promptText="Your status" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                </GridPane>
 
-            <Button fx:id="changePhotoButton"
-                    text="Change Photo"
-                    prefHeight="36.0" minWidth="148.0"
-                    style="-fx-background-color: rgba(10,132,255,0.15);
-                           -fx-text-fill: #0A84FF;
-                           -fx-background-radius: 10;
-                           -fx-font-size: 13px;
-                           -fx-font-weight: bold;
-                           -fx-cursor: hand;
-                           -fx-border-color: rgba(10,132,255,0.3);
-                           -fx-border-radius: 10;
-                           -fx-border-width: 1px;"/>
-        </VBox>
+                <VBox spacing="8" alignment="CENTER_LEFT" style="-fx-padding: 0 24 8 24;">
+                    <Label text="Theme" styleClass="form-label"/>
+                    <Label fx:id="themeStatusLabel" text="Current theme: dark" style="-fx-text-fill: rgba(255,255,255,0.65);"/>
+                    <Button fx:id="themeToggleButton" text="Switch Theme" prefHeight="40.0" minWidth="200.0" styleClass="auth-btn-secondary"/>
+                </VBox>
 
-        <!-- ── Info card ── -->
-        <VBox maxWidth="480"
-              alignment="CENTER"
-              spacing="20"
-              style="-fx-background-color: #2C2C2E;
-                     -fx-background-radius: 18;
-                     -fx-padding: 30 40 30 40;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 20, 0, 0, 6);
-                     -fx-border-color: rgba(255,255,255,0.06);
-                     -fx-border-radius: 18;
-                     -fx-border-width: 1;">
-
-            <Label text="Personal Information"
-                   style="-fx-text-fill: rgba(255,255,255,0.75);
-                          -fx-font-size: 15px;
-                          -fx-font-weight: bold;
-                          -fx-font-family: 'Segoe UI Semibold', 'Segoe UI', sans-serif;
-                          -fx-padding: 0 0 4 0;"/>
-
-            <!-- Divider -->
-            <Rectangle height="1" width="380" fill="rgba(255,255,255,0.06)"/>
-
-            <!-- Form grid -->
-            <GridPane hgap="14" vgap="14" alignment="CENTER">
-                <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" minWidth="90.0"/>
-                    <ColumnConstraints prefWidth="250.0"/>
-                </columnConstraints>
-                <children>
-                    <!-- Name -->
-                    <Label text="Name"
-                           style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.4); -fx-font-weight: 600;"
-                           GridPane.rowIndex="0"/>
-                    <TextField fx:id="nameField"
-                               promptText="Your name"
-                               style="-fx-background-color: rgba(255,255,255,0.07);
-                                      -fx-background-radius: 9;
-                                      -fx-border-color: rgba(255,255,255,0.1);
-                                      -fx-border-radius: 9;
-                                      -fx-border-width: 1px;
-                                      -fx-padding: 9 14;
-                                      -fx-font-size: 14px;
-                                      -fx-text-fill: #FFFFFF;
-                                      -fx-prompt-text-fill: rgba(255,255,255,0.3);"
-                               GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-
-                    <!-- Email -->
-                    <Label text="Email"
-                           style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.4); -fx-font-weight: 600;"
-                           GridPane.rowIndex="1"/>
-                    <TextField fx:id="emailField"
-                               promptText="Your email"
-                               style="-fx-background-color: rgba(255,255,255,0.07);
-                                      -fx-background-radius: 9;
-                                      -fx-border-color: rgba(255,255,255,0.1);
-                                      -fx-border-radius: 9;
-                                      -fx-border-width: 1px;
-                                      -fx-padding: 9 14;
-                                      -fx-font-size: 14px;
-                                      -fx-text-fill: #FFFFFF;
-                                      -fx-prompt-text-fill: rgba(255,255,255,0.3);"
-                               GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-
-                    <!-- Status -->
-                    <Label text="Status"
-                           style="-fx-font-size: 12px; -fx-text-fill: rgba(255,255,255,0.4); -fx-font-weight: 600;"
-                           GridPane.rowIndex="2"/>
-                    <TextField fx:id="statusField"
-                               promptText="Your status"
-                               style="-fx-background-color: rgba(255,255,255,0.07);
-                                      -fx-background-radius: 9;
-                                      -fx-border-color: rgba(255,255,255,0.1);
-                                      -fx-border-radius: 9;
-                                      -fx-border-width: 1px;
-                                      -fx-padding: 9 14;
-                                      -fx-font-size: 14px;
-                                      -fx-text-fill: #FFFFFF;
-                                      -fx-prompt-text-fill: rgba(255,255,255,0.3);"
-                               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-
-                    <!-- Confirmation -->
-                    <Label fx:id="saveConfirmationLabel"
-                           text="✓  Changes saved!"
-                           textFill="#30D158"
-                           visible="false"
-                           style="-fx-font-size: 12px; -fx-font-weight: bold;"
-                           GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                </children>
-            </GridPane>
-
-            <!-- Action Buttons -->
-            <HBox spacing="12.0" alignment="CENTER">
-                <Button fx:id="saveButton"
-                        text="Save Changes"
-                        prefHeight="40.0" minWidth="148.0"
-                        style="-fx-background-color: #0A84FF;
-                               -fx-text-fill: white;
-                               -fx-background-radius: 10;
-                               -fx-font-size: 14px;
-                               -fx-font-weight: bold;
-                               -fx-cursor: hand;
-                               -fx-effect: dropshadow(gaussian, rgba(10,132,255,0.4), 8, 0, 0, 2);"/>
-                <Button fx:id="logoutbutton"
-                        text="Log Out"
-                        prefHeight="40.0" minWidth="110.0"
-                        style="-fx-background-color: rgba(255,69,58,0.1);
-                               -fx-text-fill: #FF453A;
-                               -fx-background-radius: 10;
-                               -fx-font-size: 14px;
-                               -fx-font-weight: bold;
-                               -fx-cursor: hand;
-                               -fx-border-color: rgba(255,69,58,0.3);
-                               -fx-border-radius: 10;
-                               -fx-border-width: 1px;"/>
-            </HBox>
+                <HBox spacing="12.0" alignment="CENTER">
+                    <Button fx:id="saveButton" text="Save Changes" prefHeight="40.0" minWidth="148.0" styleClass="save-button"/>
+                    <Button fx:id="logoutbutton" text="Log Out" prefHeight="40.0" minWidth="110.0" styleClass="auth-btn-secondary"/>
+                </HBox>
+            </VBox>
         </VBox>
     </VBox>
 </AnchorPane>

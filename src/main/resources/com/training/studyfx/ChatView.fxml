@@ -1,121 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.geometry.Rectangle2D?>
-
-<VBox maxWidth="1.7976931348623157E308" minWidth="-Infinity"
-      prefHeight="680.0" prefWidth="710.0" spacing="0"
-      stylesheets="@../../../styles/ui.css"
-      styleClass="childpan"
+<VBox fx:id="chatbotRoot" spacing="0" styleClass="childpan"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.training.studyfx.controller.ChatViewController">
+      fx:controller="com.training.studyfx.controller.ChatbotViewController">
 
-    <!-- ══ Top Header Bar ══ -->
-    <HBox alignment="CENTER_LEFT" spacing="12"
-          styleClass="chat-header">
-
-        <!-- Globe avatar -->
-        <StackPane>
-            <Circle radius="22" fill="rgba(34,197,94,0.12)"
-                     stroke="rgba(34,197,94,0.35)" strokeWidth="1.5"/>
-            <Circle radius="17" fill="#22C55E"/>
-            <Label text="🌐" style="-fx-font-size: 14px;"/>
-        </StackPane>
-
-        <VBox spacing="2">
-            <Label text="Global Chat" styleClass="chat-header-title"/>
-            <Label text="Everyone is here" styleClass="chat-header-subtitle"/>
+    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="chat-header">
+        <VBox spacing="2" HBox.hgrow="ALWAYS">
+            <Label text="Chatbot AI" styleClass="chat-header-title"/>
+            <Label text="Powered by Gemini" styleClass="chat-header-subtitle"/>
         </VBox>
-
-        <Pane HBox.hgrow="ALWAYS"/>
-
-        <!-- Live badge -->
-        <HBox alignment="CENTER" spacing="6"
-              style="-fx-background-color: rgba(34,197,94,0.1);
-                     -fx-background-radius: 20px; -fx-padding: 5 13 5 13;
-                     -fx-border-color: rgba(34,197,94,0.28);
-                     -fx-border-radius: 20px; -fx-border-width: 1px;">
-            <Circle radius="4" fill="#22C55E"/>
-            <Label text="Live"
-                   style="-fx-font-size: 12px; -fx-font-weight: bold;
-                          -fx-text-fill: #22C55E;"/>
-        </HBox>
+        <Label text="AI Ready" styleClass="ai-badge"/>
     </HBox>
 
-    <!-- ══ Chat Messages Area (expands to fill all space) ══ -->
-    <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER"
-                VBox.vgrow="ALWAYS"
-                styleClass="right-aligned-scrollpane"
-                style="-fx-background: transparent;
-                       -fx-background-color: transparent;
-                       -fx-border-color: transparent;">
+    <ScrollPane fx:id="chatbotScrollPane" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS"
+                styleClass="right-aligned-scrollpane">
         <content>
-            <StackPane styleClass="childpan" HBox.hgrow="ALWAYS">
-                <VBox fx:id="chatContainer" spacing="10"
-                      style="-fx-background-color: transparent; -fx-padding: 24px;">
-                    <padding>
-                        <Insets bottom="8" left="16" right="16" top="8"/>
-                    </padding>
-                    <children>
-                        <!-- Empty state illustration -->
-                        <VBox alignment="CENTER" spacing="14">
-                            <Label text="🌐"
-                                   style="-fx-font-size: 52px; -fx-opacity: 0.18;"/>
-                            <Text fx:id="emptyStateText"
-                                  fill="#475569"
-                                  text="No messages yet. Be the first to say hello!">
-                                <font><Font size="14.0"/></font>
-                            </Text>
-                        </VBox>
-                    </children>
-                </VBox>
-            </StackPane>
+            <VBox fx:id="chatbotMessagesContainer" spacing="10" style="-fx-padding: 20 18 20 18;"/>
         </content>
     </ScrollPane>
 
-    <!-- ══ Message Input Bar ══ -->
-    <HBox alignment="CENTER" spacing="10"
-          styleClass="input-bar">
-
-        <!-- Emoji button -->
-        <Button fx:id="emojiButton"
-                onAction="#showEmojiPicker"
-                text="😊"
-                styleClass="emoji-button"/>
-
-        <!-- Text input pill -->
-        <TextField fx:id="messageField"
-                   onAction="#sendMessage"
-                   promptText="Message…"
-                   prefHeight="44.0"
-                   styleClass="message-input"
-                   HBox.hgrow="ALWAYS">
-            <font><Font size="14.0"/></font>
-        </TextField>
-
-        <!-- Send button -->
-        <StackPane alignment="CENTER" onMouseClicked="#sendMessage"
-                   styleClass="send-button"
-                   prefWidth="44" prefHeight="44">
-            <ImageView fitHeight="20.0" fitWidth="20.0"
-                       pickOnBounds="true" preserveRatio="true">
-                <image><Image url="@../../../images/send_.png"/></image>
-                <viewport><Rectangle2D/></viewport>
-            </ImageView>
-        </StackPane>
+    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="input-bar">
+        <TextField fx:id="chatbotInput" promptText="Ask me anything..." HBox.hgrow="ALWAYS" styleClass="message-input"/>
+        <Button text="Send" onAction="#handleSendMessage" styleClass="auth-btn-primary" prefWidth="120"/>
     </HBox>
 </VBox>

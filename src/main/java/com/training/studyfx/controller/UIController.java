@@ -1,129 +1,114 @@
 package com.training.studyfx.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.training.studyfx.App;
 import com.training.studyfx.model.User;
 import com.training.studyfx.service.UserService;
-
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+import javafx.animation.FadeTransition;
+import javafx.fxml.*;
 import javafx.scene.Parent;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
+import javafx.util.Duration;
+import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class UIController implements Initializable {
     @FXML
     private Circle avt;
-
     @FXML
-    private AnchorPane mainContentArea;
+    private StackPane mainContentArea;
+    @FXML
+    private Button About, Chat, Chatbot, Setting, themeToggleBtn;
+
+    private String activeNav = "about";
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        loadUserAvatar();
-        String targetTab = App.getTargetTab();
-        App.clearNextTab();
+        loadAvatar();
+        loadView("AboutView");
+        setActive("about");
+        if (themeToggleBtn != null)
+            themeToggleBtn.setOnMouseClicked(e -> toggleTheme());
+    }
 
+    private void loadAvatar() {
+        if (avt == null)
+            return;
+        User u = UserService.getInstance().getCurrentUser();
         try {
-            if ("setting".equalsIgnoreCase(targetTab)) {
-                loadView("ProfileSettingView.fxml");
+            Image img;
+            String path = u != null ? u.getProfileImagePath() : null;
+            if (path != null && !path.isEmpty() && new File(path).exists()) {
+                img = new Image(new File(path).toURI().toString());
             } else {
-                loadView("AboutView.fxml"); // mặc định
+                img = new Image(getClass().getResourceAsStream("/images/default_profile.png"));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (img != null && !img.isError())
+                avt.setFill(new ImagePattern(img));
+        } catch (Exception ignored) {
         }
     }
 
     @FXML
-    private void handleAboutClick(MouseEvent event) {
-        try {
-            loadView("AboutView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleAboutClick() {
+        loadView("AboutView");
+        setActive("about");
     }
 
     @FXML
     private void handleChatClick() {
-        try {
-            loadView("ChatView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        loadView("ChatView");
+        setActive("chat");
     }
 
     @FXML
-    private void handleChatbotClick(MouseEvent event) {
-        try {
-            loadView("ChatbotView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleChatbotClick() {
+        loadView("ChatbotView");
+        setActive("chatbot");
     }
 
     @FXML
-    private void handleSettingClick(MouseEvent event) {
-        try {
-            loadView("ProfileSettingView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleSettingClick() {
+        loadView("ProfileSettingView");
+        setActive("settings");
     }
 
-    private void loadView(String fxmlFile) throws IOException {
-        if (mainContentArea != null) {
+    @FXML
+    private void toggleTheme() {
+        App.toggleTheme();
+    }
+
+    private void loadView(String name) {
+        if (mainContentArea == null)
+            return;
+        try {
             mainContentArea.getChildren().clear();
-            Parent view = FXMLLoader.load(getClass().getResource("/com/training/studyfx/" + fxmlFile));
+            Parent view = FXMLLoader.load(getClass().getResource("/com/training/studyfx/" + name + ".fxml"));
+            view.setOpacity(0);
             mainContentArea.getChildren().add(view);
-            AnchorPane.setTopAnchor(view, 0.0);
-            AnchorPane.setBottomAnchor(view, 0.0);
-            AnchorPane.setLeftAnchor(view, 0.0);
-            AnchorPane.setRightAnchor(view, 0.0);
+            FadeTransition ft = new FadeTransition(Duration.millis(200), view);
+            ft.setToValue(1);
+            ft.play();
+        } catch (Exception e) {
+            System.err.println("Load view failed: " + name + " - " + e.getMessage());
         }
     }
 
-    private void loadUserAvatar() {
-        if (avt == null) return;
-
-        User currentUser = UserService.getInstance().getCurrentUser();
-
-        try {
-            Image image;
-            String imagePath = (currentUser != null && currentUser.getProfileImagePath() != null)
-                    ? currentUser.getProfileImagePath()
-                    : "/images/default-profile.png";
-
-            if (imagePath.startsWith("/")) {
-                image = new Image(getClass().getResourceAsStream(imagePath));
-            } else {
-                File imageFile = new File(imagePath);
-                if (imageFile.exists()) {
-                    image = new Image(imageFile.toURI().toString());
-                } else {
-                    image = new Image(getClass().getResourceAsStream("/images/default-profile.png"));
-                }
-            }
-
-            avt.setFill(new ImagePattern(image));
-
-        } catch (Exception e) {
-            System.err.println("Error loading avatar image: " + e.getMessage());
-            Image defaultImage = new Image(getClass().getResourceAsStream("/images/default-profile.png"));
-            avt.setFill(new ImagePattern(defaultImage));
+    private void setActive(String nav) {
+        activeNav = nav;
+        About.getStyleClass().remove("active");
+        Chat.getStyleClass().remove("active");
+        Chatbot.getStyleClass().remove("active");
+        Setting.getStyleClass().remove("active");
+        switch (nav) {
+            case "about" -> About.getStyleClass().add("active");
+            case "chat" -> Chat.getStyleClass().add("active");
+            case "chatbot" -> Chatbot.getStyleClass().add("active");
+            case "settings" -> Setting.getStyleClass().add("active");
         }
     }
 }

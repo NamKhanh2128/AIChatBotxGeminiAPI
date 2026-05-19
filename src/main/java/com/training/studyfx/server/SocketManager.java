@@ -8,92 +8,76 @@ import java.util.List;
 public class SocketManager {
     private static SocketManager instance;
     private Socket socket;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
+    private PrintWriter writer;
+    private BufferedReader reader;
     private String username;
-    private List<MessageListener> messageListeners = new ArrayList<>();
-
-    private SocketManager() {}
-
-    public static synchronized SocketManager getInstance() {
-        if (instance == null) {
-            instance = new SocketManager();
-        }
-        return instance;
-    }
+    private final List<MessageListener> listeners = new ArrayList<>();
 
     public interface MessageListener {
         void onMessageReceived(String message);
     }
 
-    public void addMessageListener(MessageListener listener) {
-        messageListeners.add(listener);
+    private SocketManager() {
     }
 
-    public void removeMessageListener(MessageListener listener) {
-        messageListeners.remove(listener);
+    public static SocketManager getInstance() {
+        if (instance == null)
+            instance = new SocketManager();
+        return instance;
     }
 
     public void connect(String username) throws IOException {
-        if (socket == null || !socket.isConnected()) {
-            this.username = username;
-            this.socket = new Socket("localhost", 1234);
-            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            // Gửi thông báo tham gia
-            sendMessage(username + " has joined the chat");
-
-            // Bắt đầu lắng nghe tin nhắn
-            new Thread(this::listenForMessages).start();
-        }
-    }
-
-    public void sendMessage(String message) throws IOException {
-        if (socket != null && socket.isConnected() && bufferedWriter != null) {
-            bufferedWriter.write(message);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
-        }
-    }
-
-    private void listenForMessages() {
-        try {
-            String messageFromServer;
-            while (socket.isConnected() && (messageFromServer = bufferedReader.readLine()) != null) {
-                final String message = messageFromServer;
-                // Thông báo cho tất cả các listener
-                for (MessageListener listener : messageListeners) {
-                    listener.onMessageReceived(message);
+        this.username = username;
+        socket = new Socket("localhost", 1235);
+        writer = new PrintWriter(socket.getOutputStream(), true);
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        new Thread(() -> {
+            try {
+                String msg;
+                while ((msg = reader.readLine()) != null) {
+                    final String finalMsg = msg;
+                    javafx.application.Platform.runLater(() -> {
+                        for (MessageListener l : new ArrayList<>(listeners)) {
+                            l.onMessageReceived(finalMsg);
+                        }
+                    });
                 }
+            } catch (IOException ignored) {
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
-    public void disconnect() {
-        try {
-            if (bufferedReader != null) bufferedReader.close();
-            if (bufferedWriter != null) bufferedWriter.close();
-            if (socket != null) socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void sendMessage(String msg) throws IOException {
+        if (writer != null)
+            writer.println(msg);
+    }
+
+    public void broadcast(String msg) {
+        // Implemented to resolve compilation error from ClientHandler
+        javafx.application.Platform.runLater(() -> {
+            for (MessageListener l : new ArrayList<>(listeners)) {
+                l.onMessageReceived(msg);
+            }
+        });
+    }
+
+    public void addMessageListener(MessageListener listener) {
+        listeners.add(listener);
     }
 
     public boolean isConnected() {
-        return socket != null && socket.isConnected();
+        return socket != null && socket.isConnected() && !socket.isClosed();
     }
 
     public String getUsername() {
         return username;
     }
-    public void reset() {
-        disconnect();
-        username = null;
-        messageListeners.clear();
-        instance = null;
-    }
 
-} 
+    public void reset() {
+        try {
+            if (socket != null)
+                socket.close();
+        } catch (IOException ignored) {
+        }
+    }
+}

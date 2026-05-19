@@ -3,42 +3,31 @@ package com.training.studyfx.controller;
 import com.training.studyfx.App;
 import com.training.studyfx.service.UserService;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
-import java.io.IOException;
+import javafx.scene.control.*;
 
 public class LoginController {
-
     @FXML
     private TextField usernameField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private Label errorLabel;
 
-    private UserService userService = UserService.getInstance();
+    @FXML
+    public void initialize() {
+        errorLabel.setVisible(false);
+    }
 
     @FXML
     private void handleLogin() {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
-
-        if (username.isEmpty() || password.isEmpty()) {
-            showError("Username and password are required");
+        String u = usernameField.getText().trim();
+        String p = passwordField.getText();
+        if (u.isEmpty() || p.isEmpty()) {
+            showError("Please fill all fields");
             return;
         }
-
-        if (userService.login(username, password)) {
-            try {
-                App.setRoot("UI");
-            } catch (IOException e) {
-                e.printStackTrace();
-                showError("Error loading main interface");
-            }
+        if (UserService.getInstance().login(u, p)) {
+            App.setRoot("UI");
         } else {
             showError("Invalid username or password");
         }
@@ -46,16 +35,11 @@ public class LoginController {
 
     @FXML
     private void handleShowRegister() {
-        try {
-            App.setRoot("RegisterView");
-        } catch (IOException e) {
-            e.printStackTrace();
-            showError("Error loading registration page");
-        }
+        App.setRoot("RegisterView");
     }
 
-    private void showError(String errorMessage) {
-        errorLabel.setText(errorMessage);
+    private void showError(String msg) {
+        errorLabel.setText(msg);
         errorLabel.setVisible(true);
     }
 }

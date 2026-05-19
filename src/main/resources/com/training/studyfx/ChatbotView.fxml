@@ -1,98 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
+package com.training.studyfx.controller;
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
+import com.training.studyfx.service.GeminiService;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
 
-<VBox prefHeight="680.0" prefWidth="710.0" spacing="0"
-      stylesheets="@../../../styles/ui.css"
-      styleClass="childpan"
-      xmlns="http://javafx.com/javafx/23.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.training.studyfx.controller.ChatbotViewController">
+public class ChatbotViewController {
+    @FXML private ScrollPane chatbotScrollPane;
+    @FXML private VBox chatbotMessagesContainer;
+    @FXML private TextField chatbotInput;
 
-   <!-- ══ Header ══ -->
-   <HBox alignment="CENTER_LEFT" spacing="14"
-         styleClass="chat-header">
+    private final GeminiService gemini = new GeminiService();
 
-      <!-- AI Avatar with amber glow -->
-      <StackPane>
-         <Circle radius="24" fill="rgba(245,158,11,0.15)"
-                  stroke="rgba(245,158,11,0.35)" strokeWidth="1.5"/>
-         <Circle radius="19" fill="#F59E0B"/>
-         <Label text="✦" style="-fx-font-size: 15px; -fx-text-fill: white;"/>
-      </StackPane>
+    @FXML public void initialize() {
+        addMessage("Chào bạn! Tôi là Chatbot cá nhân của bạn. Tôi có thể giúp gì cho bạn hôm nay?", true);
+    }
 
-      <VBox spacing="2">
-         <Label text="Chatbot AI" styleClass="chat-header-title"/>
-         <Label text="Powered by Gemini" styleClass="chat-header-subtitle"/>
-      </VBox>
+    @FXML private void handleSendMessage() {
+        String text = chatbotInput.getText().trim();
+        if (text.isEmpty()) return;
+        addMessage(text, false);
+        chatbotInput.clear();
+        addMessage("...", true);
+        new Thread(() -> {
+            String reply = gemini.generateResponse(text);
+            Platform.runLater(() -> {
+                removeLast();
+                addMessage(reply, true);
+            });
+        }).start();
+    }
 
-      <Pane HBox.hgrow="ALWAYS"/>
+    private void addMessage(String text, boolean bot) {
+        Label msg = new Label(text);
+        msg.setWrapText(true);
+        msg.setMaxWidth(450);
+        msg.getStyleClass().add(bot ? "bot-message" : "user-message");
+        chatbotMessagesContainer.getChildren().add(msg);
+        Platform.runLater(() -> chatbotScrollPane.setVvalue(1.0));
+    }
 
-      <!-- AI Ready badge -->
-      <HBox alignment="CENTER" spacing="6"
-            style="-fx-background-color: rgba(245,158,11,0.1);
-                   -fx-background-radius: 20px; -fx-padding: 5 14 5 14;
-                   -fx-border-color: rgba(245,158,11,0.28);
-                   -fx-border-radius: 20px; -fx-border-width: 1px;">
-         <Circle radius="4" fill="#F59E0B"/>
-         <Label text="AI Ready"
-                style="-fx-font-size: 12px; -fx-font-weight: bold;
-                       -fx-text-fill: #F59E0B;"/>
-      </HBox>
-   </HBox>
-
-   <!-- ══ Messages area (expands to fill all space) ══ -->
-   <ScrollPane fx:id="chatbotScrollPane" fitToWidth="true"
-               VBox.vgrow="ALWAYS"
-               styleClass="right-aligned-scrollpane"
-               style="-fx-background-color: transparent;
-                      -fx-background: transparent;
-                      -fx-border-color: transparent;">
-      <content>
-         <VBox fx:id="chatbotMessagesContainer" spacing="14.0"
-               style="-fx-background-color: transparent;">
-            <padding>
-               <Insets top="28" bottom="28" left="40" right="40"/>
-            </padding>
-         </VBox>
-      </content>
-   </ScrollPane>
-
-   <!-- ══ Input bar ══ -->
-   <HBox alignment="CENTER" spacing="10"
-         styleClass="input-bar">
-
-      <!-- Text input pill -->
-      <TextField fx:id="chatbotInput"
-                 promptText="Ask me anything…"
-                 prefHeight="46.0"
-                 styleClass="message-input"
-                 HBox.hgrow="ALWAYS"/>
-
-      <!-- Send button circle -->
-      <StackPane alignment="CENTER"
-                 onMouseClicked="#handleSendMessage"
-                 prefWidth="46" prefHeight="46"
-                 style="-fx-cursor: hand;
-                        -fx-background-color: #F59E0B;
-                        -fx-background-radius: 50%;
-                        -fx-effect: dropshadow(gaussian, rgba(245,158,11,0.5), 10, 0, 0, 3);">
-         <ImageView fitHeight="20.0" fitWidth="20.0"
-                    pickOnBounds="true" preserveRatio="true">
-            <image><Image url="@../../../images/send_.png"/></image>
-         </ImageView>
-      </StackPane>
-   </HBox>
-</VBox>
+    private void removeLast() {
+        if (!chatbotMessagesContainer.getChildren().isEmpty())
+            chatbotMessagesContainer.getChildren().remove(chatbotMessagesContainer.getChildren().size() - 1);
+    }
+}
