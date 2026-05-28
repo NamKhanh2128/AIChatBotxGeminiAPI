@@ -15,7 +15,7 @@
 <?import javafx.scene.control.Label?>
 
 <Pane prefHeight="620.0" prefWidth="220.0"
-      stylesheets="@../../../styles/ui.css"
+      stylesheets="@../../../styles/dark-theme.css"
       style="-fx-background-color: #1F1F21;
              -fx-border-width: 0 1 0 0;
              -fx-border-color: rgba(255,255,255,0.06);"

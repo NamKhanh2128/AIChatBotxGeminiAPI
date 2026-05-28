@@ -11,8 +11,11 @@ com\training\studyfx\model\ChatMessage.class
 com\training\studyfx\service\ChatHistoryManager.class
 com\training\studyfx\model\ChatMessage$MessageType.class
 com\training\studyfx\server\SocketManager.class
+com\training\studyfx\util\ScaleManager.class
 com\training\studyfx\exception\MessageException.class
 com\training\studyfx\App.class
+module-info.class
+com\training\studyfx\util\ThemeManager.class
 com\training\studyfx\controller\ChatViewController.class
 com\training\studyfx\exception\ChatException.class
 com\training\studyfx\server\Server.class

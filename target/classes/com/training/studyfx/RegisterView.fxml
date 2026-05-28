@@ -1,117 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.training.studyfx.controller.RegisterController"
+            styleClass="auth-container">
 
-<AnchorPane
-    stylesheets="@../../../styles/ui.css"
-    xmlns="http://javafx.com/javafx/21"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.training.studyfx.controller.RegisterController"
-    styleClass="auth-container">
+    <!-- Ambient glow blobs -->
+    <Circle radius="180" fill="rgba(139,92,246,0.08)"
+             translateX="-70" translateY="-80"
+             AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0"
+             mouseTransparent="true"/>
+    <Circle radius="120" fill="rgba(196,40,176,0.06)"
+             AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+             translateX="60" translateY="60"
+             mouseTransparent="true"/>
 
-    <!-- Decorative ambient blobs -->
-    <Circle radius="220" fill="rgba(139,92,246,0.06)"
-             translateX="80" translateY="100"
-             AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0"/>
-    <Circle radius="160" fill="rgba(59,130,246,0.05)"
-             translateX="-50" translateY="-50"
-             AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"/>
+    <!-- Center card (scrollable for small screens) -->
+    <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER"
+                style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;"
+                AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <content>
+            <VBox alignment="CENTER" minHeight="640" spacing="0">
+                <VBox fx:id="registerCard" alignment="CENTER" spacing="18"
+                      styleClass="auth-card" maxWidth="400">
 
-    <!-- Center wrapper -->
-    <VBox alignment="CENTER"
-          AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
-          AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                    <!-- Icon -->
+                    <VBox alignment="CENTER" spacing="10">
+                        <StackPane alignment="CENTER">
+                            <Circle radius="38" fill="rgba(139,92,246,0.1)"
+                                     stroke="rgba(139,92,246,0.3)" strokeWidth="1.5"/>
+                            <Circle radius="30"
+                                     style="-fx-fill: linear-gradient(from 0% 0% to 100% 100%, #8b5cf6, #c428b0);"/>
+                            <Label text="✨" style="-fx-font-size: 22px;"/>
+                        </StackPane>
+                        <Label text="Create Account" styleClass="auth-title"/>
+                        <Label text="Join Internal Chat today" styleClass="auth-subtitle"/>
+                    </VBox>
 
-        <!-- Auth Card -->
-        <VBox alignment="CENTER" spacing="20"
-              styleClass="auth-card"
-              maxWidth="420">
+                    <Rectangle height="1" width="300" fill="rgba(255,255,255,0.05)"/>
 
-            <!-- Logo + Title -->
-            <VBox alignment="CENTER" spacing="10">
-                <StackPane alignment="CENTER">
-                    <Circle radius="40"
-                             fill="rgba(139,92,246,0.12)"
-                             stroke="rgba(139,92,246,0.35)"
-                             strokeWidth="1.5"/>
-                    <Circle radius="33" fill="#8B5CF6"/>
-                    <Label text="✨" style="-fx-font-size: 26px;"/>
-                </StackPane>
-                <Label text="Create Account" styleClass="auth-title">
-                    <font><Font name="System Bold" size="26.0"/></font>
-                </Label>
-                <Label text="Join Internal Chat today" styleClass="auth-subtitle"/>
+                    <VBox alignment="CENTER_LEFT" spacing="7">
+                        <Label text="Username" styleClass="auth-label"/>
+                        <TextField fx:id="usernameField" promptText="Choose a username"
+                                   styleClass="auth-field" maxWidth="Infinity"/>
+                    </VBox>
+                    <VBox alignment="CENTER_LEFT" spacing="7">
+                        <Label text="Email" styleClass="auth-label"/>
+                        <TextField fx:id="emailField" promptText="Enter your email"
+                                   styleClass="auth-field" maxWidth="Infinity"/>
+                    </VBox>
+                    <VBox alignment="CENTER_LEFT" spacing="7">
+                        <Label text="Password" styleClass="auth-label"/>
+                        <PasswordField fx:id="passwordField" promptText="Create a password"
+                                       styleClass="auth-field" maxWidth="Infinity"/>
+                    </VBox>
+                    <VBox alignment="CENTER_LEFT" spacing="7">
+                        <Label text="Confirm Password" styleClass="auth-label"/>
+                        <PasswordField fx:id="confirmPasswordField" promptText="Confirm your password"
+                                       styleClass="auth-field" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <Label fx:id="errorLabel" visible="false" wrapText="true"
+                           maxWidth="300" styleClass="auth-error"/>
+
+                    <VBox alignment="CENTER" spacing="10">
+                        <Button fx:id="registerButton" defaultButton="true"
+                                onAction="#handleRegister" text="Create Account"
+                                prefHeight="48" maxWidth="Infinity"
+                                styleClass="auth-btn-primary"/>
+                        <Button fx:id="backToLoginButton"
+                                onAction="#handleBackToLogin" text="← Back to Login"
+                                prefHeight="44" maxWidth="Infinity"
+                                styleClass="auth-btn-secondary"/>
+                    </VBox>
+                </VBox>
             </VBox>
-
-            <!-- Divider -->
-            <Rectangle height="1" width="320"
-                       fill="rgba(255,255,255,0.07)"/>
-
-            <!-- Username -->
-            <VBox alignment="CENTER_LEFT" spacing="8">
-                <Label text="Username" styleClass="auth-label"/>
-                <TextField fx:id="usernameField"
-                           promptText="Choose a username"
-                           styleClass="auth-field"/>
-            </VBox>
-
-            <!-- Email -->
-            <VBox alignment="CENTER_LEFT" spacing="8">
-                <Label text="Email" styleClass="auth-label"/>
-                <TextField fx:id="emailField"
-                           promptText="Enter your email"
-                           styleClass="auth-field"/>
-            </VBox>
-
-            <!-- Password -->
-            <VBox alignment="CENTER_LEFT" spacing="8">
-                <Label text="Password" styleClass="auth-label"/>
-                <PasswordField fx:id="passwordField"
-                               promptText="Create a password"
-                               styleClass="auth-field"/>
-            </VBox>
-
-            <!-- Confirm Password -->
-            <VBox alignment="CENTER_LEFT" spacing="8">
-                <Label text="Confirm Password" styleClass="auth-label"/>
-                <PasswordField fx:id="confirmPasswordField"
-                               promptText="Confirm your password"
-                               styleClass="auth-field"/>
-            </VBox>
-
-            <!-- Error label -->
-            <Label fx:id="errorLabel"
-                   styleClass="auth-error"
-                   visible="false"
-                   wrapText="true"
-                   maxWidth="320"/>
-
-            <!-- Buttons -->
-            <VBox alignment="CENTER" spacing="12">
-                <Button fx:id="registerButton"
-                        defaultButton="true"
-                        mnemonicParsing="false"
-                        onAction="#handleRegister"
-                        text="Create Account"
-                        styleClass="auth-btn-primary"
-                        prefHeight="48"/>
-                <Button fx:id="backToLoginButton"
-                        mnemonicParsing="false"
-                        onAction="#handleBackToLogin"
-                        text="Back to Login"
-                        styleClass="auth-btn-secondary"
-                        prefHeight="44"/>
-            </VBox>
-        </VBox>
-    </VBox>
+        </content>
+    </ScrollPane>
 </AnchorPane>

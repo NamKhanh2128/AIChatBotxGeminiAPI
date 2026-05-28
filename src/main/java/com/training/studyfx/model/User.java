@@ -1,62 +1,78 @@
 package com.training.studyfx.model;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class User {
+    private int id;
     private String username;
     private String password;
-    private String email;
     private String fullName;
-    public String bietdanh;
+    private String email;
     private String status;
     private String profileImagePath;
-    private List<Message> messages;
+    public String bietdanh;
 
-    public User(String username, String password, String email) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.status = "Available";
-        this.profileImagePath = "/images/default-profile.png";
-        this.messages = new ArrayList<>();
+    public User() {
     }
 
-    // Getters and setters
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.fullName = username;
+        this.status = "Available";
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String v) {
+        this.username = v;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String v) {
+        this.password = v;
+    }
+
+    public String getFullName() {
+        return fullName != null ? fullName : username;
+    }
+
+    public void setFullName(String v) {
+        this.fullName = v;
+    }
 
     public String getEmail() {
         return email;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setEmail(String v) {
+        this.email = v;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(String v) {
+        this.status = v;
     }
 
     public String getProfileImagePath() {
         return profileImagePath;
     }
 
-    public void setProfileImagePath(String profileImagePath) {
-        this.profileImagePath = profileImagePath;
+    public void setProfileImagePath(String v) {
+        this.profileImagePath = v;
     }
-
-
 }

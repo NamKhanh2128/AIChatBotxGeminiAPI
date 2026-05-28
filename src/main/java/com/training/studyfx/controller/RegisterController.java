@@ -3,72 +3,50 @@ package com.training.studyfx.controller;
 import com.training.studyfx.App;
 import com.training.studyfx.service.UserService;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
-import java.io.IOException;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 
 public class RegisterController {
-
     @FXML
-    private TextField usernameField;
-
+    private TextField usernameField, emailField;
     @FXML
-    private TextField emailField;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    private PasswordField confirmPasswordField;
-
+    private PasswordField passwordField, confirmPasswordField;
     @FXML
     private Label errorLabel;
 
-    private UserService userService = UserService.getInstance();
+    @FXML
+    public void initialize() {
+        errorLabel.setVisible(false);
+        confirmPasswordField.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER)
+                handleRegister();
+        });
+    }
 
     @FXML
     private void handleRegister() {
-        String username = usernameField.getText().trim();
-        String email = emailField.getText().trim();
-        String password = passwordField.getText();
-        String confirmPassword = confirmPasswordField.getText();
-
-        // Basic validation
-        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            showError("All fields are required");
+        String u = usernameField.getText().trim();
+        String e = emailField.getText().trim();
+        String p = passwordField.getText();
+        String c = confirmPasswordField.getText();
+        if (u.isEmpty() || u.length() < 3) {
+            showError("Username must be at least 3 characters");
             return;
         }
-
-        if (username.length() < 4) {
-            showError("Username must be at least 4 characters");
+        if (e.isEmpty() || !e.contains("@")) {
+            showError("Valid email required");
             return;
         }
-
-        if (!email.contains("@") || !email.contains(".")) {
-            showError("Please enter a valid email");
+        if (p.length() < 4) {
+            showError("Password must be at least 4 characters");
             return;
         }
-
-        if (password.length() < 6) {
-            showError("Password must be at least 6 characters");
-            return;
-        }
-
-        if (!password.equals(confirmPassword)) {
+        if (!p.equals(c)) {
             showError("Passwords do not match");
             return;
         }
-
-        // Register the user
-        if (userService.register(username, password, email)) {
-            try {
-                App.setRoot("LoginView");
-            } catch (IOException e) {
-                e.printStackTrace();
-                showError("Error returning to login");
-            }
+        if (UserService.getInstance().register(u, p, e)) {
+            App.setRoot("UI");
         } else {
             showError("Username already exists");
         }
@@ -76,16 +54,11 @@ public class RegisterController {
 
     @FXML
     private void handleBackToLogin() {
-        try {
-            App.setRoot("LoginView");
-        } catch (IOException e) {
-            e.printStackTrace();
-            showError("Error returning to login");
-        }
+        App.setRoot("LoginView");
     }
 
-    private void showError(String errorMessage) {
-        errorLabel.setText(errorMessage);
+    private void showError(String msg) {
+        errorLabel.setText(msg);
         errorLabel.setVisible(true);
     }
 }
