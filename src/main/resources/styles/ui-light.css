@@ -484,3 +484,56 @@
 .logo-container {
     -fx-effect: dropshadow(three-pass-box, rgba(6, 182, 212, 0.25), 20, 0, 0, 4);
 }
+
+/* ── About View (Light Theme) ── */
+.about-hero-title {
+    -fx-text-fill: #0f172a;
+    -fx-effect: dropshadow(three-pass-box, rgba(10, 132, 255, 0.15), 10, 0, 0, 0);
+}
+
+.about-hero-subtitle {
+    -fx-text-fill: #475569;
+}
+
+.about-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e2e8f0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 24, 0, 0, 6);
+}
+
+.about-card-title {
+    -fx-text-fill: #0f172a;
+}
+
+.about-card-desc {
+    -fx-text-fill: #475569;
+}
+
+.about-divider {
+    -fx-background-color: #e2e8f0;
+}
+
+.about-divider-v {
+    -fx-background-color: #e2e8f0;
+}
+
+.about-info-box {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+}
+
+.about-info-val {
+    -fx-text-fill: #0f172a;
+}
+
+.about-info-lbl {
+    -fx-text-fill: #64748b;
+}
+
+.about-feature-title {
+    -fx-text-fill: #334155;
+}
+
+.about-contact-lbl {
+    -fx-text-fill: #94a3b8;
+}

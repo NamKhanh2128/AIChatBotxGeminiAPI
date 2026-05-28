@@ -478,3 +478,57 @@
 .logo-container {
     -fx-effect: dropshadow(three-pass-box, rgba(0, 210, 255, 0.4), 28, 0, 0, 0);
 }
+
+/* ── About View (Dark Theme) ── */
+.about-hero-title {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(10, 132, 255, 0.4), 14, 0, 0, 0);
+}
+
+.about-hero-subtitle {
+    -fx-text-fill: white;
+    -fx-opacity: 0.4;
+}
+
+.about-card {
+    -fx-background-color: rgba(14, 16, 26, 0.95);
+    -fx-border-color: rgba(255, 255, 255, 0.07);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 28, 0, 0, 8);
+}
+
+.about-card-title {
+    -fx-text-fill: #FFFFFF;
+}
+
+.about-card-desc {
+    -fx-text-fill: rgba(255, 255, 255, 0.55);
+}
+
+.about-divider {
+    -fx-background-color: rgba(255, 255, 255, 0.07);
+}
+
+.about-divider-v {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+}
+
+.about-info-box {
+    -fx-background-color: rgba(255, 255, 255, 0.04);
+    -fx-border-color: rgba(255, 255, 255, 0.07);
+}
+
+.about-info-val {
+    -fx-text-fill: #eef2ff;
+}
+
+.about-info-lbl {
+    -fx-text-fill: #3d4a5c;
+}
+
+.about-feature-title {
+    -fx-text-fill: rgba(255, 255, 255, 0.80);
+}
+
+.about-contact-lbl {
+    -fx-text-fill: rgba(255, 255, 255, 0.3);
+}
