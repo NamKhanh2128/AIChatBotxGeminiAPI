@@ -1,212 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.effect.DropShadow?>
 
 <AnchorPane
-    stylesheets="@../../../styles/dark-theme.css"
-    style="-fx-background-color: #1C1C1E;"
+    styleClass="childpan"
     xmlns="http://javafx.com/javafx/23.0.1"
     xmlns:fx="http://javafx.com/fxml/1">
 
-    <StackPane AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
-               AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"
+                style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;">
+        <content>
+            <StackPane>
+                <!-- Ambient blobs (decorative, don't affect layout) -->
+                <Circle radius="160" fill="rgba(10,132,255,0.04)"
+                         translateX="300" translateY="-200" mouseTransparent="true"/>
+                <Circle radius="100" fill="rgba(191,90,242,0.05)"
+                         translateX="-280" translateY="180" mouseTransparent="true"/>
+                <Circle radius="70"  fill="rgba(245,158,11,0.04)"
+                         translateX="200" translateY="240" mouseTransparent="true"/>
 
-        <!-- Ambient blobs -->
-        <Circle radius="160" fill="rgba(10,132,255,0.04)"
-                 translateX="300" translateY="-200"/>
-        <Circle radius="100" fill="rgba(191,90,242,0.05)"
-                 translateX="-280" translateY="180"/>
-        <Circle radius="70"  fill="rgba(245,158,11,0.04)"
-                 translateX="200" translateY="240"/>
+                <!-- Outer centering VBox -->
+                <VBox alignment="CENTER" fillWidth="true" style="-fx-padding: 20 32 20 32;">
+                    <!-- Main card — grows width but stays centered with padding -->
+                    <VBox alignment="CENTER" spacing="22" maxWidth="800">
 
-        <!-- Main card -->
-        <VBox alignment="CENTER" spacing="22" maxWidth="720">
+                        <!-- ── Hero: App title ── -->
+                        <HBox alignment="CENTER" spacing="18">
+                            <StackPane>
+                                <Circle radius="48"
+                                         fill="rgba(10,132,255,0.1)"
+                                         stroke="rgba(10,132,255,0.3)" strokeWidth="1.5"/>
+                                <Circle radius="38" fill="#0A84FF"/>
+                                <Label text="💬" style="-fx-font-size: 2em; -fx-text-fill: white;"/>
+                            </StackPane>
+                            <VBox alignment="CENTER_LEFT" spacing="4">
+                                <Label text="Internal Chat"
+                                       style="-fx-font-size: 2.4em; -fx-font-weight: 800;
+                                              -fx-text-fill: white;
+                                              -fx-effect: dropshadow(three-pass-box, rgba(10,132,255,0.4), 14, 0, 0, 0);"/>
+                                <Label text="HUST · OOP Project"
+                                       style="-fx-font-size: 1em; -fx-text-fill: white; -fx-opacity: 0.4;"/>
+                            </VBox>
+                        </HBox>
 
-            <!-- ── Hero: App title ── -->
-            <HBox alignment="CENTER" spacing="18">
-                <StackPane>
-                    <Circle radius="48"
-                             fill="rgba(10,132,255,0.1)"
-                             stroke="rgba(10,132,255,0.3)" strokeWidth="1.5"/>
-                    <Circle radius="38" fill="#0A84FF"/>
-                    <Label text="💬" textFill="WHITE">
-                        <font><Font size="30.0"/></font>
-                    </Label>
-                </StackPane>
-                <VBox alignment="CENTER_LEFT" spacing="4">
-                    <Label text="Internal Chat" textFill="WHITE">
-                        <font><Font name="System Bold" size="34.0"/></font>
-                        <effect><DropShadow color="rgba(10,132,255,0.4)" radius="14"/></effect>
-                    </Label>
-                    <Label text="HUST · OOP Project" textFill="WHITE" opacity="0.4">
-                        <font><Font name="System" size="14.0"/></font>
-                    </Label>
+                        <!-- ── Info card ── -->
+                        <VBox alignment="TOP_CENTER" spacing="20"
+                              styleClass="about-card"
+                              style="-fx-background-color: rgba(14,16,26,0.95);
+                                     -fx-background-radius: 22;
+                                     -fx-padding: 32 38 32 38;
+                                     -fx-border-color: rgba(255,255,255,0.07);
+                                     -fx-border-radius: 22;
+                                     -fx-border-width: 1;
+                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 28, 0, 0, 8);"
+                              maxWidth="Infinity">
+
+                            <!-- Card header -->
+                            <HBox alignment="CENTER" spacing="12">
+                                <StackPane>
+                                    <Circle radius="22" fill="rgba(10,132,255,0.1)"/>
+                                    <Label style="-fx-font-size: 1.5em;" text="🗨️"/>
+                                </StackPane>
+                                <Label style="-fx-font-size: 1.3em; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;"
+                                       text="Giới thiệu ứng dụng"/>
+                            </HBox>
+
+                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity"
+                                     style="-fx-background-color: rgba(255,255,255,0.07);"/>
+
+                            <!-- Description -->
+                            <Label alignment="CENTER"
+                                   style="-fx-font-size: 1em; -fx-text-fill: rgba(255,255,255,0.55);
+                                          -fx-line-spacing: 4;"
+                                   text="Internal Chat là ứng dụng chat desktop hiện đại xây dựng bằng JavaFX, tích hợp Gemini AI. Được phát triển nhằm hỗ trợ sinh viên học tập, ôn luyện và tương tác với AI một cách đơn giản, hiệu quả."
+                                   wrapText="true" maxWidth="Infinity"/>
+
+                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity"
+                                     style="-fx-background-color: rgba(255,255,255,0.07);"/>
+
+                            <!-- Version info — flexible HBox -->
+                            <HBox alignment="CENTER" spacing="16">
+                                <VBox alignment="CENTER" spacing="4"
+                                      HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color: rgba(255,255,255,0.04);
+                                             -fx-background-radius: 14;
+                                             -fx-padding: 14 20 14 20;
+                                             -fx-border-color: rgba(255,255,255,0.07);
+                                             -fx-border-radius: 14;
+                                             -fx-border-width: 1;">
+                                    <Label style="-fx-font-size: 1.4em; -fx-font-weight: 800; -fx-text-fill: #eef2ff;" text="v1.0.0"/>
+                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: #3d4a5c;" text="Version"/>
+                                </VBox>
+                                <VBox alignment="CENTER" spacing="4"
+                                      HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color: rgba(255,255,255,0.04);
+                                             -fx-background-radius: 14;
+                                             -fx-padding: 14 20 14 20;
+                                             -fx-border-color: rgba(255,255,255,0.07);
+                                             -fx-border-radius: 14;
+                                             -fx-border-width: 1;">
+                                    <Label style="-fx-font-size: 1.4em; -fx-font-weight: 800; -fx-text-fill: #eef2ff;" text="06/2025"/>
+                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: #3d4a5c;" text="Release"/>
+                                </VBox>
+                                <VBox alignment="CENTER" spacing="4"
+                                      HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color: rgba(255,255,255,0.04);
+                                             -fx-background-radius: 14;
+                                             -fx-padding: 14 20 14 20;
+                                             -fx-border-color: rgba(255,255,255,0.07);
+                                             -fx-border-radius: 14;
+                                             -fx-border-width: 1;">
+                                    <Label style="-fx-font-size: 1.4em; -fx-font-weight: 800; -fx-text-fill: #eef2ff;" text="HUST"/>
+                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: #3d4a5c;" text="University"/>
+                                </VBox>
+                            </HBox>
+
+                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity"
+                                     style="-fx-background-color: rgba(255,255,255,0.07);"/>
+
+                            <!-- Features grid — all cells grow equally -->
+                            <HBox alignment="CENTER" spacing="14">
+                                <!-- Feature 1: Dark Mode -->
+                                <VBox alignment="CENTER" spacing="10"
+                                      HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color: rgba(245,158,11,0.09);
+                                             -fx-background-radius: 14;
+                                             -fx-padding: 18 14 18 14;
+                                             -fx-border-color: rgba(245,158,11,0.18);
+                                             -fx-border-radius: 14;
+                                             -fx-border-width: 1;">
+                                    <StackPane alignment="CENTER">
+                                        <Circle radius="24" style="-fx-fill: rgba(245,158,11,0.2);"/>
+                                        <Label style="-fx-font-size: 1.6em;" text="🌙"/>
+                                    </StackPane>
+                                    <Label style="-fx-font-size: 0.85em; -fx-font-weight: bold;
+                                                  -fx-text-fill: rgba(255,255,255,0.80);
+                                                  -fx-text-alignment: CENTER; -fx-alignment: CENTER;"
+                                           text="Dark Mode" wrapText="true"/>
+                                </VBox>
+                                <!-- Feature 2: Gemini AI -->
+                                <VBox alignment="CENTER" spacing="10"
+                                      HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color: rgba(6,182,212,0.09);
+                                             -fx-background-radius: 14;
+                                             -fx-padding: 18 14 18 14;
+                                             -fx-border-color: rgba(6,182,212,0.18);
+                                             -fx-border-radius: 14;
+                                             -fx-border-width: 1;">
+                                    <StackPane alignment="CENTER">
+                                        <Circle radius="24" style="-fx-fill: rgba(6,182,212,0.2);"/>
+                                        <Label style="-fx-font-size: 1.6em;" text="🤖"/>
+                                    </StackPane>
+                                    <Label style="-fx-font-size: 0.85em; -fx-font-weight: bold;
+                                                  -fx-text-fill: rgba(255,255,255,0.80);
+                                                  -fx-text-alignment: CENTER; -fx-alignment: CENTER;"
+                                           text="Gemini AI" wrapText="true"/>
+                                </VBox>
+                                <!-- Feature 3: Real-time Chat -->
+                                <VBox alignment="CENTER" spacing="10"
+                                      HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color: rgba(34,197,94,0.09);
+                                             -fx-background-radius: 14;
+                                             -fx-padding: 18 14 18 14;
+                                             -fx-border-color: rgba(34,197,94,0.18);
+                                             -fx-border-radius: 14;
+                                             -fx-border-width: 1;">
+                                    <StackPane alignment="CENTER">
+                                        <Circle radius="24" style="-fx-fill: rgba(34,197,94,0.2);"/>
+                                        <Label style="-fx-font-size: 1.6em;" text="📡"/>
+                                    </StackPane>
+                                    <Label style="-fx-font-size: 0.85em; -fx-font-weight: bold;
+                                                  -fx-text-fill: rgba(255,255,255,0.80);
+                                                  -fx-text-alignment: CENTER; -fx-alignment: CENTER;"
+                                           text="Real-time Chat" wrapText="true"/>
+                                </VBox>
+                                <!-- Feature 4: Chat History -->
+                                <VBox alignment="CENTER" spacing="10"
+                                      HBox.hgrow="ALWAYS"
+                                      style="-fx-background-color: rgba(167,139,250,0.09);
+                                             -fx-background-radius: 14;
+                                             -fx-padding: 18 14 18 14;
+                                             -fx-border-color: rgba(167,139,250,0.18);
+                                             -fx-border-radius: 14;
+                                             -fx-border-width: 1;">
+                                    <StackPane alignment="CENTER">
+                                        <Circle radius="24" style="-fx-fill: rgba(167,139,250,0.2);"/>
+                                        <Label style="-fx-font-size: 1.6em;" text="🕒"/>
+                                    </StackPane>
+                                    <Label style="-fx-font-size: 0.85em; -fx-font-weight: bold;
+                                                  -fx-text-fill: rgba(255,255,255,0.80);
+                                                  -fx-text-alignment: CENTER; -fx-alignment: CENTER;"
+                                           text="Chat History" wrapText="true"/>
+                                </VBox>
+                            </HBox>
+
+                            <!-- Contact -->
+                            <HBox alignment="CENTER" spacing="28">
+                                <VBox alignment="CENTER" spacing="4">
+                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: rgba(255,255,255,0.3);" text="EMAIL"/>
+                                    <Label style="-fx-font-size: 0.95em; -fx-font-weight: bold; -fx-text-fill: #0A84FF;"
+                                           text="oopGr6@gmail.com"/>
+                                </VBox>
+                                <Region prefWidth="1" maxWidth="1" prefHeight="32" maxHeight="32"
+                                        style="-fx-background-color: rgba(255,255,255,0.08);"/>
+                                <VBox alignment="CENTER" spacing="4">
+                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: rgba(255,255,255,0.3);" text="GITHUB"/>
+                                    <Label style="-fx-font-size: 0.95em; -fx-font-weight: bold; -fx-text-fill: #BF5AF2;"
+                                           text="github.com/OOP_BTL20242"/>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                    </VBox>
                 </VBox>
-            </HBox>
-
-            <!-- ── Info card ── -->
-            <VBox alignment="TOP_CENTER" spacing="20"
-                  style="-fx-background-color: #2C2C2E;
-                         -fx-background-radius: 22px;
-                         -fx-padding: 32 38 32 38;
-                         -fx-border-color: rgba(255,255,255,0.07);
-                         -fx-border-radius: 22px;
-                         -fx-border-width: 1px;
-                         -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 28, 0, 0, 8);">
-
-                <!-- Card header -->
-                <HBox alignment="CENTER" spacing="12">
-                    <StackPane>
-                        <Circle radius="22" fill="rgba(10,132,255,0.1)"/>
-                        <Label style="-fx-font-size: 1.5em;" text="🗨️"/>
-                    </StackPane>
-                    <Label style="-fx-font-size: 18px; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;
-                                   -fx-font-family: 'Segoe UI Semibold', 'Segoe UI', sans-serif;"
-                           text="Giới thiệu ứng dụng"/>
-                </HBox>
-
-                <Rectangle height="1" width="580" fill="rgba(255,255,255,0.07)"/>
-
-                <!-- Description -->
-                <Label alignment="CENTER"
-                       style="-fx-font-size: 14px; -fx-text-fill: rgba(255,255,255,0.55);
-                              -fx-line-spacing: 4; -fx-font-family: 'Segoe UI', sans-serif;"
-                       text="Internal Chat là ứng dụng chat desktop hiện đại xây dựng bằng JavaFX, tích hợp Gemini AI. Được phát triển nhằm hỗ trợ sinh viên học tập, ôn luyện và tương tác với AI một cách đơn giản, hiệu quả."
-                       wrapText="true"/>
-
-                <Rectangle height="1" width="580" fill="rgba(255,255,255,0.07)"/>
-
-                <!-- Version info -->
-                <HBox alignment="CENTER" spacing="40">
-                    <HBox alignment="CENTER" spacing="10"
-                          style="-fx-background-color: rgba(255,255,255,0.05);
-                                 -fx-background-radius: 12;
-                                 -fx-padding: 10 20 10 20;
-                                 -fx-border-color: rgba(255,255,255,0.08);
-                                 -fx-border-radius: 12;
-                                 -fx-border-width: 1;">
-                        <Label style="-fx-font-size: 18px;" text="🛠"/>
-                        <Label style="-fx-font-size: 13px; -fx-font-weight: bold;
-                                      -fx-text-fill: rgba(255,255,255,0.7);" text="v1.0.0"/>
-                    </HBox>
-                    <HBox alignment="CENTER" spacing="10"
-                          style="-fx-background-color: rgba(255,255,255,0.05);
-                                 -fx-background-radius: 12;
-                                 -fx-padding: 10 20 10 20;
-                                 -fx-border-color: rgba(255,255,255,0.08);
-                                 -fx-border-radius: 12;
-                                 -fx-border-width: 1;">
-                        <Label style="-fx-font-size: 18px;" text="📅"/>
-                        <Label style="-fx-font-size: 13px; -fx-font-weight: bold;
-                                      -fx-text-fill: rgba(255,255,255,0.7);" text="06/2025"/>
-                    </HBox>
-                    <HBox alignment="CENTER" spacing="10"
-                          style="-fx-background-color: rgba(255,255,255,0.05);
-                                 -fx-background-radius: 12;
-                                 -fx-padding: 10 20 10 20;
-                                 -fx-border-color: rgba(255,255,255,0.08);
-                                 -fx-border-radius: 12;
-                                 -fx-border-width: 1;">
-                        <Label style="-fx-font-size: 18px;" text="🎓"/>
-                        <Label style="-fx-font-size: 13px; -fx-font-weight: bold;
-                                      -fx-text-fill: rgba(255,255,255,0.7);" text="HUST"/>
-                    </HBox>
-                </HBox>
-
-                <Rectangle height="1" width="580" fill="rgba(255,255,255,0.07)"/>
-
-                <!-- Features grid -->
-                <HBox alignment="CENTER" spacing="14">
-                    <!-- Feature 1 -->
-                    <VBox alignment="CENTER" spacing="8" prefWidth="150"
-                          style="-fx-background-color: rgba(10,132,255,0.08);
-                                 -fx-background-radius: 14;
-                                 -fx-padding: 16 14 16 14;
-                                 -fx-border-color: rgba(10,132,255,0.15);
-                                 -fx-border-radius: 14;
-                                 -fx-border-width: 1;">
-                        <Label style="-fx-font-size: 24px;" text="🌙"/>
-                        <Label style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                      -fx-text-fill: rgba(255,255,255,0.75);
-                                      -fx-text-alignment: CENTER;
-                                      -fx-alignment: CENTER;"
-                               text="Dark Mode" wrapText="true"/>
-                    </VBox>
-                    <!-- Feature 2 -->
-                    <VBox alignment="CENTER" spacing="8" prefWidth="150"
-                          style="-fx-background-color: rgba(245,158,11,0.08);
-                                 -fx-background-radius: 14;
-                                 -fx-padding: 16 14 16 14;
-                                 -fx-border-color: rgba(245,158,11,0.15);
-                                 -fx-border-radius: 14;
-                                 -fx-border-width: 1;">
-                        <Label style="-fx-font-size: 24px;" text="🤖"/>
-                        <Label style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                      -fx-text-fill: rgba(255,255,255,0.75);
-                                      -fx-text-alignment: CENTER;
-                                      -fx-alignment: CENTER;"
-                               text="Gemini AI" wrapText="true"/>
-                    </VBox>
-                    <!-- Feature 3 -->
-                    <VBox alignment="CENTER" spacing="8" prefWidth="150"
-                          style="-fx-background-color: rgba(48,209,88,0.08);
-                                 -fx-background-radius: 14;
-                                 -fx-padding: 16 14 16 14;
-                                 -fx-border-color: rgba(48,209,88,0.15);
-                                 -fx-border-radius: 14;
-                                 -fx-border-width: 1;">
-                        <Label style="-fx-font-size: 24px;" text="💬"/>
-                        <Label style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                      -fx-text-fill: rgba(255,255,255,0.75);
-                                      -fx-text-alignment: CENTER;
-                                      -fx-alignment: CENTER;"
-                               text="Real-time Chat" wrapText="true"/>
-                    </VBox>
-                    <!-- Feature 4 -->
-                    <VBox alignment="CENTER" spacing="8" prefWidth="150"
-                          style="-fx-background-color: rgba(191,90,242,0.08);
-                                 -fx-background-radius: 14;
-                                 -fx-padding: 16 14 16 14;
-                                 -fx-border-color: rgba(191,90,242,0.15);
-                                 -fx-border-radius: 14;
-                                 -fx-border-width: 1;">
-                        <Label style="-fx-font-size: 24px;" text="💾"/>
-                        <Label style="-fx-font-size: 12px; -fx-font-weight: bold;
-                                      -fx-text-fill: rgba(255,255,255,0.75);
-                                      -fx-text-alignment: CENTER;
-                                      -fx-alignment: CENTER;"
-                               text="Chat History" wrapText="true"/>
-                    </VBox>
-                </HBox>
-
-                <!-- Contact -->
-                <HBox alignment="CENTER" spacing="28">
-                    <VBox alignment="CENTER" spacing="4">
-                        <Label style="-fx-font-size: 11px; -fx-text-fill: rgba(255,255,255,0.3);"
-                               text="EMAIL"/>
-                        <Label style="-fx-font-size: 13px; -fx-font-weight: bold;
-                                      -fx-text-fill: #0A84FF;"
-                               text="oopGr6@gmail.com"/>
-                    </VBox>
-                    <Rectangle width="1" height="32" fill="rgba(255,255,255,0.08)"/>
-                    <VBox alignment="CENTER" spacing="4">
-                        <Label style="-fx-font-size: 11px; -fx-text-fill: rgba(255,255,255,0.3);"
-                               text="GITHUB"/>
-                        <Label style="-fx-font-size: 13px; -fx-font-weight: bold;
-                                      -fx-text-fill: #BF5AF2;"
-                               text="github.com/OOP_BTL20242"/>
-                    </VBox>
-                </HBox>
-            </VBox>
-        </VBox>
-    </StackPane>
+            </StackPane>
+        </content>
+    </ScrollPane>
 </AnchorPane>

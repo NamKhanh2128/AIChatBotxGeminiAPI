@@ -1,29 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<VBox fx:id="chatbotRoot" spacing="0" styleClass="childpan"
+<VBox spacing="0" styleClass="childpan"
       xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.training.studyfx.controller.ChatbotViewController">
+      fx:controller="com.training.studyfx.controller.ChatViewController">
 
-    <HBox alignment="CENTER_LEFT" spacing="12" styleClass="chat-header">
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="14" styleClass="chat-header">
+        <StackPane alignment="CENTER">
+            <Circle radius="24"
+                    style="-fx-fill: linear-gradient(from 0% 0% to 100% 100%, #0ea5e9, #06b6d4);
+                           -fx-effect: dropshadow(three-pass-box, rgba(6,182,212,0.45), 10, 0, 0, 0);"/>
+            <Circle radius="20" style="-fx-fill: rgba(6,182,212,0.85);"/>
+            <Label text="🌐" style="-fx-font-size: 14px;"/>
+        </StackPane>
         <VBox spacing="2" HBox.hgrow="ALWAYS">
-            <Label text="Chatbot AI" styleClass="chat-header-title"/>
-            <Label text="Powered by Gemini" styleClass="chat-header-subtitle"/>
+            <Label text="Global Chat" styleClass="chat-header-title"/>
+            <Label text="Everyone is here" styleClass="chat-header-subtitle"/>
         </VBox>
-        <Label text="AI Ready" styleClass="ai-badge"/>
+        <Label text="● Live" styleClass="online-badge"/>
     </HBox>
 
-    <ScrollPane fx:id="chatbotScrollPane" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS"
-                styleClass="right-aligned-scrollpane">
-        <content>
-            <VBox fx:id="chatbotMessagesContainer" spacing="10" style="-fx-padding: 20 18 20 18;"/>
-        </content>
-    </ScrollPane>
+    <!-- Chat messages area -->
+    <StackPane VBox.vgrow="ALWAYS">
+        <!-- Background watermark -->
+        <Label text="🌐"
+               alignment="CENTER"
+               opacity="0.04"
+               style="-fx-font-size: 180px; -fx-text-fill: #06b6d4;"
+               mouseTransparent="true"/>
 
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER"
+                    styleClass="right-aligned-scrollpane">
+            <content>
+                <VBox fx:id="chatContainer" spacing="4" style="-fx-padding: 16 16 16 16;">
+                    <Label fx:id="emptyStateText" text="" visible="false"
+                           style="-fx-text-fill: #475569; -fx-font-size: 13px;" managed="false"/>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </StackPane>
+
+    <!-- Input bar -->
     <HBox alignment="CENTER_LEFT" spacing="10" styleClass="input-bar">
-        <TextField fx:id="chatbotInput" promptText="Ask me anything..." HBox.hgrow="ALWAYS" styleClass="message-input"/>
-        <Button text="Send" onAction="#handleSendMessage" styleClass="auth-btn-primary" prefWidth="120"/>
+        <Button onAction="#showEmojiPicker" styleClass="emoji-btn"
+                prefWidth="44" prefHeight="44" text="😊" focusTraversable="false"/>
+        <TextField fx:id="messageField" promptText="Message..."
+                   HBox.hgrow="ALWAYS" styleClass="message-input"
+                   onAction="#sendMessage"/>
+        <Button onAction="#sendMessage" styleClass="send-btn"
+                prefWidth="44" prefHeight="44" text="▶" focusTraversable="false"/>
     </HBox>
 </VBox>

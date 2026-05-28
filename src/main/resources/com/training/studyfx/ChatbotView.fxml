@@ -1,50 +1,45 @@
-package com.training.studyfx.controller;
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-import com.training.studyfx.service.GeminiService;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.scene.control.Label;
+<VBox fx:id="chatbotRoot" spacing="0" styleClass="childpan"
+      xmlns="http://javafx.com/javafx/23.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.training.studyfx.controller.ChatbotViewController">
 
-public class ChatbotViewController {
-    @FXML private ScrollPane chatbotScrollPane;
-    @FXML private VBox chatbotMessagesContainer;
-    @FXML private TextField chatbotInput;
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="14" styleClass="chat-header">
+        <StackPane alignment="CENTER">
+            <Circle radius="24"
+                    style="-fx-fill: linear-gradient(from 0% 0% to 100% 100%, #7c3aed, #db2777);
+                           -fx-effect: dropshadow(three-pass-box, rgba(124,58,237,0.45), 10, 0, 0, 0);"/>
+            <Circle radius="20" style="-fx-fill: rgba(124,58,237,0.85);"/>
+            <Label text="✨" style="-fx-font-size: 14px;"/>
+        </StackPane>
+        <VBox spacing="2" HBox.hgrow="ALWAYS">
+            <Label text="Chatbot AI" styleClass="chat-header-title"/>
+            <Label text="Powered by Gemini" styleClass="chat-header-subtitle"/>
+        </VBox>
+        <Label text="● AI Ready" styleClass="ai-badge"/>
+    </HBox>
 
-    private final GeminiService gemini = new GeminiService();
+    <!-- Chat messages area -->
+    <ScrollPane fx:id="chatbotScrollPane" fitToWidth="true" hbarPolicy="NEVER"
+                VBox.vgrow="ALWAYS" styleClass="right-aligned-scrollpane">
+        <content>
+            <VBox fx:id="chatbotMessagesContainer" spacing="10"
+                  style="-fx-padding: 20 18 20 18;"/>
+        </content>
+    </ScrollPane>
 
-    @FXML public void initialize() {
-        addMessage("Chào bạn! Tôi là Chatbot cá nhân của bạn. Tôi có thể giúp gì cho bạn hôm nay?", true);
-    }
-
-    @FXML private void handleSendMessage() {
-        String text = chatbotInput.getText().trim();
-        if (text.isEmpty()) return;
-        addMessage(text, false);
-        chatbotInput.clear();
-        addMessage("...", true);
-        new Thread(() -> {
-            String reply = gemini.generateResponse(text);
-            Platform.runLater(() -> {
-                removeLast();
-                addMessage(reply, true);
-            });
-        }).start();
-    }
-
-    private void addMessage(String text, boolean bot) {
-        Label msg = new Label(text);
-        msg.setWrapText(true);
-        msg.setMaxWidth(450);
-        msg.getStyleClass().add(bot ? "bot-message" : "user-message");
-        chatbotMessagesContainer.getChildren().add(msg);
-        Platform.runLater(() -> chatbotScrollPane.setVvalue(1.0));
-    }
-
-    private void removeLast() {
-        if (!chatbotMessagesContainer.getChildren().isEmpty())
-            chatbotMessagesContainer.getChildren().remove(chatbotMessagesContainer.getChildren().size() - 1);
-    }
-}
+    <!-- Input bar -->
+    <HBox alignment="CENTER_LEFT" spacing="10" styleClass="input-bar">
+        <TextField fx:id="chatbotInput" promptText="Ask me anything..."
+                   HBox.hgrow="ALWAYS" styleClass="message-input"
+                   onAction="#handleSendMessage"/>
+        <Button onAction="#handleSendMessage" styleClass="send-btn"
+                prefWidth="44" prefHeight="44" text="▶" focusTraversable="false"/>
+    </HBox>
+</VBox>

@@ -1,6 +1,7 @@
 package com.training.studyfx.util;
 
 import javafx.scene.Scene;
+import com.training.studyfx.util.ScaleManager;
 import java.io.*;
 import java.nio.file.*;
 import java.util.Properties;
@@ -44,6 +45,8 @@ public class ThemeManager {
             if (resource != null) {
                 scene.getStylesheets().add(resource.toExternalForm());
             }
+            // Restore font-scale after stylesheet reset
+            ScaleManager.reapply();
         }
     }
 

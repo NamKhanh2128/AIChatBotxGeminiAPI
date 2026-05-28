@@ -2,61 +2,104 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.training.studyfx.controller.ProfileSettingController"
-            styleClass="childpan">
+            styleClass="auth-container">
 
-    <VBox AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-        <HBox alignment="CENTER_LEFT" prefHeight="58.0" styleClass="chat-header">
-            <StackPane style="-fx-padding: 0 12 0 0;">
-                <Circle radius="16" fill="rgba(255,255,255,0.07)"/>
-                <Label text="⚙" style="-fx-font-size: 16px; -fx-text-fill: rgba(255,255,255,0.7);"/>
-            </StackPane>
-            <Label text="Settings" textFill="#FFFFFF">
-                <font><Font name="Segoe UI Semibold" size="17.0"/></font>
-            </Label>
-        </HBox>
+    <!-- Ambient glow blobs (same as RegisterView) -->
+    <Circle radius="180" fill="rgba(139,92,246,0.08)"
+             translateX="-70" translateY="-80"
+             AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0"
+             mouseTransparent="true"/>
+    <Circle radius="120" fill="rgba(196,40,176,0.06)"
+             AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="0"
+             translateX="60" translateY="60"
+             mouseTransparent="true"/>
 
-        <VBox alignment="CENTER" spacing="26" VBox.vgrow="ALWAYS">
-            <VBox alignment="CENTER" spacing="14">
-                <StackPane alignment="CENTER">
-                    <Circle radius="62" fill="rgba(10,132,255,0.08)" stroke="rgba(10,132,255,0.25)" strokeWidth="1.5"/>
-                    <Circle radius="56" fill="#2C2C2E" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5"/>
-                    <ImageView fx:id="profileImage" fitHeight="104.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true"/>
-                </StackPane>
-                <Button fx:id="changePhotoButton" text="Change Photo" prefHeight="36.0" minWidth="148.0" styleClass="change-photo-button"/>
-            </VBox>
+    <!-- Scrollable center -->
+    <ScrollPane fitToWidth="true" fitToHeight="false" hbarPolicy="NEVER"
+                style="-fx-background: transparent; -fx-background-color: transparent; -fx-border-color: transparent;"
+                AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+                AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <content>
+            <VBox alignment="CENTER" minHeight="700" spacing="0">
+                <VBox fx:id="settingsCard" alignment="CENTER" spacing="18"
+                      styleClass="auth-card" maxWidth="400">
 
-            <VBox maxWidth="520" alignment="CENTER" spacing="18" styleClass="profile-container">
-                <Label text="Personal Information" styleClass="section-title"/>
-                <GridPane hgap="14" vgap="14" alignment="CENTER">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" minWidth="90.0"/>
-                        <ColumnConstraints prefWidth="250.0" hgrow="ALWAYS"/>
-                    </columnConstraints>
-                    <Label text="Name" styleClass="form-label" GridPane.rowIndex="0"/>
-                    <TextField fx:id="nameField" promptText="Your name" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                    <Label text="Email" styleClass="form-label" GridPane.rowIndex="1"/>
-                    <TextField fx:id="emailField" promptText="Your email" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                    <Label text="Status" styleClass="form-label" GridPane.rowIndex="2"/>
-                    <TextField fx:id="statusField" promptText="Your status" styleClass="form-field" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                </GridPane>
+                    <!-- Icon + Avatar -->
+                    <VBox alignment="CENTER" spacing="10">
+                        <StackPane alignment="CENTER">
+                            <!-- Outer glow ring -->
+                            <Circle radius="44" fill="rgba(139,92,246,0.12)"
+                                     stroke="rgba(139,92,246,0.3)" strokeWidth="1.5"/>
+                            <!-- Gradient circle -->
+                            <Circle radius="36"
+                                     style="-fx-fill: linear-gradient(from 0% 0% to 100% 100%, #8b5cf6, #c428b0);
+                                            -fx-effect: dropshadow(three-pass-box, rgba(139,92,246,0.6), 20, 0, 0, 0);"/>
+                            <!-- Fallback icon (behind image) -->
+                            <Label text="⚙" style="-fx-font-size: 26px; -fx-text-fill: white;
+                                                     -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.4), 6, 0, 0, 0);"/>
+                            <!-- Profile image overlays icon when set -->
+                            <ImageView fx:id="profileImage" fitHeight="52" fitWidth="52"
+                                       pickOnBounds="true" preserveRatio="true"/>
+                        </StackPane>
+                        <Label text="Profile Settings" styleClass="auth-title"/>
+                        <Label text="Update your personal information" styleClass="auth-subtitle"/>
+                    </VBox>
 
-                <VBox spacing="8" alignment="CENTER_LEFT" style="-fx-padding: 0 24 8 24;">
-                    <Label text="Theme" styleClass="form-label"/>
-                    <Label fx:id="themeStatusLabel" text="Current theme: dark" style="-fx-text-fill: rgba(255,255,255,0.65);"/>
-                    <Button fx:id="themeToggleButton" text="Switch Theme" prefHeight="40.0" minWidth="200.0" styleClass="auth-btn-secondary"/>
+                    <Rectangle height="1" width="300" fill="rgba(255,255,255,0.05)"/>
+
+                    <!-- Name field -->
+                    <VBox alignment="CENTER_LEFT" spacing="7">
+                        <Label text="Name" styleClass="auth-label"/>
+                        <TextField fx:id="nameField" promptText="Your full name"
+                                   styleClass="auth-field" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <!-- Email field -->
+                    <VBox alignment="CENTER_LEFT" spacing="7">
+                        <Label text="Email" styleClass="auth-label"/>
+                        <TextField fx:id="emailField" promptText="Your email address"
+                                   styleClass="auth-field" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <!-- Status field -->
+                    <VBox alignment="CENTER_LEFT" spacing="7">
+                        <Label text="Status" styleClass="auth-label"/>
+                        <TextField fx:id="statusField" promptText="What's your status?"
+                                   styleClass="auth-field" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <!-- Buttons -->
+                    <VBox alignment="CENTER" spacing="10">
+                        <Button fx:id="saveButton" defaultButton="true"
+                                text="Save Changes"
+                                prefHeight="48" maxWidth="Infinity"
+                                styleClass="auth-btn-primary"/>
+                        <Button fx:id="changePhotoButton"
+                                text="📷  Change Photo"
+                                prefHeight="44" maxWidth="Infinity"
+                                styleClass="auth-btn-secondary"/>
+                        <Button fx:id="logoutbutton"
+                                text="← Log Out"
+                                prefHeight="44" maxWidth="Infinity"
+                                styleClass="auth-btn-secondary"/>
+                    </VBox>
+
+                    <!-- Theme toggle (subtle, at bottom) -->
+                    <HBox alignment="CENTER">
+                        <Button fx:id="themeToggleButton" text="🌓  Toggle Theme"
+                                styleClass="auth-btn-secondary"
+                                onAction="#toggleTheme"
+                                style="-fx-padding: 6 16; -fx-font-size: 12px;
+                                       -fx-background-radius: 10; -fx-border-radius: 10;"/>
+                    </HBox>
+
                 </VBox>
-
-                <HBox spacing="12.0" alignment="CENTER">
-                    <Button fx:id="saveButton" text="Save Changes" prefHeight="40.0" minWidth="148.0" styleClass="save-button"/>
-                    <Button fx:id="logoutbutton" text="Log Out" prefHeight="40.0" minWidth="110.0" styleClass="auth-btn-secondary"/>
-                </HBox>
             </VBox>
-        </VBox>
-    </VBox>
+        </content>
+    </ScrollPane>
 </AnchorPane>

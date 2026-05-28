@@ -24,7 +24,7 @@ public class ChatbotViewController {
     @FXML
     public void initialize() {
         chatbotScrollPane.setFitToWidth(true);
-        addBubble("Hello! I'm your AI assistant. Ask me anything!", false);
+        addBubble("Chào bạn! Tôi là Chatbot cá nhân của bạn. Tôi có thể giúp gì cho bạn hôm nay?", false);
     }
 
     @FXML
@@ -52,11 +52,12 @@ public class ChatbotViewController {
         HBox row = new HBox();
         row.setPadding(new Insets(4, 12, 4, 12));
 
-        Label bubble = new Label(isUser ? text : "Bot: " + text);
+        Label bubble = new Label(text);
         bubble.setWrapText(true);
         bubble.setMaxWidth(450);
         bubble.setOpacity(0);
-        bubble.getStyleClass().add(isUser ? "user-message" : "bot-message");
+        boolean isError = !isUser && text.startsWith("Sorry, I encountered");
+        bubble.getStyleClass().add(isUser ? "user-message" : (isError ? "error-message" : "bot-message"));
 
         if (isUser) {
             row.setAlignment(Pos.CENTER_RIGHT);

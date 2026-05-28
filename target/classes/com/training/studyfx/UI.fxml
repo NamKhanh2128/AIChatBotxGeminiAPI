@@ -3,96 +3,118 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="720.0" prefWidth="1080.0"
+<BorderPane prefHeight="760.0" prefWidth="1280.0"
             styleClass="root-pane"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.training.studyfx.controller.UIController">
 
-    <!-- LEFT: Sidebar -->
+    <!-- ════════════════ LEFT: Collapsible Sidebar ════════════════ -->
     <left>
-        <VBox prefWidth="250.0" minWidth="250.0" maxWidth="250.0" spacing="8"
+        <VBox fx:id="sidebar"
+              prefWidth="250.0" minWidth="250.0" maxWidth="250.0"
               alignment="TOP_CENTER"
               styleClass="side-bar">
-            <padding>
-                <Insets top="40" right="15" bottom="20" left="15"/>
-            </padding>
 
-            <VBox spacing="15" alignment="CENTER" styleClass="sidebar-profile-section">
+            <!-- Profile Section -->
+            <VBox fx:id="profileSection" spacing="12" alignment="CENTER"
+                  styleClass="sidebar-profile-section">
                 <StackPane alignment="CENTER">
-                    <Circle radius="45" fill="TRANSPARENT" stroke="#6366F1" strokeWidth="2.5"/>
-                    <Circle fx:id="avt" fill="#1E293B" radius="38.0"/>
-                    <Label text="👤" style="-fx-font-size: 30px; -fx-text-fill: #64748B;"/>
+                    <!-- Gradient ring — uses CSS class, no inline fill -->
+                    <Circle radius="46" styleClass="sidebar-avatar-ring"/>
+                    <Circle radius="41" styleClass="sidebar-avatar-inner"/>
+                    <Circle fx:id="avt" styleClass="sidebar-avatar-circle" radius="37.0"/>
+                    <Label text="👤" styleClass="sidebar-avatar-icon"/>
                 </StackPane>
-                <Label text="You" style="-fx-text-fill: #F8FAFC; -fx-font-size: 16px; -fx-font-weight: bold;"/>
-                <HBox alignment="CENTER" spacing="8">
-                    <Circle radius="4" fill="#22C55E"/>
-                    <Label text="Active now" style="-fx-text-fill: #94A3B8; -fx-font-size: 12px;"/>
+                <Label fx:id="profileName" text="You"
+                       styleClass="sidebar-profile-name"/>
+                <HBox fx:id="profileStatusBox" alignment="CENTER" spacing="7"
+                      styleClass="sidebar-status-box">
+                    <Circle radius="4" styleClass="sidebar-status-dot"
+                             style="-fx-effect: dropshadow(three-pass-box, rgba(34,197,94,0.6), 5, 0, 0, 0);"/>
+                    <Label text="Active now" styleClass="sidebar-status-label"/>
                 </HBox>
             </VBox>
 
-            <Region prefHeight="20"/>
-            <HBox alignment="CENTER_LEFT">
-                <padding><Insets left="15" bottom="5"/></padding>
-                <Label text="MENU" style="-fx-text-fill: #475569; -fx-font-size: 11px; -fx-font-weight: bold;"/>
+            <Region prefHeight="14"/>
+
+            <!-- MENU label -->
+            <HBox fx:id="menuLabelBox" alignment="CENTER_LEFT"
+                  styleClass="sidebar-menu-label"
+                  style="-fx-padding: 0 0 4 16;">
+                <Label text="MENU" styleClass="sidebar-menu-text"/>
             </HBox>
 
-            <Button fx:id="About" prefHeight="45.0" maxWidth="Infinity" styleClass="nav-button" onMouseClicked="#handleAboutClick">
+            <!-- ── About ── -->
+            <Button fx:id="About" maxWidth="Infinity" styleClass="nav-button"
+                    onMouseClicked="#handleAboutClick">
                 <graphic>
-                    <HBox alignment="CENTER_LEFT" spacing="15">
-                        <padding><Insets left="15"/></padding>
-                        <Label text="ℹ️" style="-fx-font-size: 16px;"/>
+                    <HBox styleClass="nav-btn-content">
+                        <Label text="ℹ" styleClass="nav-icon"/>
                         <Label styleClass="nav-label" text="About"/>
                     </HBox>
                 </graphic>
+                <tooltip><Tooltip text="About"/></tooltip>
             </Button>
-            <Button fx:id="Chat" prefHeight="45.0" maxWidth="Infinity" styleClass="nav-button" onMouseClicked="#handleChatClick">
+
+            <!-- ── Global Chat ── -->
+            <Button fx:id="Chat" maxWidth="Infinity" styleClass="nav-button"
+                    onMouseClicked="#handleChatClick">
                 <graphic>
-                    <HBox alignment="CENTER_LEFT" spacing="15">
-                        <padding><Insets left="15"/></padding>
-                        <Label text="💬" style="-fx-font-size: 16px;"/>
+                    <HBox styleClass="nav-btn-content">
+                        <Label text="🌐" styleClass="nav-icon"/>
                         <Label styleClass="nav-label" text="Global Chat"/>
                     </HBox>
                 </graphic>
+                <tooltip><Tooltip text="Global Chat"/></tooltip>
             </Button>
-            <Button fx:id="Chatbot" prefHeight="45.0" maxWidth="Infinity" styleClass="nav-button" onMouseClicked="#handleChatbotClick">
+
+            <!-- ── Chatbot AI ── -->
+            <Button fx:id="Chatbot" maxWidth="Infinity" styleClass="nav-button"
+                    onMouseClicked="#handleChatbotClick">
                 <graphic>
-                    <HBox alignment="CENTER_LEFT" spacing="15">
-                        <padding><Insets left="15"/></padding>
-                        <Label text="🤖" style="-fx-font-size: 16px;"/>
+                    <HBox styleClass="nav-btn-content">
+                        <Label text="✨" styleClass="nav-icon"/>
                         <Label styleClass="nav-label" text="Chatbot AI"/>
                     </HBox>
                 </graphic>
+                <tooltip><Tooltip text="Chatbot AI"/></tooltip>
             </Button>
-            <Button fx:id="Setting" prefHeight="45.0" maxWidth="Infinity" styleClass="nav-button" onMouseClicked="#handleSettingClick">
+
+            <!-- ── Settings ── -->
+            <Button fx:id="Setting" maxWidth="Infinity" styleClass="nav-button"
+                    onMouseClicked="#handleSettingClick">
                 <graphic>
-                    <HBox alignment="CENTER_LEFT" spacing="15">
-                        <padding><Insets left="15"/></padding>
-                        <Label text="⚙️" style="-fx-font-size: 16px;"/>
+                    <HBox styleClass="nav-btn-content">
+                        <Label text="⚙" styleClass="nav-icon"/>
                         <Label styleClass="nav-label" text="Settings"/>
                     </HBox>
                 </graphic>
-            </Button>
-            <Button fx:id="themeToggleBtn" prefHeight="45.0" maxWidth="Infinity" styleClass="nav-button" onMouseClicked="#toggleTheme">
-                <graphic>
-                    <HBox alignment="CENTER_LEFT" spacing="15">
-                        <padding><Insets left="15"/></padding>
-                        <Label text="🌓" style="-fx-font-size: 16px;"/>
-                        <Label styleClass="nav-label" text="Theme"/>
-                    </HBox>
-                </graphic>
+                <tooltip><Tooltip text="Settings"/></tooltip>
             </Button>
 
+            <!-- Spacer -->
             <Pane VBox.vgrow="ALWAYS"/>
-            <VBox alignment="CENTER" spacing="8" styleClass="sidebar-footer">
-                <Label text="v1.0.0 · Team StudyFX" style="-fx-text-fill: #334155; -fx-font-size: 11px;"/>
+
+            <!-- ── Collapse / Expand Toggle ── -->
+            <Button fx:id="sidebarToggle" text="◀ Collapse"
+                    maxWidth="Infinity" prefHeight="36"
+                    styleClass="sidebar-toggle-btn"
+                    onMouseClicked="#toggleSidebar"
+                    focusTraversable="false"/>
+
+            <Region prefHeight="8"/>
+
+            <!-- Footer -->
+            <VBox fx:id="sidebarFooterBox" alignment="CENTER"
+                  styleClass="sidebar-footer">
+                <Label text="v1.0.0 · Team 三六" styleClass="sidebar-footer-label"/>
             </VBox>
         </VBox>
     </left>
 
-    <!-- CENTER: Main Content Area -->
+    <!-- ════════════════ CENTER: Main Content ════════════════ -->
     <center>
         <StackPane fx:id="mainContentArea" styleClass="childpan"/>
     </center>
