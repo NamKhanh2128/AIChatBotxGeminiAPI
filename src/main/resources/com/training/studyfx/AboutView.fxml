@@ -43,25 +43,20 @@
                                 <Label text="💬" style="-fx-font-size: 2em; -fx-text-fill: white;"/>
                             </StackPane>
                             <VBox alignment="CENTER_LEFT" spacing="4">
-                                <Label text="Internal Chat"
-                                       style="-fx-font-size: 2.4em; -fx-font-weight: 800;
-                                              -fx-text-fill: white;
-                                              -fx-effect: dropshadow(three-pass-box, rgba(10,132,255,0.4), 14, 0, 0, 0);"/>
-                                <Label text="HUST · OOP Project"
-                                       style="-fx-font-size: 1em; -fx-text-fill: white; -fx-opacity: 0.4;"/>
+                                <Label text="Internal Chat" styleClass="about-hero-title"
+                                       style="-fx-font-size: 2.4em; -fx-font-weight: 800;"/>
+                                <Label text="HUST · OOP Project" styleClass="about-hero-subtitle"
+                                       style="-fx-font-size: 1em; -fx-opacity: 0.4;"/>
                             </VBox>
                         </HBox>
 
                         <!-- ── Info card ── -->
                         <VBox alignment="TOP_CENTER" spacing="20"
                               styleClass="about-card"
-                              style="-fx-background-color: rgba(14,16,26,0.95);
-                                     -fx-background-radius: 22;
+                              style="-fx-background-radius: 22;
                                      -fx-padding: 32 38 32 38;
-                                     -fx-border-color: rgba(255,255,255,0.07);
                                      -fx-border-radius: 22;
-                                     -fx-border-width: 1;
-                                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 28, 0, 0, 8);"
+                                     -fx-border-width: 1;"
                               maxWidth="Infinity">
 
                             <!-- Card header -->
@@ -70,62 +65,53 @@
                                     <Circle radius="22" fill="rgba(10,132,255,0.1)"/>
                                     <Label style="-fx-font-size: 1.5em;" text="🗨️"/>
                                 </StackPane>
-                                <Label style="-fx-font-size: 1.3em; -fx-text-fill: #FFFFFF; -fx-font-weight: bold;"
+                                <Label styleClass="about-card-title"
+                                       style="-fx-font-size: 1.3em; -fx-font-weight: bold;"
                                        text="Giới thiệu ứng dụng"/>
                             </HBox>
 
-                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity"
-                                     style="-fx-background-color: rgba(255,255,255,0.07);"/>
+                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity" styleClass="about-divider"/>
 
                             <!-- Description -->
-                            <Label alignment="CENTER"
-                                   style="-fx-font-size: 1em; -fx-text-fill: rgba(255,255,255,0.55);
-                                          -fx-line-spacing: 4;"
+                            <Label alignment="CENTER" styleClass="about-card-desc"
+                                   style="-fx-font-size: 1em; -fx-line-spacing: 4;"
                                    text="Internal Chat là ứng dụng chat desktop hiện đại xây dựng bằng JavaFX, tích hợp Gemini AI. Được phát triển nhằm hỗ trợ sinh viên học tập, ôn luyện và tương tác với AI một cách đơn giản, hiệu quả."
                                    wrapText="true" maxWidth="Infinity"/>
 
-                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity"
-                                     style="-fx-background-color: rgba(255,255,255,0.07);"/>
+                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity" styleClass="about-divider"/>
 
                             <!-- Version info — flexible HBox -->
                             <HBox alignment="CENTER" spacing="16">
                                 <VBox alignment="CENTER" spacing="4"
-                                      HBox.hgrow="ALWAYS"
-                                      style="-fx-background-color: rgba(255,255,255,0.04);
-                                             -fx-background-radius: 14;
+                                      HBox.hgrow="ALWAYS" styleClass="about-info-box"
+                                      style="-fx-background-radius: 14;
                                              -fx-padding: 14 20 14 20;
-                                             -fx-border-color: rgba(255,255,255,0.07);
                                              -fx-border-radius: 14;
                                              -fx-border-width: 1;">
-                                    <Label style="-fx-font-size: 1.4em; -fx-font-weight: 800; -fx-text-fill: #eef2ff;" text="v1.0.0"/>
-                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: #3d4a5c;" text="Version"/>
+                                    <Label styleClass="about-info-val" style="-fx-font-size: 1.4em; -fx-font-weight: 800;" text="v1.0.0"/>
+                                    <Label styleClass="about-info-lbl" style="-fx-font-size: 0.8em;" text="Version"/>
                                 </VBox>
                                 <VBox alignment="CENTER" spacing="4"
-                                      HBox.hgrow="ALWAYS"
-                                      style="-fx-background-color: rgba(255,255,255,0.04);
-                                             -fx-background-radius: 14;
+                                      HBox.hgrow="ALWAYS" styleClass="about-info-box"
+                                      style="-fx-background-radius: 14;
                                              -fx-padding: 14 20 14 20;
-                                             -fx-border-color: rgba(255,255,255,0.07);
                                              -fx-border-radius: 14;
                                              -fx-border-width: 1;">
-                                    <Label style="-fx-font-size: 1.4em; -fx-font-weight: 800; -fx-text-fill: #eef2ff;" text="06/2025"/>
-                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: #3d4a5c;" text="Release"/>
+                                    <Label styleClass="about-info-val" style="-fx-font-size: 1.4em; -fx-font-weight: 800;" text="06/2025"/>
+                                    <Label styleClass="about-info-lbl" style="-fx-font-size: 0.8em;" text="Release"/>
                                 </VBox>
                                 <VBox alignment="CENTER" spacing="4"
-                                      HBox.hgrow="ALWAYS"
-                                      style="-fx-background-color: rgba(255,255,255,0.04);
-                                             -fx-background-radius: 14;
+                                      HBox.hgrow="ALWAYS" styleClass="about-info-box"
+                                      style="-fx-background-radius: 14;
                                              -fx-padding: 14 20 14 20;
-                                             -fx-border-color: rgba(255,255,255,0.07);
                                              -fx-border-radius: 14;
                                              -fx-border-width: 1;">
-                                    <Label style="-fx-font-size: 1.4em; -fx-font-weight: 800; -fx-text-fill: #eef2ff;" text="HUST"/>
-                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: #3d4a5c;" text="University"/>
+                                    <Label styleClass="about-info-val" style="-fx-font-size: 1.4em; -fx-font-weight: 800;" text="HUST"/>
+                                    <Label styleClass="about-info-lbl" style="-fx-font-size: 0.8em;" text="University"/>
                                 </VBox>
                             </HBox>
 
-                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity"
-                                     style="-fx-background-color: rgba(255,255,255,0.07);"/>
+                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity" styleClass="about-divider"/>
 
                             <!-- Features grid — all cells grow equally -->
                             <HBox alignment="CENTER" spacing="14">
@@ -142,8 +128,8 @@
                                         <Circle radius="24" style="-fx-fill: rgba(245,158,11,0.2);"/>
                                         <Label style="-fx-font-size: 1.6em;" text="🌙"/>
                                     </StackPane>
-                                    <Label style="-fx-font-size: 0.85em; -fx-font-weight: bold;
-                                                  -fx-text-fill: rgba(255,255,255,0.80);
+                                    <Label styleClass="about-feature-title"
+                                           style="-fx-font-size: 0.85em; -fx-font-weight: bold;
                                                   -fx-text-alignment: CENTER; -fx-alignment: CENTER;"
                                            text="Dark Mode" wrapText="true"/>
                                 </VBox>
@@ -160,8 +146,8 @@
                                         <Circle radius="24" style="-fx-fill: rgba(6,182,212,0.2);"/>
                                         <Label style="-fx-font-size: 1.6em;" text="🤖"/>
                                     </StackPane>
-                                    <Label style="-fx-font-size: 0.85em; -fx-font-weight: bold;
-                                                  -fx-text-fill: rgba(255,255,255,0.80);
+                                    <Label styleClass="about-feature-title"
+                                           style="-fx-font-size: 0.85em; -fx-font-weight: bold;
                                                   -fx-text-alignment: CENTER; -fx-alignment: CENTER;"
                                            text="Gemini AI" wrapText="true"/>
                                 </VBox>
@@ -178,8 +164,8 @@
                                         <Circle radius="24" style="-fx-fill: rgba(34,197,94,0.2);"/>
                                         <Label style="-fx-font-size: 1.6em;" text="📡"/>
                                     </StackPane>
-                                    <Label style="-fx-font-size: 0.85em; -fx-font-weight: bold;
-                                                  -fx-text-fill: rgba(255,255,255,0.80);
+                                    <Label styleClass="about-feature-title"
+                                           style="-fx-font-size: 0.85em; -fx-font-weight: bold;
                                                   -fx-text-alignment: CENTER; -fx-alignment: CENTER;"
                                            text="Real-time Chat" wrapText="true"/>
                                 </VBox>
@@ -196,24 +182,25 @@
                                         <Circle radius="24" style="-fx-fill: rgba(167,139,250,0.2);"/>
                                         <Label style="-fx-font-size: 1.6em;" text="🕒"/>
                                     </StackPane>
-                                    <Label style="-fx-font-size: 0.85em; -fx-font-weight: bold;
-                                                  -fx-text-fill: rgba(255,255,255,0.80);
+                                    <Label styleClass="about-feature-title"
+                                           style="-fx-font-size: 0.85em; -fx-font-weight: bold;
                                                   -fx-text-alignment: CENTER; -fx-alignment: CENTER;"
                                            text="Chat History" wrapText="true"/>
                                 </VBox>
                             </HBox>
 
+                            <Region prefHeight="1" maxHeight="1" maxWidth="Infinity" styleClass="about-divider"/>
+
                             <!-- Contact -->
                             <HBox alignment="CENTER" spacing="28">
                                 <VBox alignment="CENTER" spacing="4">
-                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: rgba(255,255,255,0.3);" text="EMAIL"/>
+                                    <Label styleClass="about-contact-lbl" style="-fx-font-size: 0.8em;" text="EMAIL"/>
                                     <Label style="-fx-font-size: 0.95em; -fx-font-weight: bold; -fx-text-fill: #0A84FF;"
                                            text="oopGr6@gmail.com"/>
                                 </VBox>
-                                <Region prefWidth="1" maxWidth="1" prefHeight="32" maxHeight="32"
-                                        style="-fx-background-color: rgba(255,255,255,0.08);"/>
+                                <Region prefWidth="1" maxWidth="1" prefHeight="32" maxHeight="32" styleClass="about-divider-v"/>
                                 <VBox alignment="CENTER" spacing="4">
-                                    <Label style="-fx-font-size: 0.8em; -fx-text-fill: rgba(255,255,255,0.3);" text="GITHUB"/>
+                                    <Label styleClass="about-contact-lbl" style="-fx-font-size: 0.8em;" text="GITHUB"/>
                                     <Label style="-fx-font-size: 0.95em; -fx-font-weight: bold; -fx-text-fill: #BF5AF2;"
                                            text="github.com/OOP_BTL20242"/>
                                 </VBox>
