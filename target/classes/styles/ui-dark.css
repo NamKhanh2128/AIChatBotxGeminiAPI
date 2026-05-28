@@ -129,11 +129,12 @@
 
 /* ── Navigation ── */
 .nav-button {
-    -fx-background-color: transparent;
+    -fx-background-color: rgba(0, 0, 0, 0.01);
     -fx-background-radius: 12;
     -fx-cursor: hand;
     -fx-border-color: transparent;
     -fx-border-radius: 12;
+    -fx-pick-on-bounds: true;
 }
 
 .nav-button:hover {

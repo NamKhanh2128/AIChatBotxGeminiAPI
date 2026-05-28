@@ -48,11 +48,11 @@
 
             <!-- ── About ── -->
             <Button fx:id="About" maxWidth="Infinity" styleClass="nav-button"
-                    onMouseClicked="#handleAboutClick">
+                    onAction="#handleAboutClick" pickOnBounds="true">
                 <graphic>
-                    <HBox styleClass="nav-btn-content">
+                    <HBox styleClass="nav-btn-content" pickOnBounds="true">
                         <Label text="ℹ" styleClass="nav-icon"/>
-                        <Label styleClass="nav-label" text="About"/>
+                        <Label fx:id="aboutLabel" styleClass="nav-label" text="About"/>
                     </HBox>
                 </graphic>
                 <tooltip><Tooltip text="About"/></tooltip>
@@ -60,11 +60,11 @@
 
             <!-- ── Global Chat ── -->
             <Button fx:id="Chat" maxWidth="Infinity" styleClass="nav-button"
-                    onMouseClicked="#handleChatClick">
+                    onAction="#handleChatClick" pickOnBounds="true">
                 <graphic>
-                    <HBox styleClass="nav-btn-content">
+                    <HBox styleClass="nav-btn-content" pickOnBounds="true">
                         <Label text="🌐" styleClass="nav-icon"/>
-                        <Label styleClass="nav-label" text="Global Chat"/>
+                        <Label fx:id="chatLabel" styleClass="nav-label" text="Global Chat"/>
                     </HBox>
                 </graphic>
                 <tooltip><Tooltip text="Global Chat"/></tooltip>
@@ -72,11 +72,11 @@
 
             <!-- ── Chatbot AI ── -->
             <Button fx:id="Chatbot" maxWidth="Infinity" styleClass="nav-button"
-                    onMouseClicked="#handleChatbotClick">
+                    onAction="#handleChatbotClick" pickOnBounds="true">
                 <graphic>
-                    <HBox styleClass="nav-btn-content">
+                    <HBox styleClass="nav-btn-content" pickOnBounds="true">
                         <Label text="✨" styleClass="nav-icon"/>
-                        <Label styleClass="nav-label" text="Chatbot AI"/>
+                        <Label fx:id="chatbotLabel" styleClass="nav-label" text="Chatbot AI"/>
                     </HBox>
                 </graphic>
                 <tooltip><Tooltip text="Chatbot AI"/></tooltip>
@@ -84,11 +84,11 @@
 
             <!-- ── Settings ── -->
             <Button fx:id="Setting" maxWidth="Infinity" styleClass="nav-button"
-                    onMouseClicked="#handleSettingClick">
+                    onAction="#handleSettingClick" pickOnBounds="true">
                 <graphic>
-                    <HBox styleClass="nav-btn-content">
+                    <HBox styleClass="nav-btn-content" pickOnBounds="true">
                         <Label text="⚙" styleClass="nav-icon"/>
-                        <Label styleClass="nav-label" text="Settings"/>
+                        <Label fx:id="settingLabel" styleClass="nav-label" text="Settings"/>
                     </HBox>
                 </graphic>
                 <tooltip><Tooltip text="Settings"/></tooltip>
@@ -101,7 +101,8 @@
             <Button fx:id="sidebarToggle" text="◀ Collapse"
                     maxWidth="Infinity" prefHeight="36"
                     styleClass="sidebar-toggle-btn"
-                    onMouseClicked="#toggleSidebar"
+                    onAction="#toggleSidebar"
+                    pickOnBounds="true"
                     focusTraversable="false"/>
 
             <Region prefHeight="8"/>
