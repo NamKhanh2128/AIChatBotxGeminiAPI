@@ -5,6 +5,7 @@ module com.training.studyfx {
     requires java.sql;
     requires java.logging;
     requires java.net.http;
+    requires com.google.gson;
 
     opens com.training.studyfx to javafx.fxml;
     opens com.training.studyfx.controller to javafx.fxml;
