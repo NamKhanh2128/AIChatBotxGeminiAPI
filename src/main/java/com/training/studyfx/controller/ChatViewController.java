@@ -41,13 +41,24 @@ public class ChatViewController implements SocketManager.MessageListener {
     }
 
     private void connect() {
-        try {
-            if (!socket.isConnected()) {
-                socket.connect(displayName);
-                append(displayName + " joined the chat");
+        new Thread(() -> {
+            for (int attempt = 1; attempt <= 12; attempt++) {
+                try {
+                    Thread.sleep(500);
+                    if (!socket.isConnected()) {
+                        socket.connect(displayName);
+                    }
+                    final int a = attempt;
+                    Platform.runLater(() -> append(displayName + " joined the chat"));
+                    return; // kết nối thành công
+                } catch (Exception e) {
+                    if (attempt == 12) {
+                        Platform.runLater(() ->
+                            append("⚠️ Không thể kết nối server chat sau 6 giây."));
+                    }
+                }
             }
-        } catch (IOException ignored) {
-        }
+        }, "chat-connect-retry").start();
     }
 
     @FXML

@@ -97,7 +97,7 @@
                                              -fx-padding: 14 20 14 20;
                                              -fx-border-radius: 14;
                                              -fx-border-width: 1;">
-                                    <Label styleClass="about-info-val" style="-fx-font-size: 1.4em; -fx-font-weight: 800;" text="06/2025"/>
+                                    <Label styleClass="about-info-val" style="-fx-font-size: 1.4em; -fx-font-weight: 800;" text="05/2026"/>
                                     <Label styleClass="about-info-lbl" style="-fx-font-size: 0.8em;" text="Release"/>
                                 </VBox>
                                 <VBox alignment="CENTER" spacing="4"
@@ -196,13 +196,13 @@
                                 <VBox alignment="CENTER" spacing="4">
                                     <Label styleClass="about-contact-lbl" style="-fx-font-size: 0.8em;" text="EMAIL"/>
                                     <Label style="-fx-font-size: 0.95em; -fx-font-weight: bold; -fx-text-fill: #0A84FF;"
-                                           text="oopGr6@gmail.com"/>
+                                           text="oopGr18@gmail.com"/>
                                 </VBox>
                                 <Region prefWidth="1" maxWidth="1" prefHeight="32" maxHeight="32" styleClass="about-divider-v"/>
                                 <VBox alignment="CENTER" spacing="4">
                                     <Label styleClass="about-contact-lbl" style="-fx-font-size: 0.8em;" text="GITHUB"/>
                                     <Label style="-fx-font-size: 0.95em; -fx-font-weight: bold; -fx-text-fill: #BF5AF2;"
-                                           text="github.com/OOP_BTL20242"/>
+                                           text="github.com/NamKhanh2128/AIChatBotxGeminiAPI"/>
                                 </VBox>
                             </HBox>
                         </VBox>
