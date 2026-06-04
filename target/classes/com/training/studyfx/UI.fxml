@@ -110,7 +110,7 @@
             <!-- Footer -->
             <VBox fx:id="sidebarFooterBox" alignment="CENTER"
                   styleClass="sidebar-footer">
-                <Label text="v1.0.0 · Team 三六" styleClass="sidebar-footer-label"/>
+                <Label text="v1.0.0 · Nhóm 18" styleClass="sidebar-footer-label"/>
             </VBox>
         </VBox>
     </left>
