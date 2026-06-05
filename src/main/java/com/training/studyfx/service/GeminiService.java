@@ -39,60 +39,113 @@ public class GeminiService {
 
     private final HttpClient client = HttpClient.newHttpClient();
 
+    /** Models to try in order if the primary model is overloaded. */
+    private static final String[] FALLBACK_MODELS = {
+        "gemini-flash-latest",
+        "gemini-2.0-flash"
+    };
+
     public String generateResponse(String prompt) {
-        try {
-            String escapedPrompt = prompt
-                    .replace("\\", "\\\\")
-                    .replace("\"", "\\\"")
-                    .replace("\n", "\\n");
+        // Try primary model with retries, then fallback models
+        String result = tryModel(URL, prompt, 3);
+        if (result != null) return result;
 
-            String json = "{"
-                    + "\"contents\":[{"
-                    + "\"parts\":[{\"text\":\"" + escapedPrompt + "\"}]"
-                    + "}],"
-                    + "\"generationConfig\":{"
-                    + "\"temperature\":0.7,"
-                    + "\"maxOutputTokens\":1000"
-                    + "}}";
+        for (String fallback : FALLBACK_MODELS) {
+            String fallbackUrl = "https://generativelanguage.googleapis.com/v1beta/models/"
+                    + fallback + ":generateContent?key=" + KEY;
+            System.out.println("GeminiService: falling back to " + fallback);
+            result = tryModel(fallbackUrl, prompt, 1);
+            if (result != null) return result;
+        }
 
-            HttpRequest req = HttpRequest.newBuilder()
-                    .uri(URI.create(URL))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(json))
-                    .build();
+        return "⚠️ AI đang bận, vui lòng thử lại sau.";
+    }
 
-            HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
-            String body = res.body();
+    /**
+     * Try calling a specific model URL up to maxRetries times.
+     * Returns the AI reply text on success, null if all retries fail due to overload.
+     */
+    private String tryModel(String url, String prompt, int maxRetries) {
+        String escapedPrompt = prompt
+                .replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n");
 
+        String json = "{"
+                + "\"contents\":[{"
+                + "\"parts\":[{\"text\":\"" + escapedPrompt + "\"}]"
+                + "}],"
+                + "\"generationConfig\":{"
+                + "\"temperature\":0.7,"
+                + "\"maxOutputTokens\":1000"
+                + "}}";
+
+        for (int attempt = 1; attempt <= maxRetries; attempt++) {
             try {
-                JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
-                
-                // Check if there is an error field
-                if (jsonObject.has("error")) {
-                    JsonObject error = jsonObject.getAsJsonObject("error");
-                    return "API Error: " + (error.has("message") ? error.get("message").getAsString() : body);
+                HttpRequest req = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(json))
+                        .build();
+
+                HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());
+                String body = res.body();
+                int statusCode = res.statusCode();
+
+                // Overloaded / rate-limited → retry with backoff
+                if (statusCode == 503 || statusCode == 429
+                        || body.contains("high demand")
+                        || body.contains("RESOURCE_EXHAUSTED")) {
+                    System.out.println("GeminiService: attempt " + attempt + " overloaded (HTTP "
+                            + statusCode + "), retrying...");
+                    if (attempt < maxRetries) {
+                        Thread.sleep(1500L * attempt); // 1.5s, 3s backoff
+                        continue;
+                    }
+                    return null; // caller will try next fallback
                 }
 
-                // Try to navigate to candidate[0].content.parts[0].text
-                if (jsonObject.has("candidates")) {
-                    JsonObject candidate = jsonObject.getAsJsonArray("candidates").get(0).getAsJsonObject();
-                    if (candidate.has("content")) {
-                        JsonObject content = candidate.getAsJsonObject("content");
-                        if (content.has("parts")) {
-                            JsonObject part = content.getAsJsonArray("parts").get(0).getAsJsonObject();
-                            if (part.has("text")) {
-                                return part.get("text").getAsString();
+                // Parse JSON response
+                try {
+                    JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
+
+                    if (jsonObject.has("error")) {
+                        JsonObject error = jsonObject.getAsJsonObject("error");
+                        String msg = error.has("message") ? error.get("message").getAsString() : body;
+                        // Overloaded error inside JSON body
+                        if (msg.contains("high demand") || msg.contains("RESOURCE_EXHAUSTED")) {
+                            if (attempt < maxRetries) {
+                                Thread.sleep(1500L * attempt);
+                                continue;
+                            }
+                            return null;
+                        }
+                        return "API Error: " + msg;
+                    }
+
+                    if (jsonObject.has("candidates")) {
+                        JsonObject candidate = jsonObject.getAsJsonArray("candidates")
+                                .get(0).getAsJsonObject();
+                        if (candidate.has("content")) {
+                            JsonObject content = candidate.getAsJsonObject("content");
+                            if (content.has("parts")) {
+                                JsonObject part = content.getAsJsonArray("parts")
+                                        .get(0).getAsJsonObject();
+                                if (part.has("text")) {
+                                    return part.get("text").getAsString();
+                                }
                             }
                         }
                     }
+                    return "No response from AI.";
+                } catch (Exception parseEx) {
+                    return "Parse error: " + parseEx.getMessage();
                 }
-                return "No response from AI. Response: " + body;
-            } catch (Exception parseEx) {
-                return "Parse error: " + parseEx.getMessage() + ". Raw body: " + body;
-            }
 
-        } catch (Exception e) {
-            return "AI Error: " + e.getMessage();
+            } catch (Exception e) {
+                return "AI Error: " + e.getMessage();
+            }
         }
+        return null;
     }
-}
+}
