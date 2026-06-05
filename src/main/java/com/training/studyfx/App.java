@@ -76,27 +76,64 @@ public class App extends Application {
     }
 
     /**
-     * KHÔNG BAO GIỜ gọi trực tiếp - luôn dùng Thread riêng
+     * Auto-discovery startup:
+     *  1. Broadcast UDP để tìm server đang chạy trên LAN.
+     *  2. Nếu tìm thấy → chạy như Client, kết nối vào server đó.
+     *  3. Nếu không có → trở thành Server + bật UDP beacon cho các máy khác tìm thấy.
      */
     private void startServerInBackground() {
-        Thread serverThread = new Thread(() -> {
+        // Nếu host được chỉ định thủ công (không phải localhost/auto) → bỏ qua discovery
+        String configuredHost = com.training.studyfx.server.SocketManager.getServerHost();
+        boolean manualMode = !configuredHost.equalsIgnoreCase("localhost")
+                && !configuredHost.equalsIgnoreCase("auto");
+
+        if (manualMode) {
+            System.out.println("Manual mode: connecting to " + configuredHost + ":"
+                    + com.training.studyfx.server.SocketManager.getServerPort());
+            return;
+        }
+
+        Thread startupThread = new Thread(() -> {
             try {
-                // Delay nhẹ để UI render xong
-                Thread.sleep(500);
+                Thread.sleep(300); // chờ UI render xong
 
-                com.training.studyfx.server.Server server = new com.training.studyfx.server.Server(1235
+                System.out.println("Auto-discovery: scanning LAN for existing server...");
+                String discovered = com.training.studyfx.server.ServerDiscovery.discoverServer(2000);
 
-                );
-                server.startServer(); // Blocking call - OK vì đang ở background thread
+                if (discovered != null) {
+                    // ── CLIENT MODE ──────────────────────────────────
+                    String[] parts = discovered.split(":");
+                    String host = parts[0];
+                    int port = parts.length > 1 ? Integer.parseInt(parts[1]) : 1235;
+                    com.training.studyfx.server.SocketManager.setServerTarget(host, port);
+                    System.out.println("[Client mode] Connected to server at " + discovered);
 
+                } else {
+                    // ── SERVER MODE ──────────────────────────────────
+                    System.out.println("[Server mode] No server found — starting local server...");
+                    int tcpPort = com.training.studyfx.server.SocketManager.getServerPort();
+
+                    // Đặt target về localhost (chính mình)
+                    com.training.studyfx.server.SocketManager.setServerTarget("localhost", tcpPort);
+
+                    // Bật UDP beacon trước khi server TCP block
+                    com.training.studyfx.server.ServerDiscovery beacon =
+                            new com.training.studyfx.server.ServerDiscovery();
+                    beacon.startBeacon(tcpPort);
+
+                    // Khởi động TCP server (blocking — OK vì đang ở background thread)
+                    com.training.studyfx.server.Server server =
+                            new com.training.studyfx.server.Server(tcpPort);
+                    server.startServer();
+                }
             } catch (Exception e) {
-                System.err.println("Server error: " + e.getMessage());
+                System.err.println("Startup error: " + e.getMessage());
             }
-        }, "chat-server");
-        serverThread.setDaemon(true);
-        serverThread.start();
+        }, "chat-startup");
+        startupThread.setDaemon(true);
+        startupThread.start();
 
-        System.out.println("Server starting in background...");
+        System.out.println("Chat startup in background (auto-discovery)...");
     }
 
     // ===== NAVIGATION =====
