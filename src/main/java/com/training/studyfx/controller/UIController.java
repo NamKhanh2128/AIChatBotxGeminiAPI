@@ -219,7 +219,8 @@ public class UIController implements Initializable {
             view.setOpacity(0);
             mainContentArea.getChildren().setAll(view);
             FadeTransition ft = new FadeTransition(Duration.millis(220), view);
-            ft.setToValue(1);
+            ft.setFromValue(0.0);
+            ft.setToValue(1.0);
             ft.play();
         } catch (Exception e) {
             System.err.println("Load view failed: " + name + " – " + e.getMessage());

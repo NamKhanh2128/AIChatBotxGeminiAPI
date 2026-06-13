@@ -71,7 +71,8 @@ public class ChatbotViewController {
 
         chatbotMessagesContainer.getChildren().add(row);
         FadeTransition ft = new FadeTransition(Duration.millis(300), bubble);
-        ft.setToValue(1);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
         ft.play();
         Platform.runLater(() -> chatbotScrollPane.setVvalue(1.0));
     }

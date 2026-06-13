@@ -1,0 +1,1563 @@
+% ============================================================
+%  BÁO CÁO BÀI TẬP LỚN  ·  IT3103  ·  StudyFX Chat
+%  Nhóm 18  ·  Đại học Bách Khoa Hà Nội  ·  2026
+% ============================================================
+
+\documentclass[12pt, a4paper, oneside]{report}
+
+%% ── ENCODING & FONTS ─────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{lmodern}
+
+%% ── PAGE GEOMETRY ────────────────────────────────────────────
+\usepackage[
+  top=2.5cm, bottom=2.8cm,
+  left=3.0cm, right=2.2cm,
+  headheight=15pt
+]{geometry}
+
+%% ── COLORS ───────────────────────────────────────────────────
+\usepackage[dvipsnames, table, x11names]{xcolor}
+\definecolor{hustred}{RGB}{175, 20, 20}
+\definecolor{hustblue}{RGB}{0, 61, 124}
+\definecolor{accentgold}{RGB}{200, 160, 0}
+\definecolor{lightgray}{RGB}{248, 249, 250}
+\definecolor{midgray}{RGB}{220, 224, 228}
+\definecolor{darkgray}{RGB}{64, 64, 64}
+\definecolor{codegreen}{RGB}{39, 128, 68}
+\definecolor{codepurple}{RGB}{120, 0, 180}
+\definecolor{codebrown}{RGB}{160, 60, 0}
+\definecolor{codeback}{RGB}{250, 250, 252}
+\definecolor{rowA}{RGB}{248, 248, 252}
+\definecolor{rowB}{RGB}{255, 255, 255}
+\definecolor{headerrow}{RGB}{30, 50, 100}
+\definecolor{linkblue}{RGB}{0, 80, 160}
+\definecolor{sidebar}{RGB}{240, 243, 248}
+
+%% ── GRAPHICS & FIGURES ───────────────────────────────────────
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc,
+                decorations.pathmorphing, shadows, fadings}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+%% ── TABLES ───────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\renewcommand{\arraystretch}{1.45}
+
+%% ── CODE LISTINGS ────────────────────────────────────────────
+\usepackage{listings}
+\lstdefinestyle{javastyle}{
+  language=Java,
+  backgroundcolor=\color{codeback},
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  breakatwhitespace=false,
+  captionpos=b,
+  commentstyle=\color{codegreen}\itshape,
+  frame=single,
+  framerule=0pt,
+  rulecolor=\color{midgray},
+  framexleftmargin=8pt,
+  framexrightmargin=4pt,
+  framextopmargin=4pt,
+  framexbottommargin=4pt,
+  keywordstyle=\color{hustblue}\bfseries,
+  numbers=left,
+  numberstyle=\tiny\color{gray}\ttfamily,
+  numbersep=10pt,
+  showstringspaces=false,
+  stepnumber=1,
+  stringstyle=\color{codebrown},
+  tabsize=4,
+  xleftmargin=18pt,
+  morekeywords={String, Thread, Platform, IOException, Override}
+}
+\lstdefinestyle{bashstyle}{
+  language=bash,
+  backgroundcolor=\color{darkgray!95!black},
+  basicstyle=\ttfamily\small\color{white},
+  breaklines=true,
+  frame=single,
+  framerule=0pt,
+  numbers=none,
+  xleftmargin=10pt,
+  xrightmargin=6pt,
+}
+\lstset{style=javastyle}
+
+%% ── HYPERLINKS ───────────────────────────────────────────────
+\usepackage[
+  colorlinks=true,
+  linkcolor=hustblue,
+  citecolor=codegreen,
+  urlcolor=linkblue,
+  pdftitle={Báo cáo IT3103 - StudyFX Chat - Nhóm 18},
+  pdfauthor={Nhóm 18 - HUST 2026},
+  pdfsubject={Lập trình Hướng đối tượng},
+  pdfkeywords={JavaFX, OOP, Chat, Gemini AI, Socket, MVC},
+  bookmarksnumbered=true,
+  bookmarksopen=true
+]{hyperref}
+
+%% ── HEADER / FOOTER ──────────────────────────────────────────
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{%
+  \color{hustblue}\small\itshape StudyFX Chat\ ·\ IT3103 Báo cáo Bài tập lớn}
+\fancyhead[R]{\color{hustblue}\small\itshape Nhóm 18}
+\fancyfoot[C]{%
+  \textcolor{midgray}{\rule{0.3\linewidth}{0.3pt}}\ %
+  \textcolor{darkgray}{\thepage}\ %
+  \textcolor{midgray}{\rule{0.3\linewidth}{0.3pt}}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{%
+  \color{hustblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0pt}
+
+%% ── TITLE FORMATTING ─────────────────────────────────────────
+\usepackage{titlesec}
+\usepackage{titletoc}
+
+% Chapter style
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries}
+  {%
+    \begin{tikzpicture}
+      \fill[hustblue] (0,0) rectangle (\linewidth, 0.06cm);
+      \node[anchor=east, text=hustblue, font=\large\bfseries]
+            at (\linewidth, 0.4cm) {\chaptertitlename\ \thechapter};
+    \end{tikzpicture}%
+  }
+  {0pt}
+  {\Huge\bfseries\color{hustblue}}
+  [\vspace{2pt}{\color{hustblue}\titlerule[1.5pt]}]
+
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+% Section style
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{hustblue}}
+  {\colorbox{hustblue}{\textcolor{white}{\quad\thesection\quad}}}
+  {10pt}
+  {}
+\titlespacing*{\section}{0pt}{18pt}{8pt}
+
+% Subsection style
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{hustblue!80!black}}
+  {\thesubsection}
+  {8pt}
+  {}
+\titlespacing*{\subsection}{0pt}{12pt}{5pt}
+
+% Subsubsection style
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{darkgray}}
+  {\thesubsubsection}
+  {6pt}
+  {}
+
+%% ── MISC PACKAGES ────────────────────────────────────────────
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{parskip}
+\usepackage{tocloft}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mdframed}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable, listingsutf8}
+
+%% ── TCOLORBOX STYLES ─────────────────────────────────────────
+\tcbset{
+  infostyle/.style={
+    enhanced, breakable,
+    colback=hustblue!4!white,
+    colframe=hustblue,
+    coltitle=white,
+    fonttitle=\bfseries\small,
+    attach boxed title to top left={yshift=-2mm, xshift=6mm},
+    boxed title style={colback=hustblue, colframe=hustblue, sharp corners},
+    sharp corners=south,
+    top=6pt, bottom=6pt, left=8pt, right=6pt
+  },
+  codestyle/.style={
+    enhanced, breakable,
+    colback=codeback,
+    colframe=midgray,
+    boxrule=0.5pt,
+    arc=3pt,
+    top=4pt, bottom=4pt, left=6pt, right=6pt
+  },
+  keystyle/.style={
+    enhanced,
+    colback=hustred!8!white,
+    colframe=hustred,
+    coltitle=white,
+    fonttitle=\bfseries\small,
+    attach boxed title to top left={yshift=-2mm, xshift=6mm},
+    boxed title style={colback=hustred, colframe=hustred, sharp corners},
+    sharp corners=south
+  }
+}
+
+%% ── TOC STYLING ──────────────────────────────────────────────
+\renewcommand{\cftchapfont}{\bfseries\color{hustblue}}
+\renewcommand{\cftchappagefont}{\bfseries\color{hustblue}}
+\setlength{\cftbeforechapskip}{6pt}
+\renewcommand{\cftchapleader}{\color{hustblue!50}\cftdotfill{\cftdotsep}}
+
+%% ── CAPTION STYLE ────────────────────────────────────────────
+\captionsetup{
+  labelfont={bf, color=hustblue},
+  labelsep=period,
+  font=small,
+  margin=1cm
+}
+
+%% ── SPACING ──────────────────────────────────────────────────
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{5pt plus 1pt}
+\onehalfspacing
+
+%% ── HELPER MACROS ────────────────────────────────────────────
+\newcommand{\code}[1]{\texttt{\color{hustblue!80!black}#1}}
+\newcommand{\hdr}[1]{\rowcolor{headerrow}\textcolor{white}{\textbf{#1}}}
+\newcommand{\rA}{\rowcolor{rowA}}
+\newcommand{\rB}{\rowcolor{rowB}}
+\newcommand{\done}{\textcolor{green!60!black}{\textbf{\checkmark\ Hoàn thành}}}
+\newcommand{\todo}{\textcolor{orange!80!black}{\textbf{$\circ$\ Chưa thực hiện}}}
+\newcommand{\checklabel}[1]{\textcolor{hustblue}{\textbf{#1}}}
+\newcommand{\keyword}[1]{%
+  \fcolorbox{hustblue!40}{hustblue!8}{\small\texttt{\color{hustblue}#1}}}
+
+%% ── VIETNAMESE LITERATE ──────────────────────────────────────
+\lstset{
+  literate=
+   {à}{{\`a}}1{á}{{\'a}}1{ả}{{\h{a}}}1{ã}{{\~a}}1{ạ}{{\d{a}}}1
+   {ă}{{\u{a}}}1{ắ}{{\'{\u{a}}}}1{ằ}{{\`{\u{a}}}}1{ẳ}{{\h{\u{a}}}}1
+   {ẵ}{{\~{\u{a}}}}1{ặ}{{\d{\u{a}}}}1
+   {â}{{\^a}}1{ấ}{{\'{\^a}}}1{ầ}{{\`{\^a}}}1{ẩ}{{\h{\^a}}}1
+   {ẫ}{{\~{\^a}}}1{ậ}{{\d{\^a}}}1
+   {đ}{{\dj}}1{Đ}{{\DJ}}1
+   {è}{{\`e}}1{é}{{\'e}}1{ẻ}{{\h{e}}}1{ẽ}{{\~e}}1{ẹ}{{\d{e}}}1
+   {ê}{{\^e}}1{ế}{{\'{\^e}}}1{ề}{{\`{\^e}}}1{ể}{{\h{\^e}}}1
+   {ễ}{{\~{\^e}}}1{ệ}{{\d{\^e}}}1
+   {ì}{{\`i}}1{í}{{\'i}}1{ỉ}{{\h{i}}}1{ĩ}{{\~i}}1{ị}{{\d{i}}}1
+   {ò}{{\`o}}1{ó}{{\'o}}1{ỏ}{{\h{o}}}1{õ}{{\~o}}1{ọ}{{\d{o}}}1
+   {ô}{{\^o}}1{ố}{{\'{\^o}}}1{ồ}{{\`{\^o}}}1{ổ}{{\h{\^o}}}1
+   {ỗ}{{\~{\^o}}}1{ộ}{{\d{\^o}}}1
+   {ơ}{{\o{}}}1{ớ}{{\'{\o{}}}}1{ờ}{{\`{\o{}}}}1{ở}{{\h{\o{}}}}1
+   {ỡ}{{\~{\o{}}}}1{ợ}{{\d{\o{}}}}1
+   {ù}{{\`u}}1{ú}{{\'u}}1{ủ}{{\h{u}}}1{ũ}{{\~u}}1{ụ}{{\d{u}}}1
+   {ư}{{\uu{}}}1{ứ}{{\'{\uu{}}}}1{ừ}{{\`{\uu{}}}}1{ử}{{\h{\uu{}}}}1
+   {ữ}{{\~{\uu{}}}}1{ự}{{\d{\uu{}}}}1
+   {ỳ}{{\`y}}1{ý}{{\'y}}1{ỷ}{{\h{y}}}1{ỹ}{{\~y}}1{ỵ}{{\d{y}}}1
+   {Đ}{{\DJ}}1{Ô}{{\^O}}1{Ơ}{{\O{}}}1{Ư}{{\UU{}}}1
+   {Ê}{{\^E}}1{Â}{{\^A}}1{Ă}{{\u{A}}}1
+}
+
+% ─────────────────────────────────────────────────────────────
+\begin{document}
+\thispagestyle{empty}
+
+% ============================================================
+%  TRANG BÌA
+% ============================================================
+\begin{titlepage}
+\newgeometry{top=0cm, bottom=0cm, left=0cm, right=0cm}
+
+%% Nền gradient xanh đậm bên trái
+\begin{tikzpicture}[remember picture, overlay]
+  %% Dải màu bên trái
+  \fill[hustblue] (current page.north west)
+    rectangle ([xshift=7cm] current page.south west);
+  %% Tam giác trang trí góc trên phải dải xanh
+  \fill[hustblue!70!black]
+    ([xshift=7cm] current page.north west) --
+    ([xshift=5cm] current page.north west) --
+    ([xshift=7cm, yshift=-4cm] current page.north west) -- cycle;
+  %% Dải vàng accent
+  \fill[accentgold]
+    ([xshift=7cm] current page.north west) rectangle
+    ([xshift=7.18cm] current page.south west);
+  %% Nền trắng bên phải
+  \fill[white]
+    ([xshift=7.18cm] current page.north west) rectangle
+    (current page.south east);
+  %% Vòng tròn trang trí bên trái (watermark)
+  \draw[white, opacity=0.07, line width=60pt]
+    ([xshift=3.5cm, yshift=-10cm] current page.north west) circle (5cm);
+  \draw[white, opacity=0.05, line width=40pt]
+    ([xshift=3.5cm, yshift=-22cm] current page.north west) circle (3.5cm);
+  \draw[white, opacity=0.04, line width=20pt]
+    ([xshift=1cm, yshift=-18cm] current page.north west) circle (2cm);
+\end{tikzpicture}
+
+%% ── Cột trái (nền xanh) ──────────────────────────────────────
+\begin{minipage}[t][29.7cm][t]{6.6cm}
+  \vspace{1.8cm}
+  \begin{center}
+    {\color{white}\fontsize{8.5pt}{12pt}\selectfont
+      \textbf{ĐẠI HỌC BÁCH KHOA HÀ NỘI}\\[2pt]
+      Trường Công nghệ\\Thông tin và Truyền thông}
+
+    \vspace{1.4cm}
+    % Logo vòng tròn
+    \begin{tikzpicture}
+      \draw[white, line width=2pt] (0,0) circle (1.4cm);
+      \draw[accentgold, line width=1pt] (0,0) circle (1.2cm);
+      \node at (0,0) {
+        \includegraphics[width=2cm]{src/main/resources/images/logo.png}};
+    \end{tikzpicture}
+
+    \vspace{1.4cm}
+    {\color{white!70}\fontsize{8pt}{12pt}\selectfont
+      HỌC PHẦN}\\[4pt]
+    {\color{white}\fontsize{10pt}{15pt}\selectfont
+      \textbf{IT3103}\\[2pt]
+      Lập trình Hướng đối tượng}
+
+    \vspace{1.2cm}
+    \textcolor{accentgold}{\rule{3cm}{0.5pt}}
+    \vspace{1.2cm}
+
+    {\color{white!70}\fontsize{8pt}{12pt}\selectfont NHÓM}\\[4pt]
+    {\color{white}\fontsize{36pt}{40pt}\selectfont\bfseries 18}
+
+    \vspace{1.0cm}
+    \textcolor{accentgold}{\rule{3cm}{0.5pt}}
+    \vspace{1.0cm}
+
+    {\color{white!80}\fontsize{8pt}{12pt}\selectfont\itshape
+      Giảng viên hướng dẫn:\\[3pt]}
+    {\color{white}\fontsize{9.5pt}{14pt}\selectfont
+      \textbf{Trần Nhật Hóa}}
+
+    \vspace*{\fill}
+    {\color{white!60}\fontsize{8pt}{11pt}\selectfont
+      Hà Nội, tháng 06 năm 2026}
+    \vspace{1.5cm}
+  \end{center}
+\end{minipage}%
+%% ── Cột phải (nền trắng) ─────────────────────────────────────
+\hspace{0.18cm}%
+\begin{minipage}[t][29.7cm][t]{\dimexpr\paperwidth-7.18cm-0.18cm\relax}
+  \vspace{2.2cm}
+  \begin{flushleft}
+    {\color{hustblue!40}\fontsize{9pt}{13pt}\selectfont
+      BÁO CÁO BÀI TẬP LỚN}
+
+    \vspace{0.5cm}
+    {\color{hustblue}\fontsize{30pt}{35pt}\selectfont\bfseries
+      StudyFX\\Chat}
+
+    \vspace{0.3cm}
+    \textcolor{accentgold}{\rule{6cm}{2pt}}
+
+    \vspace{0.6cm}
+    {\color{darkgray}\fontsize{11pt}{16pt}\selectfont\itshape
+      Ứng dụng Chat Nhóm Thời gian Thực\\
+      \& Trợ lý Trí tuệ Nhân tạo Gemini}
+
+    \vspace{1.8cm}
+    {\color{hustblue}\fontsize{9pt}{13pt}\selectfont\bfseries
+      DANH SÁCH THÀNH VIÊN}
+
+    \vspace{0.4cm}
+    \textcolor{midgray}{\rule{8cm}{0.4pt}}
+
+    \vspace{0.3cm}
+    \begin{tabular}{@{}l l@{}}
+      \textcolor{accentgold}{\small 20235654}  &
+        {\small\textbf{Thái Mỹ Anh}}\\[5pt]
+      \textcolor{accentgold}{\small 20235699}  &
+        {\small\textbf{Nguyễn Thị Hương Giang}}\\[5pt]
+      \textcolor{accentgold}{\small 202417242} &
+        {\small\textbf{Nguyễn Đình Nam Khánh}}\\[5pt]
+      \textcolor{accentgold}{\small 20235755}  &
+        {\small\textbf{Nguyễn Đức Nam Khánh}}\\[5pt]
+      \textcolor{accentgold}{\small 20235864}  &
+        {\small\textbf{Trần Đình Tuệ}}\\
+    \end{tabular}
+
+    \vspace{2.0cm}
+    % Technology badges
+    {\color{hustblue!60}\fontsize{8pt}{13pt}\selectfont\bfseries
+      CÔNG NGHỆ SỬ DỤNG}\\[0.5cm]
+    \begin{tikzpicture}
+      \foreach \t/\c [count=\i] in {
+        Java\ 21/hustblue,
+        JavaFX\ 24/hustblue!70,
+        Gemini\ AI/hustred,
+        Socket\ TCP/codegreen!70!black,
+        Maven/accentgold!80!black}
+      {
+        \node[
+          fill=\c!15, draw=\c!60, rounded corners=3pt,
+          text=\c!80!black, font=\tiny\bfseries,
+          inner xsep=6pt, inner ysep=3pt
+        ] at (\i*1.75cm - 1.75cm, 0) {\t};
+      }
+    \end{tikzpicture}
+
+    \vspace*{\fill}
+    % Bottom stripe
+    \begin{tikzpicture}
+      \fill[hustblue!10] (0,0) rectangle (9cm, 0.8cm);
+      \fill[hustblue] (0,0) rectangle (0.3cm, 0.8cm);
+      \node[anchor=west, text=hustblue, font=\small\itshape]
+        at (0.5cm, 0.4cm) {Đại học Bách Khoa Hà Nội\ ·\ 2026};
+    \end{tikzpicture}
+    \vspace{0.5cm}
+  \end{flushleft}
+\end{minipage}
+\restoregeometry
+\end{titlepage}
+
+% ============================================================
+%  TRANG TRẮNG SAU BÌA
+% ============================================================
+\newpage\thispagestyle{empty}
+\mbox{}
+
+% ============================================================
+%  MỤC LỤC
+% ============================================================
+\newpage
+\tableofcontents
+
+\newpage
+\listoftables
+
+\newpage
+\listoffigures
+
+% ============================================================
+%  PHẦN MỞ ĐẦU: THÔNG TIN NHÓM & PHÂN CÔNG
+% ============================================================
+\newpage
+\chapter*{Thông tin Nhóm và Bảng Phân công Công việc}
+\addcontentsline{toc}{chapter}{Thông tin Nhóm và Bảng Phân công}
+\markboth{Thông tin Nhóm và Bảng Phân công}{}
+
+\vspace{-6pt}
+\begin{tcolorbox}[infostyle, title={Danh sách Thành viên Nhóm 18}]
+\begin{tabularx}{\linewidth}{c >{\bfseries}l X}
+  \rowcolor{headerrow}
+  \textcolor{white}{\textbf{MSSV}} &
+  \textcolor{white}{\textbf{Họ và tên}} &
+  \textcolor{white}{\textbf{Vai trò trong dự án}} \\
+  \rA 20235654  & Thái Mỹ Anh            & Quản lý Mô hình Dữ liệu và Xử lý File I/O \\
+  \rB 20235699  & Nguyễn Thị Hương Giang & Thiết kế UX/UI và viết Báo cáo dự án \\
+  \rA 202417242 & Nguyễn Đình Nam Khánh  & Xử lý Logic Giao diện Chat nhóm và Tích hợp Tổng thể \\
+  \rB 20235755  & Nguyễn Đức Nam Khánh   & Tích hợp Trí tuệ Nhân tạo và xử lý API \\
+  \rA 20235864  & Trần Đình Tuệ          & Xây dựng Hệ thống Mạng và Client-Server \\
+\end{tabularx}
+\end{tcolorbox}
+
+\bigskip
+\section*{Bảng Phân công Công việc Chi tiết}
+
+\begin{longtable}{>{\raggedright}p{3.2cm} >{\raggedright}p{5.8cm}
+                   >{\centering}p{1.3cm} >{\centering}p{2.2cm} c}
+  \rowcolor{headerrow}
+  \textcolor{white}{\textbf{Thành viên}} &
+  \textcolor{white}{\textbf{Công việc}} &
+  \textcolor{white}{\textbf{KL\%}} &
+  \textcolor{white}{\textbf{Hoàn thành}} &
+  \textcolor{white}{\textbf{Điểm}} \\
+  \endfirsthead
+  \rowcolor{headerrow}
+  \textcolor{white}{\textbf{Thành viên}} &
+  \textcolor{white}{\textbf{Công việc}} &
+  \textcolor{white}{\textbf{KL\%}} &
+  \textcolor{white}{\textbf{Hoàn thành}} &
+  \textcolor{white}{\textbf{Điểm}} \\
+  \endhead
+
+  \rA
+  \textbf{Thái Mỹ Anh} \newline {\footnotesize 20235654} &
+  Thiết kế lớp \code{User}, \code{Message}, \code{ChatMessage};
+  cài đặt \code{ChatHistoryManager} và \code{UserService} &
+  20\% & \done & \textbf{10} \\
+
+  \rB
+  \textbf{Nguyễn T.\ H.\ Giang} \newline {\footnotesize 20235699} &
+  Thiết kế toàn bộ giao diện FXML; xây dựng CSS Dark/Light Mode;
+  viết báo cáo dự án &
+  20\% & \done & \textbf{10} \\
+
+  \rA
+  \textbf{Nguyễn Đ.\ N.\ Khánh} \newline {\footnotesize 202417242} &
+  Phát triển \code{ChatViewController}, \code{UIController};
+  xử lý cú pháp \code{@bot}; tích hợp các module &
+  20\% & \done & \textbf{10} \\
+
+  \rB
+  \textbf{Nguyễn Đ.\ N.\ Khánh} \newline {\footnotesize 20235755} &
+  Triển khai \code{GeminiService}; cơ chế retry + fallback;
+  chatbot cá nhân (\code{ChatbotViewController}) &
+  20\% & \done & \textbf{10} \\
+
+  \rA
+  \textbf{Trần Đình Tuệ} \newline {\footnotesize 20235864} &
+  Xây dựng \code{Server} TCP/IP đa luồng; \code{ServerDiscovery}
+  qua UDP broadcast; \code{SocketManager} phía client &
+  20\% & \done & \textbf{10} \\
+\end{longtable}
+
+\bigskip
+\begin{tcolorbox}[keystyle, title={Nhận xét từng thành viên}]
+\begin{description}[leftmargin=0pt, itemsep=6pt]
+  \item[\textcolor{hustblue}{Thái Mỹ Anh:}]
+    Hoàn thành xuất sắc nền tảng dữ liệu. Các lớp Model tuân thủ tốt
+    nguyên tắc đóng gói; \code{ChatHistoryManager} an toàn luồng nhờ từ
+    khóa \code{synchronized}.
+
+  \item[\textcolor{hustblue}{Nguyễn Thị Hương Giang:}]
+    Giao diện đẹp, nhất quán, chuyên nghiệp. Cặp stylesheet Dark/Light
+    Mode thể hiện hiểu biết sâu về CSS JavaFX. Báo cáo mạch lạc, đầy đủ.
+
+  \item[\textcolor{hustblue}{Nguyễn Đình Nam Khánh:}]
+    Đóng vai trò then chốt trong tích hợp tổng thể. Logic \code{@bot} và
+    hệ thống điều hướng sidebar được cài đặt tinh tế và mượt mà.
+
+  \item[\textcolor{hustblue}{Nguyễn Đức Nam Khánh:}]
+    Nghiên cứu và tích hợp thành công Gemini API. Cơ chế retry
+    exponential backoff và fallback model thể hiện tư duy lập trình
+    robustness cao.
+
+  \item[\textcolor{hustblue}{Trần Đình Tuệ:}]
+    Giải quyết bài toán mạng phức tạp. UDP auto-discovery là điểm sáng
+    kỹ thuật nổi bật, loại bỏ hoàn toàn cấu hình thủ công.
+\end{description}
+\end{tcolorbox}
+
+% ============================================================
+%  CHƯƠNG 1: GIỚI THIỆU ĐỀ TÀI
+% ============================================================
+\chapter{Giới thiệu Đề tài}
+
+\section{Bối cảnh và Động lực}
+
+Trong thời đại học tập trực tuyến ngày càng phổ biến, nhu cầu về công
+cụ giao tiếp tích hợp hỗ trợ AI không ngừng tăng cao. Các nền tảng hiện
+có như Zalo hay Microsoft Teams đáp ứng được giao tiếp cơ bản nhưng chưa
+kết hợp sâu với trợ lý AI trong môi trường học thuật.
+
+Xuất phát từ thực tiễn đó, nhóm 18 xây dựng \textbf{StudyFX Chat} --
+ứng dụng chat desktop dành cho sinh viên, kết hợp \textit{trò chuyện
+nhóm thời gian thực} và \textit{trợ lý trí tuệ nhân tạo tích hợp}. Đây
+đồng thời là dự án thực hành vận dụng toàn diện kiến thức học phần
+\textbf{IT3103 -- Lập trình Hướng đối tượng}.
+
+\section{Mục tiêu Dự án}
+
+\begin{tcolorbox}[infostyle, title={Ba nhóm mục tiêu chính}]
+\begin{enumerate}[leftmargin=1.5em, itemsep=6pt]
+  \item \textbf{Mục tiêu kỹ thuật:}
+    Hệ thống chat đa người dùng thời gian thực qua Socket TCP/IP;
+    tích hợp Google Gemini AI cho chatbot cá nhân và trợ lý nhóm;
+    giao diện JavaFX chuyên nghiệp với UX/UI hiện đại.
+
+  \item \textbf{Mục tiêu học thuật:}
+    Áp dụng đầy đủ 4 tính chất OOP; triển khai mô hình MVC trong
+    dự án Java thực tế; thực hành làm việc nhóm và quản lý mã nguồn.
+
+  \item \textbf{Mục tiêu sản phẩm:}
+    Tạo ứng dụng desktop hoàn chỉnh, có thể sử dụng thực tế, đảm bảo
+    trải nghiệm người dùng mượt mà, không treo giật.
+\end{enumerate}
+\end{tcolorbox}
+
+\section{Phạm vi Thực hiện}
+
+Dự án tập trung vào các tính năng sau trong khuôn khổ một học kỳ:
+
+\begin{itemize}[leftmargin=2em, itemsep=3pt]
+  \item[\textcolor{hustblue}{$\bullet$}]
+    Đăng ký, đăng nhập và quản lý hồ sơ cá nhân.
+  \item[\textcolor{hustblue}{$\bullet$}]
+    Chat nhóm thời gian thực với nhiều người dùng trên mạng LAN.
+  \item[\textcolor{hustblue}{$\bullet$}]
+    Chatbot AI cá nhân tương tác 1-1 với Google Gemini.
+  \item[\textcolor{hustblue}{$\bullet$}]
+    Gọi AI trong phòng chat nhóm qua cú pháp \code{@bot [câu hỏi]}.
+  \item[\textcolor{hustblue}{$\bullet$}]
+    Giao diện Dark Mode / Light Mode với lưu tuỳ chọn tự động.
+  \item[\textcolor{hustblue}{$\bullet$}]
+    Giao diện Responsive tự điều chỉnh font-size theo kích thước cửa sổ.
+  \item[\textcolor{hustblue}{$\bullet$}]
+    Lưu trữ và phục hồi lịch sử trò chuyện.
+\end{itemize}
+
+\section{Công nghệ và Thư viện Sử dụng}
+
+\begin{table}[H]
+  \centering
+  \caption{Các công nghệ và thư viện sử dụng trong dự án}
+  \label{tab:tech}
+  \begin{tabularx}{\linewidth}{>{\bfseries\color{hustblue}}l c X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Thành phần}} &
+    \textcolor{white}{\textbf{Phiên bản}} &
+    \textcolor{white}{\textbf{Mục đích}} \\
+    \rA Java (OpenJDK)      & 21        & Ngôn ngữ lập trình chính \\
+    \rB JavaFX              & 24.0.1    & Framework giao diện đồ họa desktop \\
+    \rA Apache Maven        & 3.x       & Quản lý dự án và dependencies \\
+    \rB Google Gemini API   & 2.0-flash & Tích hợp trí tuệ nhân tạo \\
+    \rA Gson (Google)       & 2.11.0    & Phân tích dữ liệu JSON từ API \\
+    \rB SQLite JDBC         & 3.45.2.0  & Kết nối cơ sở dữ liệu (dự phòng) \\
+    \rA Java Socket API     & JDK built-in & Lập trình mạng TCP/IP và UDP \\
+    \rB Java HTTP Client    & JDK built-in & Gửi HTTP request tới Gemini API \\
+    \rA FXML + CSS          & JavaFX    & Khai báo và định dạng giao diện \\
+  \end{tabularx}
+\end{table}
+
+% ============================================================
+%  CHƯƠNG 2: PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG
+% ============================================================
+\chapter{Phân tích và Thiết kế Hệ thống}
+
+\section{Phân tích Yêu cầu}
+
+\subsection{Yêu cầu Chức năng}
+
+\begin{table}[H]
+  \centering
+  \caption{Danh sách yêu cầu chức năng}
+  \label{tab:func}
+  \begin{tabularx}{\linewidth}{c >{\bfseries\color{hustblue}}l X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{ID}} &
+    \textcolor{white}{\textbf{Tên}} &
+    \textcolor{white}{\textbf{Mô tả}} \\
+    \rA F01 & Xác thực người dùng &
+      Đăng nhập bằng username/password; tự động đăng ký nếu tài khoản
+      chưa tồn tại; đăng ký độc lập với kiểm tra email và độ dài mật khẩu. \\
+    \rB F02 & Chat nhóm thời gian thực &
+      Nhiều client kết nối socket TCP và trao đổi tin nhắn tức thì;
+      phân biệt tin nhắn bản thân/người khác bằng căn chỉnh và màu sắc. \\
+    \rA F03 & AI trong chat nhóm &
+      Cú pháp \code{@bot [câu hỏi]} gọi Gemini AI và phân phối câu
+      trả lời đến toàn bộ thành viên phòng chat. \\
+    \rB F04 & Chatbot cá nhân &
+      Giao diện riêng tư 1-1 với Gemini AI, độc lập với chat nhóm. \\
+    \rA F05 & Quản lý hồ sơ &
+      Cập nhật họ tên, email, trạng thái và ảnh đại diện. \\
+    \rB F06 & Lịch sử trò chuyện &
+      Ghi toàn bộ tin nhắn vào file có dấu thời gian; tải lại 200 dòng
+      gần nhất khi đăng nhập. \\
+    \rA F07 & Chế độ giao diện &
+      Chuyển đổi Dark/Light Mode; lưu lựa chọn vào
+      \code{\textasciitilde/.studyfx/theme.properties}. \\
+  \end{tabularx}
+\end{table}
+
+\subsection{Yêu cầu Phi Chức năng}
+
+\begin{itemize}[leftmargin=2em, itemsep=4pt]
+  \item \textbf{Hiệu năng:} Mọi tác vụ nặng (socket, API) chạy trên luồng
+    phụ; giao diện không bao giờ bị treo.
+  \item \textbf{Độ tin cậy:} Tự động retry kết nối 12 lần (6 giây) trước
+    khi thông báo lỗi; retry AI với backoff rồi chuyển model dự phòng.
+  \item \textbf{Khả năng mở rộng:} Kiến trúc MVC phân tầng cho phép thêm
+    tính năng không ảnh hưởng module hiện có.
+  \item \textbf{Tính di động:} Chạy trên mọi máy có JDK 21 và Maven.
+  \item \textbf{Responsive UI:} Font-size tự điều chỉnh theo chiều rộng
+    cửa sổ từ 10px đến 18px.
+\end{itemize}
+
+\section{Sơ đồ Use Case}
+
+\begin{table}[H]
+  \centering
+  \caption{Bảng tóm tắt các Use Case chính}
+  \label{tab:usecase}
+  \begin{tabularx}{\linewidth}{c >{\bfseries\color{hustblue}}l X c}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{ID}} &
+    \textcolor{white}{\textbf{Use Case}} &
+    \textcolor{white}{\textbf{Mô tả}} &
+    \textcolor{white}{\textbf{Tác nhân}} \\
+    \rA UC01 & Đăng nhập & Xác thực và vào giao diện chính & Người dùng \\
+    \rB UC02 & Đăng ký   & Tạo tài khoản với kiểm tra hợp lệ & Người dùng \\
+    \rA UC03 & Gửi tin nhắn nhóm & Phát tán qua socket đến tất cả thành viên & Người dùng \\
+    \rB UC04 & Nhận tin nhắn & Hiển thị tin nhắn từ người khác & Người dùng \\
+    \rA UC05 & Gọi AI nhóm & Dùng cú pháp \code{@bot} trong chat & Người dùng \\
+    \rB UC06 & AI phản hồi & Gọi Gemini API và gửi kết quả & Gemini AI \\
+    \rA UC07 & Chat cá nhân AI & Tương tác 1-1 trong tab Chatbot & Người dùng \\
+    \rB UC08 & Cập nhật hồ sơ & Sửa tên, email, avatar & Người dùng \\
+    \rA UC09 & Đổi giao diện & Chuyển Dark/Light Mode & Người dùng \\
+    \rB UC10 & Xem lịch sử & Tải và hiển thị tin nhắn cũ & Người dùng \\
+  \end{tabularx}
+\end{table}
+
+\section{Kiến trúc Hệ thống}
+
+\subsection{Mô hình MVC Tổng quan}
+
+StudyFX Chat tuân thủ mô hình \textbf{MVC (Model-View-Controller)} mở rộng
+thêm lớp \textbf{Service} để xử lý logic nghiệp vụ độc lập:
+
+\vspace{8pt}
+\begin{center}
+\begin{tikzpicture}[
+  box/.style={
+    draw=#1, fill=#1!10, rounded corners=4pt,
+    text width=3.2cm, align=center, minimum height=1.1cm,
+    font=\small\bfseries, drop shadow
+  },
+  arrow/.style={-Stealth, thick, color=darkgray},
+  layer/.style={draw=gray!40, fill=gray!5, rounded corners=6pt,
+                dashed, inner sep=10pt}
+]
+  % Layer 1: View
+  \node[layer, minimum width=11cm, minimum height=1.6cm] (vl) at (0, 4.5) {};
+  \node[font=\tiny\bfseries\color{gray}] at (-4.5, 5.1) {VIEW};
+  \foreach \t/\x in {LoginView.fxml/-3.8, UI.fxml/-1.2, ChatView.fxml/1.4,
+                      ChatbotView.fxml/4.2} {
+    \node[box=hustblue, text width=2.3cm, minimum height=0.85cm, font=\tiny\bfseries]
+      at (\x, 4.5) {\t};
+  }
+
+  % Layer 2: Controller
+  \node[layer, minimum width=11cm, minimum height=1.6cm] (cl) at (0, 2.6) {};
+  \node[font=\tiny\bfseries\color{gray}] at (-4.5, 3.2) {CONTROLLER};
+  \foreach \t/\x in {LoginController/-3.8, UIController/-1.2,
+                      ChatViewController/1.4, ChatbotViewController/4.2} {
+    \node[box=hustred, text width=2.6cm, minimum height=0.85cm, font=\tiny\bfseries]
+      at (\x, 2.6) {\t};
+  }
+
+  % Layer 3: Service
+  \node[layer, minimum width=11cm, minimum height=1.6cm] (sl) at (0, 0.7) {};
+  \node[font=\tiny\bfseries\color{gray}] at (-4.5, 1.3) {SERVICE};
+  \foreach \t/\x in {UserService/-3.8, GeminiService/-1.2,
+                      ChatHistoryManager/1.5, SocketManager/4.2} {
+    \node[box=codegreen!80!black, text width=2.6cm, minimum height=0.85cm, font=\tiny\bfseries]
+      at (\x, 0.7) {\t};
+  }
+
+  % Layer 4: Model & Infra
+  \node[layer, minimum width=11cm, minimum height=1.5cm] (ml) at (0, -1.1) {};
+  \node[font=\tiny\bfseries\color{gray}] at (-4.5, -0.55) {MODEL \& INFRA};
+  \foreach \t/\x in {User/-3.8, Message/-1.2, Server/1.4, ServerDiscovery/4.2} {
+    \node[box=accentgold!80!black, text width=2.6cm, minimum height=0.85cm, font=\tiny\bfseries]
+      at (\x, -1.1) {\t};
+  }
+
+  % Arrows between layers
+  \draw[arrow] (vl.south) -- (cl.north)
+    node[midway, right, font=\tiny, color=darkgray] {Events};
+  \draw[arrow] (cl.south) -- (sl.north)
+    node[midway, right, font=\tiny, color=darkgray] {Calls};
+  \draw[arrow] (sl.south) -- (ml.north)
+    node[midway, right, font=\tiny, color=darkgray] {Uses};
+\end{tikzpicture}
+\end{center}
+
+\subsection{Cơ chế Auto-Discovery Server}
+
+\begin{tcolorbox}[infostyle, title={Quy trình khởi động tự động (UDP Auto-Discovery)}]
+\begin{enumerate}[leftmargin=1.8em, itemsep=5pt]
+  \item \textbf{Broadcast UDP:} \code{ServerDiscovery.discoverServer()} phát
+    gói tin \code{STUDYFX\_DISCOVER} lên cổng UDP 1236 tới toàn bộ LAN
+    (\code{255.255.255.255} và các subnet broadcast).
+
+  \item \textbf{Nếu tìm thấy server đang chạy:} Server phản hồi với IP và cổng
+    TCP. Ứng dụng hiện tại chuyển sang \textit{chế độ Client} và kết nối vào.
+
+  \item \textbf{Nếu không tìm thấy:} Ứng dụng khởi động \code{Server} TCP (cổng
+    1235), bật \code{beacon UDP}, rồi tự kết nối vào chính mình với vai trò client.
+\end{enumerate}
+\vspace{4pt}
+\textit{Kết quả: Chạy nhiều instance \code{mvn javafx:run} để chat nhóm mà không
+cần khởi động server thủ công.}
+\end{tcolorbox}
+
+\section{Thiết kế Cơ sở Dữ liệu và Lưu trữ}
+
+Dữ liệu được quản lý theo ba cơ chế:
+
+\begin{enumerate}[leftmargin=2em, itemsep=6pt]
+  \item \textbf{Bộ nhớ trong phiên (In-memory):}
+    \code{UserService} dùng \code{ConcurrentHashMap<String, User>}
+    lưu tài khoản trong suốt phiên làm việc. An toàn luồng theo thiết kế.
+
+  \item \textbf{File text (\code{chat\_history.txt}):}
+    Mỗi tin nhắn ghi một dòng định dạng \code{[yyyy-MM-dd HH:mm:ss] Nội dung}.
+    Phương thức \code{saveMessage()} được \code{synchronized}. Tự cắt bớt khi
+    vượt 2000 dòng.
+
+  \item \textbf{File cấu hình:}
+    \code{config.properties} lưu API key, host/port;
+    \code{theme.properties} tại \code{\textasciitilde/.studyfx/} lưu tuỳ chọn giao diện.
+\end{enumerate}
+
+\section{Thiết kế Các Lớp Chính}
+
+\subsection{Lớp Model}
+
+\begin{table}[H]
+  \centering
+  \caption{Mô tả các lớp Model}
+  \label{tab:models}
+  \begin{tabularx}{\linewidth}{>{\bfseries\ttfamily\color{hustblue}}l X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Lớp}} &
+    \textcolor{white}{\textbf{Thuộc tính và Mô tả}} \\
+    \rA User &
+      \code{id}, \code{username}, \code{password}, \code{fullName},
+      \code{email}, \code{status}, \code{profileImagePath}.
+      Có hai constructor: mặc định và \code{User(username, password)}.
+      Getter \code{getFullName()} tự fallback về username nếu fullName null. \\
+    \rB Message &
+      \code{sender}, \code{content}, \code{time}, \code{isBot}.
+      Constructor không tham số (cho framework) và
+      \code{Message(sender, content, time)}. \\
+    \rA ChatMessage &
+      \code{text}, \code{type} (\code{enum \{USER, BOT, SYSTEM\}}),
+      \code{time}, \code{sender}.
+      Phương thức tĩnh \code{now()} trả về thời gian dạng \code{HH:mm}. \\
+  \end{tabularx}
+\end{table}
+
+\subsection{Lớp Service}
+
+\begin{table}[H]
+  \centering
+  \caption{Mô tả các lớp Service}
+  \label{tab:services}
+  \begin{tabularx}{\linewidth}{>{\bfseries\ttfamily\color{hustblue}}l c X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Lớp}} &
+    \textcolor{white}{\textbf{Pattern}} &
+    \textcolor{white}{\textbf{Chức năng}} \\
+    \rA UserService &
+      Singleton &
+      Quản lý vòng đời tài khoản: \code{login()}, \code{register()},
+      \code{logout()}, \code{updateUserProfile()}. \\
+    \rB GeminiService &
+      Per-request &
+      Gọi Gemini API qua \code{HttpClient}; retry 3 lần với backoff;
+      fallback 2 model dự phòng; phân tích JSON bằng Gson. \\
+    \rA ChatHistoryManager &
+      Singleton &
+      Đọc/ghi lịch sử chat; \code{synchronized} để thread-safe;
+      tự cắt bớt file khi quá 2000 dòng. \\
+  \end{tabularx}
+\end{table}
+
+\subsection{Lớp Server \& Mạng}
+
+\begin{table}[H]
+  \centering
+  \caption{Mô tả các lớp Server và Mạng}
+  \label{tab:server}
+  \begin{tabularx}{\linewidth}{>{\bfseries\ttfamily\color{hustblue}}l X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Lớp}} &
+    \textcolor{white}{\textbf{Chức năng}} \\
+    \rA Server &
+      TCP Server đa luồng; \code{ExecutorService} (cached pool) xử lý
+      mỗi client; \code{ConcurrentHashMap.newKeySet()} lưu tập
+      \code{PrintWriter} để broadcast. \\
+    \rB SocketManager &
+      Singleton quản lý kết nối Socket phía client; Observer Pattern
+      qua \code{MessageListener}; đọc cấu hình từ static block. \\
+    \rA ServerDiscovery &
+      UDP auto-discovery: \code{discoverServer()} quét mạng LAN;
+      \code{startBeacon()} phản hồi các yêu cầu khám phá từ client khác. \\
+  \end{tabularx}
+\end{table}
+
+\section{Thiết kế Giao diện}
+
+\begin{table}[H]
+  \centering
+  \caption{Danh sách các màn hình giao diện}
+  \label{tab:screens}
+  \begin{tabularx}{\linewidth}{>{\ttfamily\color{hustblue}}l >{\ttfamily}l X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{FXML}} &
+    \textcolor{white}{\textbf{Controller}} &
+    \textcolor{white}{\textbf{Chức năng}} \\
+    \rA LoginView       & LoginController          & Đăng nhập (420×560 px) \\
+    \rB RegisterView    & RegisterController       & Đăng ký tài khoản mới \\
+    \rA UI              & UIController             & Khung chính: Sidebar + Content Area \\
+    \rB ChatView        & ChatViewController       & Chat nhóm thời gian thực \\
+    \rA ChatbotView     & ChatbotViewController    & Chatbot AI cá nhân \\
+    \rB ProfileSettingView & ProfileSettingController & Cập nhật hồ sơ và cài đặt \\
+    \rA AboutView       & AboutController          & Thông tin về ứng dụng \\
+  \end{tabularx}
+\end{table}
+
+% ============================================================
+%  CHƯƠNG 3: CÀI ĐẶT VÀ TRIỂN KHAI
+% ============================================================
+\chapter{Cài đặt và Triển khai}
+
+\section{Cấu trúc Thư mục Dự án}
+
+\begin{tcolorbox}[codestyle]
+\begin{lstlisting}[style=bashstyle, numbers=none]
+AIChatBotxGeminiAPI/
+|-- src/main/java/com/training/studyfx/
+|   |-- App.java              # Diem khoi dong JavaFX + Navigation
+|   |-- Launcher.java         # Lop trung gian (tranh loi JavaFX module)
+|   |-- controller/           # FXML Controllers (7 lop)
+|   |-- exception/            # Ngoai le tu dinh nghia (3 lop)
+|   |-- model/                # Doi tuong du lieu: User, Message, ChatMessage
+|   |-- server/               # Mang: Server, SocketManager, ServerDiscovery
+|   |-- service/              # Logic: UserService, GeminiService, ChatHistoryManager
+|   `-- util/                 # Tien ich: ThemeManager, ScaleManager
+|-- src/main/resources/
+|   |-- com/training/studyfx/ # File FXML (7 man hinh)
+|   |-- images/               # Tai nguyen hinh anh (15 file)
+|   |-- styles/               # ui-dark.css, ui-light.css
+|   `-- config.properties     # API key, server host/port, theme
+|-- chat_history.txt           # Lich su tin nhan (tu sinh)
+|-- studyfx.db                 # SQLite (du phong)
+`-- pom.xml                    # Cau hinh Maven
+\end{lstlisting}
+\end{tcolorbox}
+
+\section{Mô tả Chi tiết Các Module}
+
+\subsection{Module Khởi động: \texttt{App.java} \& \texttt{Launcher.java}}
+
+\code{Launcher} là điểm vào thực sự, tách khỏi \code{App extends Application}
+để tránh lỗi module JavaFX khi đóng gói JAR. \code{App.java} đảm nhiệm:
+
+\begin{itemize}[leftmargin=2em, itemsep=4pt]
+  \item Khởi tạo Scene/Stage, đăng ký \code{ThemeManager} và \code{ScaleManager}.
+  \item Navigation qua \code{setRoot(fxml)} với hiệu ứng FadeOut (120ms) → FadeIn (200ms).
+  \item Điều chỉnh kích thước cửa sổ theo từng màn hình; tối đa hóa trên màn hình $<$1366px.
+  \item Khởi động server nền trên daemon thread \code{chat-startup} sau khi UI render xong.
+\end{itemize}
+
+\subsection{Module Chat Nhóm: \texttt{ChatViewController.java}}
+
+\begin{lstlisting}[caption={Xử lý gửi tin nhắn với cú pháp @bot},
+                   label=lst:sendmsg, style=javastyle]
+private void sendMessage() {
+    String msg = messageField.getText().trim();
+    if (msg.startsWith("@bot ")) {
+        String prompt = msg.substring(5);
+        append(displayName + ": " + msg);     // Hien thi tin nguoi dung
+        append("Bot: thinking...");
+        new Thread(() -> {                     // Goi AI tren luong phu
+            String reply = new GeminiService().generateResponse(prompt);
+            Platform.runLater(() -> {          // Cap nhat UI tren UI Thread
+                removeLast();                  // Xoa placeholder
+                append("@#$%^01naffajg: " + reply);
+            });
+        }).start();
+    } else {
+        socket.sendMessage(displayName + ": " + msg);
+    }
+}
+\end{lstlisting}
+
+Ba cơ chế chính của module này:
+\begin{enumerate}[leftmargin=2em, itemsep=4pt]
+  \item \textbf{Kết nối có retry:} Thử tối đa 12 lần (cách 500ms) trước khi
+    báo lỗi.
+  \item \textbf{Hiển thị bong bóng:} CSS class động theo loại tin
+    (\code{mess-global} / \code{other-global} / \code{bot-message} /
+    \code{join-notification}) kèm FadeIn 300ms.
+  \item \textbf{Observer:} Triển khai \code{SocketManager.MessageListener},
+    nhận tin qua \code{onMessageReceived()} và chuyển lên UI Thread bằng
+    \code{Platform.runLater()}.
+\end{enumerate}
+
+\subsection{Module Chatbot AI: \texttt{ChatbotViewController.java}}
+
+\begin{lstlisting}[caption={Luồng xử lý câu hỏi chatbot cá nhân},
+                   label=lst:chatbot, style=javastyle]
+private void handleSendMessage() {
+    String text = chatbotInput.getText().trim();
+    addBubble(text, true);          // Hien thi tin nguoi dung (ben phai)
+    chatbotInput.clear();
+
+    Label typing = new Label("Thinking...");
+    chatbotMessagesContainer.getChildren().add(typing);
+
+    new Thread(() -> {              // Goi API tren luong phu (non-blocking)
+        String reply = gemini.generateResponse(text);
+        Platform.runLater(() -> {
+            chatbotMessagesContainer.getChildren().remove(typing);
+            addBubble(reply, false);  // Hien thi phan hoi AI (ben trai)
+        });
+    }).start();
+}
+\end{lstlisting}
+
+\subsection{Module Giao diện Chính: \texttt{UIController.java}}
+
+\begin{itemize}[leftmargin=2em, itemsep=4pt]
+  \item \textbf{Sidebar animation:} Thu gọn = mờ nhãn (140ms) → thu hẹp
+    (260ms); Mở rộng = tăng chiều rộng (260ms) → hiện nhãn (140ms).
+    Biến \code{animating} ngăn trigger chồng chéo.
+  \item \textbf{Navigation:} Nạp FXML vào \code{mainContentArea} với
+    FadeIn 220ms khi chuyển tab.
+  \item \textbf{Avatar:} Hiển thị trong \code{Circle} bằng \code{ImagePattern};
+    ưu tiên ảnh người dùng chọn, fallback về ảnh mặc định.
+\end{itemize}
+
+\subsection{Module Tích hợp AI: \texttt{GeminiService.java}}
+
+\begin{tcolorbox}[infostyle, title={Chiến lược xử lý lỗi phân tầng}]
+\begin{enumerate}[leftmargin=1.5em, itemsep=4pt]
+  \item Gọi model chính (ví dụ \code{gemini-2.0-flash}) tối đa \textbf{3 lần}
+    với backoff 1,5s và 3,0s.
+  \item Nếu thất bại (HTTP 429/503, \code{RESOURCE\_EXHAUSTED}), thử lần lượt
+    \textbf{2 model dự phòng}: \code{gemini-flash-latest} rồi \code{gemini-2.0-flash}.
+  \item Nếu tất cả thất bại, trả về thông báo thân thiện bằng tiếng Việt.
+\end{enumerate}
+\end{tcolorbox}
+
+\subsection{Module Giao diện: \texttt{ThemeManager} \& \texttt{ScaleManager}}
+
+\textbf{ThemeManager:} Dùng \code{WeakHashMap<Scene, Void>} theo dõi tất cả
+Scene mà không giữ strong reference (tránh memory leak). Lưu theme vào
+\code{theme.properties} và đọc lại trong static block.
+
+\textbf{ScaleManager:} Lắng nghe \code{widthProperty()} của Scene và áp dụng:
+\[
+  \text{fontSize} = \text{clamp}\!\left(10,\;\; 14 \times
+  \frac{\text{sceneWidth}}{1280},\;\; 18\right) \text{ px}
+\]
+Kết quả áp dụng qua \code{-fx-font-size} inline style lên root node.
+
+\section{Quy trình Hoạt động}
+
+\subsection{Quy trình Đăng nhập và Khởi động}
+
+\vspace{6pt}
+\begin{center}
+\begin{tikzpicture}[
+  node distance=0.6cm and 0.4cm,
+  box/.style={draw=hustblue, fill=hustblue!8, rounded corners=4pt,
+              minimum height=0.7cm, text width=3cm, align=center,
+              font=\small},
+  decision/.style={draw=accentgold!80!black, fill=accentgold!10,
+                   diamond, aspect=2.5, font=\small, inner sep=2pt},
+  arrow/.style={-Stealth, thick, color=hustblue},
+  label/.style={font=\tiny\itshape, color=darkgray}
+]
+  \node[box] (start)   {Nhập login};
+  \node[box, below=of start] (auth)  {UserService.login()};
+  \node[decision, below=of auth] (ok) {Thành công?};
+  \node[box, below=of ok] (ui)    {App.setRoot("UI")};
+  \node[box, below=of ui] (chat)  {ChatViewController.\newline initialize()};
+  \node[box, below=of chat] (conn) {connect() với retry};
+  \node[box, right=2cm of ok] (err) {Hiện lỗi};
+
+  \draw[arrow] (start) -- (auth);
+  \draw[arrow] (auth)  -- (ok);
+  \draw[arrow] (ok)    -- node[label, left]{Có} (ui);
+  \draw[arrow] (ok)    -- node[label, above]{Không} (err);
+  \draw[arrow] (ui)    -- (chat);
+  \draw[arrow] (chat)  -- (conn);
+\end{tikzpicture}
+\end{center}
+
+\subsection{Quy trình Gửi Tin nhắn \texttt{@bot}}
+
+\begin{enumerate}[leftmargin=2em, itemsep=4pt]
+  \item Người dùng gõ \code{@bot Giải thích OOP} và nhấn Enter.
+  \item \code{sendMessage()} phát hiện prefix \code{@bot}, hiển thị tin
+    của người dùng và thêm placeholder ``Bot: thinking...''.
+  \item Luồng phụ gọi \code{GeminiService.generateResponse()}.
+  \item \code{Platform.runLater()} xóa placeholder và thêm câu trả lời AI.
+  \item Tin nhắn AI lưu vào \code{chat\_history.txt} nhưng \textit{không}
+    gửi qua Socket (chỉ hiển thị cục bộ cho người gọi).
+\end{enumerate}
+
+% ============================================================
+%  CHƯƠNG 4: KẾT QUẢ ĐẠT ĐƯỢC
+% ============================================================
+\chapter{Kết quả Đạt được}
+
+\section{Các Chức năng Đã Hoàn thành}
+
+\begin{table}[H]
+  \centering
+  \caption{Tổng hợp kết quả thực hiện}
+  \label{tab:results}
+  \begin{tabularx}{\linewidth}{c X c}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{STT}} &
+    \textcolor{white}{\textbf{Chức năng}} &
+    \textcolor{white}{\textbf{Trạng thái}} \\
+    \rA 1  & Đăng nhập / Đăng ký tài khoản với kiểm tra hợp lệ & \done \\
+    \rB 2  & Chat nhóm thời gian thực qua Socket TCP/IP & \done \\
+    \rA 3  & Tự động phát hiện Server trên LAN (UDP Discovery) & \done \\
+    \rB 4  & Gọi AI trong chat nhóm qua cú pháp \code{@bot} & \done \\
+    \rA 5  & Chatbot cá nhân 1-1 với Google Gemini AI & \done \\
+    \rB 6  & Lưu và phục hồi lịch sử trò chuyện & \done \\
+    \rA 7  & Dark Mode / Light Mode với lưu tuỳ chọn & \done \\
+    \rB 8  & Giao diện Responsive tự điều chỉnh font-size & \done \\
+    \rA 9  & Sidebar thu gọn / mở rộng với animation & \done \\
+    \rB 10 & Hiệu ứng FadeIn/FadeOut khi chuyển màn hình & \done \\
+    \rA 11 & Cập nhật hồ sơ cá nhân (tên, email, trạng thái) & \done \\
+    \rB 12 & Thông báo khi thành viên tham gia / rời phòng & \done \\
+  \end{tabularx}
+\end{table}
+
+\section{Các Chức năng Chưa Hoàn thành}
+
+\begin{table}[H]
+  \centering
+  \caption{Các chức năng chưa triển khai và kế hoạch}
+  \label{tab:todo}
+  \begin{tabularx}{\linewidth}{X X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Chức năng}} &
+    \textcolor{white}{\textbf{Lý do / Kế hoạch}} \\
+    \rA Nhắn tin riêng tư 1-1 &
+      Cần giao thức định tuyến theo người nhận cụ thể trong server. \\
+    \rB Gửi file đính kèm &
+      Cần truyền nhị phân qua socket và giao thức phân mảnh riêng. \\
+    \rA Tải lên ảnh đại diện &
+      File picker chưa hoàn thiện; nút UI đã có sẵn. \\
+    \rB Mã hóa mật khẩu &
+      Cần tích hợp BCrypt hoặc SHA-256. \\
+    \rA Lưu trữ tài khoản lâu dài &
+      Cần kết nối SQLite hoặc MySQL đang có sẵn trong dự án. \\
+  \end{tabularx}
+\end{table}
+
+\section{Đánh giá Hệ thống}
+
+\subsection{Ưu điểm}
+
+\begin{itemize}[leftmargin=2em, itemsep=5pt]
+  \item \textbf{Kiến trúc rõ ràng:} MVC phân tầng nghiêm ngặt; mỗi lớp
+    có trách nhiệm duy nhất (Single Responsibility).
+  \item \textbf{Trải nghiệm mượt mà:} Mọi tác vụ nặng trên luồng phụ;
+    giao diện không bao giờ bị treo dù AI đang xử lý.
+  \item \textbf{Tự phục hồi:} AI retry và fallback model; socket tự retry
+    12 lần trước khi báo lỗi.
+  \item \textbf{Dễ mở rộng:} Observer pattern cho phép thêm component nhận
+    tin nhắn mà không sửa \code{SocketManager}.
+  \item \textbf{Cài đặt không đau:} UDP auto-discovery loại bỏ hoàn toàn
+    cấu hình thủ công.
+\end{itemize}
+
+\subsection{Hạn chế}
+
+\begin{itemize}[leftmargin=2em, itemsep=5pt]
+  \item Không mã hóa kênh truyền; mật khẩu plain text trong bộ nhớ.
+  \item Tài khoản mất sau mỗi phiên vì chưa kết nối CSDL bền vững.
+  \item Phụ thuộc hoàn toàn vào Google Gemini API và kết nối internet.
+\end{itemize}
+
+% ============================================================
+%  CHƯƠNG 5: LIÊN HỆ VỚI MÔN HỌC OOP
+% ============================================================
+\chapter{Liên hệ với Môn học Lập trình Hướng đối tượng}
+
+\section{Tính Đóng gói (Encapsulation)}
+
+Đóng gói được áp dụng nhất quán ở hai mức độ:
+
+\textbf{Mức lớp đơn:} Toàn bộ thuộc tính trong các lớp Model là
+\code{private}, truy cập qua getter/setter:
+
+\begin{lstlisting}[caption={Đóng gói trong lớp User},
+                   label=lst:encap, style=javastyle]
+public class User {
+    private String username;
+    private String password;
+    private String fullName;
+
+    public String getUsername() { return username; }
+    public void setUsername(String v) { this.username = v; }
+
+    public String getFullName() {
+        return fullName != null ? fullName : username; // Fallback logic
+    }
+}
+\end{lstlisting}
+
+\textbf{Mức module:} \code{UserService}, \code{ChatHistoryManager},
+\code{GeminiService} ẩn hoàn toàn chi tiết cài đặt. \code{ChatViewController}
+không biết dữ liệu lưu thế nào -- chỉ gọi \code{saveMessage(msg)}.
+
+\begin{tcolorbox}[infostyle, title={Lợi ích thực tế}]
+Khi muốn chuyển từ file text sang SQLite, chỉ cần sửa \textbf{nội dung bên
+trong} \code{ChatHistoryManager} mà \textbf{không cần động vào bất kỳ
+Controller nào}. Đây chính là giá trị cốt lõi của đóng gói.
+\end{tcolorbox}
+
+\section{Tính Kế thừa (Inheritance)}
+
+\subsection{Kế thừa từ JavaFX Framework}
+
+\begin{lstlisting}[caption={App kế thừa Application và override vòng đời},
+                   label=lst:inherit, style=javastyle]
+public class App extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Phuong thuc vong doi - JavaFX tu goi khi khoi dong
+    }
+}
+public class UIController implements Initializable {
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // JavaFX goi sau khi FXML duoc nap thanh cong
+    }
+}
+\end{lstlisting}
+
+\subsection{Kế thừa trong Hệ thống Ngoại lệ}
+
+\begin{lstlisting}[caption={Phân cấp ngoại lệ theo ngữ nghĩa},
+                   label=lst:exc, style=javastyle]
+// Tang goc: moi loi trong he thong chat
+public class ChatException extends RuntimeException {
+    public ChatException(String msg) { super(msg); }
+    public ChatException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+}
+// Loi cu the hon: ket noi socket
+public class ConnectionException extends ChatException { ... }
+// Loi cu the hon: tin nhan khong hop le
+public class MessageException extends ChatException { ... }
+\end{lstlisting}
+
+\section{Tính Đa hình (Polymorphism)}
+
+\subsection{Đa hình qua Interface -- Observer Pattern}
+
+\begin{lstlisting}[caption={Observer Pattern: MessageListener interface},
+                   label=lst:observer, style=javastyle]
+// SocketManager dinh nghia "hop dong"
+public interface MessageListener {
+    void onMessageReceived(String message);
+}
+
+// ChatViewController ky "hop dong" do
+public class ChatViewController
+        implements SocketManager.MessageListener {
+    @Override
+    public void onMessageReceived(String msg) {
+        Platform.runLater(() -> append(msg)); // Luon tren UI Thread
+    }
+}
+\end{lstlisting}
+
+Từ góc độ \code{SocketManager}, \code{List<MessageListener> listeners} chỉ
+biết đây là ``đối tượng biết nhận tin nhắn''. Không cần biết chúng là
+\code{ChatViewController} hay lớp nào khác. Đây chính là bản chất đa hình.
+
+\subsection{Nạp chồng Hàm Khởi tạo}
+
+\begin{lstlisting}[caption={Nạp chồng constructor phục vụ ngữ cảnh khác nhau},
+                   label=lst:overload, style=javastyle]
+public User() { }  // Cho framework tu tao doi tuong (deserialize)
+
+public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+    this.fullName = username;  // Mac dinh fullName = username
+    this.status = "Available";
+}
+\end{lstlisting}
+
+\section{Tính Trừu tượng (Abstraction)}
+
+Ba mức trừu tượng hóa trong dự án:
+
+\begin{tcolorbox}[infostyle, title={API trừu tượng tối giản cho các Controller}]
+\begin{lstlisting}[style=javastyle, numbers=none]
+// Giao tiep mang - an di toan bo socket/stream/thread
+socket.connect(displayName);
+socket.sendMessage(fullMessage);
+socket.addMessageListener(this);
+
+// Goi AI - an di HTTP request, JSON parse, retry
+String reply = new GeminiService().generateResponse(prompt);
+
+// Quan ly theme - an di file I/O va CSS switching
+ThemeManager.toggle();
+ThemeManager.registerScene(scene);
+
+// Quan ly kich thuoc - an di tinh toan va listener
+ScaleManager.attach(scene);
+\end{lstlisting}
+\end{tcolorbox}
+
+\section{Tổ chức Package và Vòng đời Đối tượng}
+
+\begin{table}[H]
+  \centering
+  \caption{Cấu trúc package và chiến lược tạo đối tượng}
+  \label{tab:packages}
+  \begin{tabularx}{\linewidth}{>{\ttfamily\color{hustblue}}l X c c}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Package}} &
+    \textcolor{white}{\textbf{Trách nhiệm}} &
+    \textcolor{white}{\textbf{Số lớp}} &
+    \textcolor{white}{\textbf{Pattern}} \\
+    \rA ...studyfx      & Điểm khởi động App, Launcher & 2 & --- \\
+    \rB ...controller   & Điều khiển giao diện FXML    & 7 & Managed by FX \\
+    \rA ...model        & POJO dữ liệu thuần           & 3 & Per-request \\
+    \rB ...service      & Logic nghiệp vụ + API        & 3 & Singleton \\
+    \rA ...server       & Lập trình mạng Socket        & 4 & Singleton + Thread \\
+    \rB ...exception    & Ngoại lệ tự định nghĩa       & 3 & --- \\
+    \rA ...util         & Tiện ích dùng chung          & 3 & Static \\
+    \rB \multicolumn{2}{l}{\textbf{Tổng cộng}} & \textbf{25} & \\
+  \end{tabularx}
+\end{table}
+
+\section{Xử lý Ngoại lệ (Exception Handling)}
+
+Chiến lược xử lý ngoại lệ nhiều tầng:
+
+\begin{itemize}[leftmargin=2em, itemsep=4pt]
+  \item \textbf{Custom hierarchy:} \code{ChatException} → \code{ConnectionException}
+    / \code{MessageException} -- bắt theo ngữ nghĩa.
+  \item \textbf{Try-with-resources:} \code{Server.handleClient()} tự động
+    đóng \code{socket}, \code{BufferedReader}, \code{PrintWriter}.
+  \item \textbf{Phân loại lỗi API:} \code{GeminiService} phân nhánh xử lý
+    HTTP 429/503, lỗi JSON parse và lỗi mạng khác nhau.
+  \item \textbf{Fail-graceful:} Mọi lỗi được bắt cục bộ, hiển thị thông
+    báo thân thiện thay vì crash ứng dụng.
+\end{itemize}
+
+\section{Đa luồng và Bất đồng bộ}
+
+\begin{table}[H]
+  \centering
+  \caption{Các luồng trong hệ thống}
+  \label{tab:threads}
+  \begin{tabularx}{\linewidth}{>{\ttfamily\color{hustblue}}l X c}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Tên luồng}} &
+    \textcolor{white}{\textbf{Chức năng}} &
+    \textcolor{white}{\textbf{Loại}} \\
+    \rA chat-startup       & Auto-discovery + khởi động server/client & Daemon \\
+    \rB chat-connect-retry & Kết nối socket với retry & Daemon \\
+    \rA (AI Thread)        & Gọi GeminiService bất đồng bộ & Transient \\
+    \rB (Socket Reader)    & Vòng lặp đọc tin nhắn từ server & Long-lived \\
+    \rA pool-*             & Xử lý mỗi client (thread pool) & Pooled \\
+    \rB discovery-beacon   & Phản hồi UDP discovery requests & Daemon \\
+  \end{tabularx}
+\end{table}
+
+\begin{tcolorbox}[keystyle, title={Quy tắc vàng: JavaFX Thread Safety}]
+\textbf{Mọi thay đổi giao diện đều thông qua \code{Platform.runLater()}.}
+Đây là quy tắc bắt buộc của JavaFX: chỉ UI Thread mới được cập nhật
+component. Vi phạm quy tắc này gây ra \code{IllegalStateException} hoặc
+hành vi không xác định. Dự án tuân thủ tuyệt đối nguyên tắc này.
+\end{tcolorbox}
+
+\section{Mẫu Thiết kế (Design Patterns)}
+
+\begin{table}[H]
+  \centering
+  \caption{Các Design Pattern được áp dụng trong dự án}
+  \label{tab:patterns}
+  \begin{tabularx}{\linewidth}{>{\bfseries\color{hustblue}}l l X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Mẫu}} &
+    \textcolor{white}{\textbf{Vị trí}} &
+    \textcolor{white}{\textbf{Mục đích}} \\
+    \rA Singleton &
+      \code{UserService}, \code{SocketManager}, \code{ChatHistoryManager} &
+      Một thể hiện duy nhất, chia sẻ trạng thái toàn cục \\
+    \rB Observer &
+      \code{SocketManager.MessageListener} &
+      Thông báo tin nhắn mới đến nhiều subscriber \\
+    \rA MVC &
+      Toàn bộ kiến trúc &
+      Tách biệt giao diện, điều khiển và dữ liệu \\
+    \rB Strategy &
+      \code{GeminiService} retry + fallback &
+      Thay đổi chiến lược gọi API theo tình trạng \\
+    \rA Template Method &
+      \code{App.adjustWindow()} &
+      Khung thuật toán; case cụ thể điền chi tiết \\
+  \end{tabularx}
+\end{table}
+
+% ============================================================
+%  CHƯƠNG 6: KẾT LUẬN
+% ============================================================
+\chapter{Kết luận}
+
+\section{Tóm tắt Kết quả}
+
+Nhóm 18 đã hoàn thành xây dựng \textbf{StudyFX Chat} -- ứng dụng
+desktop hoàn chỉnh kết hợp thành công chat nhóm thời gian thực qua
+Socket TCP/IP và trợ lý AI tích hợp Google Gemini. Giao diện đồ họa
+JavaFX chuyên nghiệp với đầy đủ tính năng UX/UI hiện đại.
+
+Về mặt học thuật, bốn tính chất OOP không còn là lý thuyết trừu tượng
+mà trở thành công cụ thiết kế thực sự: đóng gói bảo vệ dữ liệu, kế thừa
+tái sử dụng framework, đa hình mở rộng linh hoạt, trừu tượng che giấu
+sự phức tạp.
+
+\section{Hướng Phát triển}
+
+\subsection{Ngắn hạn}
+
+\begin{itemize}[leftmargin=2em, itemsep=4pt]
+  \item \textbf{CSDL bền vững:} Kết nối SQLite đã có sẵn để lưu tài khoản
+    và lịch sử. Mã hóa mật khẩu bằng BCrypt.
+  \item \textbf{Chat riêng tư 1-1:} Thêm giao thức định tuyến trong Server.
+  \item \textbf{Hoàn thiện avatar:} Triển khai file picker và lưu vào
+    thư mục \code{upload/}.
+\end{itemize}
+
+\subsection{Dài hạn}
+
+\begin{itemize}[leftmargin=2em, itemsep=4pt]
+  \item \textbf{Cloud deployment:} Chuyển Server lên AWS/GCP/VPS để chat
+    qua Internet thay vì chỉ LAN.
+  \item \textbf{AI nâng cao:} Bộ nhớ ngữ cảnh hội thoại; hỗ trợ phân tích
+    file đính kèm; streaming response.
+  \item \textbf{Bảo mật:} TLS/SSL cho kênh socket; xác thực phía server.
+  \item \textbf{Mobile app:} Phiên bản Android/iOS qua REST API.
+  \item \textbf{File đính kèm:} Truyền ảnh và tài liệu qua socket.
+\end{itemize}
+
+\section{Bài học Kinh nghiệm}
+
+\begin{tcolorbox}[infostyle, title={Kiến thức OOP đã vận dụng}]
+Dự án chứng minh OOP không chỉ là cú pháp \code{class} và \code{extends},
+mà là \textit{triết lý thiết kế}:
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt, topsep=4pt]
+  \item Đóng gói xác định ranh giới trách nhiệm giữa các module.
+  \item Kế thừa JavaFX Framework -- ví dụ sống động nhất: chỉ cần ghi
+    đè đúng phương thức vòng đời, không viết lại event loop.
+  \item Đa hình qua interface (\code{MessageListener}) -- ``lập trình theo
+    hợp đồng'' giúp mở rộng mà không sửa code cũ.
+  \item Singleton, Observer xuất hiện \textit{tự nhiên} khi gặp bài toán
+    thực tế, không phải vì cố áp đặt pattern.
+\end{itemize}
+\end{tcolorbox}
+
+\begin{tcolorbox}[keystyle, title={Kỹ năng nghề nghiệp thu được}]
+\begin{description}[leftmargin=0pt, itemsep=5pt]
+  \item[\textcolor{hustblue}{Lập trình mạng:}]
+    Xây dựng Client-Server đa luồng hoàn chỉnh kèm UDP Discovery tự động.
+  \item[\textcolor{hustblue}{Tích hợp API:}]
+    Đọc tài liệu, xây dựng HTTP request, xử lý JSON và retry robustness.
+  \item[\textcolor{hustblue}{Đa luồng:}]
+    Race condition, \code{synchronized}, \code{ConcurrentHashMap},
+    \code{Platform.runLater()}.
+  \item[\textcolor{hustblue}{Làm việc nhóm:}]
+    Kiến trúc MVC giúp phân chia module độc lập; Git quản lý phiên bản;
+    debug hệ thống tích hợp từ nhiều thành viên.
+\end{description}
+\end{tcolorbox}
+
+\bigskip\bigskip
+\begin{center}
+  \textcolor{hustblue!40}{\rule{0.4\linewidth}{0.4pt}}
+\end{center}
+
+\bigskip
+\noindent Nhóm 18 xin chân thành cảm ơn giảng viên \textbf{Trần Nhật Hóa}
+đã hướng dẫn và hỗ trợ trong suốt quá trình thực hiện dự án. Những kiến thức
+và kinh nghiệm thu được từ học phần IT3103 sẽ là nền tảng vững chắc cho hành
+trình phát triển phần mềm của chúng em.
+
+% ============================================================
+%  PHỤ LỤC
+% ============================================================
+\appendix
+\chapter{Hướng dẫn Cài đặt và Chạy Ứng dụng}
+
+\section{Yêu cầu Hệ thống}
+
+\begin{table}[H]
+  \centering
+  \begin{tabularx}{\linewidth}{>{\bfseries}l X}
+    \rowcolor{headerrow}
+    \textcolor{white}{\textbf{Yêu cầu}} & \textcolor{white}{\textbf{Chi tiết}} \\
+    \rA JDK         & Phiên bản 21+ (\url{https://openjdk.org/}) \\
+    \rB Apache Maven & Cài đặt và cấu hình biến môi trường \code{PATH} \\
+    \rA Internet    & Cần thiết cho tính năng Gemini AI \\
+    \rB API Key     & Đăng ký miễn phí tại \url{https://aistudio.google.com/} \\
+  \end{tabularx}
+\end{table}
+
+\section{Cấu hình và Khởi chạy}
+
+\textbf{Bước 1 -- Cấu hình API Key} trong
+\code{src/main/resources/config.properties}:
+
+\begin{tcolorbox}[codestyle]
+\begin{lstlisting}[style=bashstyle, numbers=none]
+gemini.api.key=YOUR_GEMINI_API_KEY_HERE
+gemini.model=gemini-2.0-flash
+chat.server.host=auto
+chat.server.port=1235
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Bước 2 -- Biên dịch và chạy:}
+
+\begin{tcolorbox}[codestyle]
+\begin{lstlisting}[style=bashstyle, numbers=none]
+mvn clean compile     # Bien dich du an
+mvn javafx:run        # Khoi chay ung dung
+\end{lstlisting}
+\end{tcolorbox}
+
+\textbf{Bước 3 -- Kiểm thử chat nhóm} (mở nhiều Terminal):
+
+\begin{enumerate}[leftmargin=2em, itemsep=4pt]
+  \item Terminal 1: \code{mvn javafx:run} → Cửa sổ đầu \textbf{tự động là Server}.
+  \item Terminal 2: \code{mvn javafx:run} → Cửa sổ thứ hai \textbf{tự động kết nối}.
+  \item Đăng nhập tài khoản khác nhau → vào tab \textbf{Chat} → bắt đầu nhắn tin!
+\end{enumerate}
+
+\chapter{Tài liệu Tham khảo}
+
+\begin{enumerate}[leftmargin=2em, itemsep=6pt]
+  \item Oracle. \textit{Java SE 21 Documentation}.
+    \url{https://docs.oracle.com/en/java/javase/21/}
+
+  \item OpenJFX. \textit{JavaFX 24 API Documentation}.
+    \url{https://openjfx.io/javadoc/24/}
+
+  \item Google. \textit{Gemini API Reference}.
+    \url{https://ai.google.dev/api/}
+
+  \item Google. \textit{Gson User Guide}.
+    \url{https://github.com/google/gson/blob/main/UserGuide.md}
+
+  \item Gamma, E., Helm, R., Johnson, R., Vlissides, J.
+    \textit{Design Patterns: Elements of Reusable Object-Oriented Software}.
+    Addison-Wesley, 1994.
+
+  \item Horstmann, C.~S. \textit{Core Java, Volume I -- Fundamentals},
+    12th ed. Pearson, 2022.
+
+  \item Sharan, K. \textit{Learn JavaFX 17}. Apress, 2022.
+\end{enumerate}
+
+\end{document}

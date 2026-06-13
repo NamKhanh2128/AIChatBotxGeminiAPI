@@ -12,7 +12,7 @@ import java.util.Properties;
 public class GeminiService {
 
     private static String KEY = "YOUR_GEMINI_API_KEY";
-    private static String MODEL = "gemini-3.5-flash";
+    private static String MODEL = "gemini-1.5-flash";
     private static String URL;
 
     static {
